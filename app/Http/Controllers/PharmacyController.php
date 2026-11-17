@@ -239,6 +239,16 @@ class PharmacyController extends Controller
         }
     }
 
+    public function checkout(Request $request)
+    {
+        return $this->storeSale($request);
+    }
+
+    public function printSale(PharmacySale $sale)
+    {
+        return $this->print($sale);
+    }
+
     public function print(PharmacySale $sale)
     {
         $sale->load(['patient', 'items.medicine', 'seller']);

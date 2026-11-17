@@ -62,8 +62,94 @@ Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'ind
 Route::middleware('auth')->group(function () {
     Route::resource('patients', \App\Http\Controllers\PatientController::class);
     Route::resource('admin-doctors', \App\Http\Controllers\DoctorController::class)->names('doctors')->parameters(['admin-doctors' => 'doctor']);
+    // Appointments & OPD Queue
     Route::resource('appointments', \App\Http\Controllers\AppointmentController::class);
     Route::patch('appointments/{appointment}/status', [\App\Http\Controllers\AppointmentController::class, 'updateStatus'])->name('appointments.updateStatus');
+    Route::get('appointments-queue', [\App\Http\Controllers\AppointmentController::class, 'queue'])->name('appointments.queue');
+
+    // Emergency Department (ER & Triage)
+    Route::resource('emergency', \App\Http\Controllers\EmergencyController::class);
+    Route::post('emergency/{emergency}/transfer-ipd', [\App\Http\Controllers\EmergencyController::class, 'transferToIpd'])->name('emergency.transfer-ipd');
+
+    // Clinical Vitals Recording
+    Route::post('vitals', [\App\Http\Controllers\VitalController::class, 'store'])->name('vitals.store');
+
+    // Wards, Cabins & Beds Management
+    Route::resource('wards', \App\Http\Controllers\WardController::class);
+    Route::get('beds-matrix', [\App\Http\Controllers\BedController::class, 'matrix'])->name('beds.matrix');
+    Route::patch('beds/{bed}/status', [\App\Http\Controllers\BedController::class, 'updateStatus'])->name('beds.updateStatus');
+    Route::resource('beds', \App\Http\Controllers\BedController::class);
+
+    // IPD Admissions, Transfers & Discharges
+    Route::resource('admissions', \App\Http\Controllers\AdmissionController::class);
+    Route::post('admissions/{admission}/transfer-bed', [\App\Http\Controllers\AdmissionController::class, 'transferBed'])->name('admissions.transfer-bed');
+    Route::post('admissions/{admission}/daily-charge', [\App\Http\Controllers\AdmissionController::class, 'addDailyCharge'])->name('admissions.daily-charge');
+    Route::post('admissions/{admission}/discharge', [\App\Http\Controllers\AdmissionController::class, 'discharge'])->name('admissions.discharge');
+
+    // Nursing Station, MAR & Shift Roster
+    Route::get('nursing', [\App\Http\Controllers\NursingController::class, 'index'])->name('nursing.index');
+    Route::get('nursing/mar', [\App\Http\Controllers\NursingController::class, 'mar'])->name('nursing.mar');
+    Route::post('nursing/administer-dose', [\App\Http\Controllers\NursingController::class, 'administerDose'])->name('nursing.administer-dose');
+    Route::get('nursing/roster', [\App\Http\Controllers\NursingController::class, 'roster'])->name('nursing.roster');
+    Route::post('nursing/roster', [\App\Http\Controllers\NursingController::class, 'storeRoster'])->name('nursing.store-roster');
+
+    // Operation Theatre (OT) & Surgeries
+    Route::resource('ot', \App\Http\Controllers\OtController::class);
+    Route::put('ot/{ot}/notes', [\App\Http\Controllers\OtController::class, 'updateNotes'])->name('ot.update-notes');
+    Route::post('ot/{ot}/staff', [\App\Http\Controllers\OtController::class, 'addStaff'])->name('ot.add-staff');
+
+    // Hospital Pharmacy POS & Inventory
+    Route::get('pharmacy', [\App\Http\Controllers\PharmacyController::class, 'index'])->name('pharmacy.index');
+    Route::get('pharmacy/medicines', [\App\Http\Controllers\PharmacyController::class, 'medicines'])->name('pharmacy.medicines');
+    Route::post('pharmacy/medicines', [\App\Http\Controllers\PharmacyController::class, 'storeMedicine'])->name('pharmacy.medicines.store');
+    Route::get('pharmacy/batches', [\App\Http\Controllers\PharmacyController::class, 'batches'])->name('pharmacy.batches');
+    Route::post('pharmacy/batches', [\App\Http\Controllers\PharmacyController::class, 'storeBatch'])->name('pharmacy.batches.store');
+    Route::get('pharmacy/pos', [\App\Http\Controllers\PharmacyController::class, 'pos'])->name('pharmacy.pos');
+    Route::post('pharmacy/pos/checkout', [\App\Http\Controllers\PharmacyController::class, 'checkout'])->name('pharmacy.pos.checkout');
+    Route::get('pharmacy/sales/{sale}/print', [\App\Http\Controllers\PharmacyController::class, 'printSale'])->name('pharmacy.print');
+
+    // Laboratory Pathology Samples
+    Route::get('samples', [\App\Http\Controllers\SampleController::class, 'index'])->name('samples.index');
+    Route::post('samples/{sample}/collect', [\App\Http\Controllers\SampleController::class, 'collect'])->name('samples.collect');
+    Route::post('samples/{sample}/receive', [\App\Http\Controllers\SampleController::class, 'receive'])->name('samples.receive');
+    Route::post('samples/{sample}/reject', [\App\Http\Controllers\SampleController::class, 'reject'])->name('samples.reject');
+
+    // Digital Radiology & Imaging
+    Route::resource('radiology', \App\Http\Controllers\RadiologyController::class);
+    Route::get('radiology/{radiology}/report', [\App\Http\Controllers\RadiologyController::class, 'reportForm'])->name('radiology.report-form');
+    Route::post('radiology/{radiology}/report', [\App\Http\Controllers\RadiologyController::class, 'saveReport'])->name('radiology.save-report');
+    Route::get('radiology/{radiology}/print', [\App\Http\Controllers\RadiologyController::class, 'printReport'])->name('radiology.print-report');
+
+    // Hospital Expenses
+    Route::resource('expenses', \App\Http\Controllers\ExpenseController::class);
+
+    // Blood Bank & Donors
+    Route::get('blood-bank', [\App\Http\Controllers\BloodBankController::class, 'index'])->name('blood-bank.index');
+    Route::post('blood-bank/donors', [\App\Http\Controllers\BloodBankController::class, 'storeDonor'])->name('blood-bank.store-donor');
+    Route::post('blood-bank/bags', [\App\Http\Controllers\BloodBankController::class, 'storeBag'])->name('blood-bank.store-bag');
+    Route::post('blood-bank/bags/{bag}/issue', [\App\Http\Controllers\BloodBankController::class, 'issueBag'])->name('blood-bank.issue-bag');
+
+    // Ambulance Fleet & Dispatch
+    Route::get('ambulance', [\App\Http\Controllers\AmbulanceController::class, 'index'])->name('ambulance.index');
+    Route::post('ambulance/vehicles', [\App\Http\Controllers\AmbulanceController::class, 'storeVehicle'])->name('ambulance.store-vehicle');
+    Route::patch('ambulance/vehicles/{vehicle}/status', [\App\Http\Controllers\AmbulanceController::class, 'updateVehicleStatus'])->name('ambulance.update-vehicle-status');
+    Route::post('ambulance/requests', [\App\Http\Controllers\AmbulanceController::class, 'storeRequest'])->name('ambulance.store-request');
+    Route::patch('ambulance/requests/{ambulanceRequest}/status', [\App\Http\Controllers\AmbulanceController::class, 'updateRequestStatus'])->name('ambulance.update-request-status');
+
+    // HR & Staff Payroll
+    Route::get('payroll', [\App\Http\Controllers\PayrollController::class, 'index'])->name('payroll.index');
+    Route::post('payroll/attendance', [\App\Http\Controllers\PayrollController::class, 'markAttendance'])->name('payroll.mark-attendance');
+    Route::post('payroll/salary', [\App\Http\Controllers\PayrollController::class, 'storeSalary'])->name('payroll.store-salary');
+    Route::get('payroll/payslip/{salaryPayment}', [\App\Http\Controllers\PayrollController::class, 'payslip'])->name('payroll.payslip');
+
+    // Vital Records & Medical Certificates
+    Route::get('certificates', [\App\Http\Controllers\CertificateController::class, 'index'])->name('certificates.index');
+    Route::post('certificates/birth', [\App\Http\Controllers\CertificateController::class, 'storeBirth'])->name('certificates.store-birth');
+    Route::post('certificates/death', [\App\Http\Controllers\CertificateController::class, 'storeDeath'])->name('certificates.store-death');
+    Route::post('certificates/medical', [\App\Http\Controllers\CertificateController::class, 'storeMedical'])->name('certificates.store-medical');
+    Route::get('certificates/birth/{record}/print', [\App\Http\Controllers\CertificateController::class, 'printBirth'])->name('certificates.print-birth');
+    Route::get('certificates/death/{record}/print', [\App\Http\Controllers\CertificateController::class, 'printDeath'])->name('certificates.print-death');
+    Route::get('certificates/medical/{certificate}/print', [\App\Http\Controllers\CertificateController::class, 'printMedical'])->name('certificates.print-medical');
     Route::resource('admin-tests', \App\Http\Controllers\TestController::class)->names('tests')->parameters(['admin-tests' => 'test']);
     Route::resource('invoices', \App\Http\Controllers\InvoiceController::class);
     Route::resource('diagnostic-orders', \App\Http\Controllers\DiagnosticOrderController::class);

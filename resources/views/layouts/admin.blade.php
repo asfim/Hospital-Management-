@@ -638,7 +638,59 @@
             <span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span> Dashboard
         </a>
 
-        <div class="nav-label">Modules</div>
+        @can('view appointments')
+            <a href="{{ route('appointments.queue') }}" class="{{ request()->routeIs('appointments.queue') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-tv"></i></span> OPD Live Calling
+            </a>
+        @endcan
+
+        <div class="nav-label">Emergency & IPD</div>
+
+        @can('view emergency')
+            <a href="{{ route('emergency.index') }}" class="{{ request()->routeIs('emergency.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-truck-medical text-danger"></i></span> Emergency (ER)
+            </a>
+        @endcan
+
+        @can('view ipd')
+            <a href="{{ route('admissions.index') }}" class="{{ request()->routeIs('admissions.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-hospital-user text-primary"></i></span> IPD Admissions
+            </a>
+        @endcan
+
+        @can('view beds')
+            <a href="{{ route('beds.matrix') }}" class="{{ request()->routeIs('beds.matrix') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-bed text-success"></i></span> Bed Matrix
+            </a>
+            <a href="{{ route('wards.index') }}" class="{{ request()->routeIs('wards.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-door-open"></i></span> Wards & Cabins
+            </a>
+            <a href="{{ route('beds.index') }}" class="{{ request()->routeIs('beds.index') || request()->routeIs('beds.create') || request()->routeIs('beds.edit') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-bed-pulse"></i></span> Bed Units
+            </a>
+        @endcan
+
+        <div class="nav-label">Clinical Care & OT</div>
+
+        @can('view nursing')
+            <a href="{{ route('nursing.index') }}" class="{{ request()->routeIs('nursing.index') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-user-nurse"></i></span> Nursing Station
+            </a>
+            <a href="{{ route('nursing.mar') }}" class="{{ request()->routeIs('nursing.mar') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-pills text-warning"></i></span> MAR Medication
+            </a>
+            <a href="{{ route('nursing.roster') }}" class="{{ request()->routeIs('nursing.roster') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-calendar-days"></i></span> Nurse Roster
+            </a>
+        @endcan
+
+        @can('view ot')
+            <a href="{{ route('ot.index') }}" class="{{ request()->routeIs('ot.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-syringe text-danger"></i></span> Operation Theatre
+            </a>
+        @endcan
+
+        <div class="nav-label">Outpatient (OPD)</div>
 
         @can('view patients')
             <a href="{{ route('patients.index') }}" class="{{ request()->routeIs('patients.*') ? 'active' : '' }}">
@@ -653,19 +705,56 @@
         @endcan
 
         @can('view appointments')
-            <a href="{{ route('appointments.index') }}" class="{{ request()->routeIs('appointments.*') ? 'active' : '' }}">
+            <a href="{{ route('appointments.index') }}" class="{{ request()->routeIs('appointments.index') || request()->routeIs('appointments.create') || request()->routeIs('appointments.show') || request()->routeIs('appointments.edit') ? 'active' : '' }}">
                 <span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span> Appointments
             </a>
         @endcan
 
         @can('view consultations')
-            <a href="{{ route('consultations.index') }}"
-                class="{{ request()->routeIs('consultations.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-stethoscope"></i></span> OPD Consultations
+            <a href="{{ route('consultations.index') }}" class="{{ request()->routeIs('consultations.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-stethoscope"></i></span> Consultations
             </a>
         @endcan
 
-        <div class="nav-label">Laboratory</div>
+        <div class="nav-label">Pharmacy</div>
+
+        @can('view pharmacy')
+            <a href="{{ route('pharmacy.pos') }}" class="{{ request()->routeIs('pharmacy.pos') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-cash-register text-success"></i></span> Pharmacy POS
+            </a>
+            <a href="{{ route('pharmacy.index') }}" class="{{ request()->routeIs('pharmacy.index') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-prescription-bottle-medical"></i></span> Dispensary
+            </a>
+            <a href="{{ route('pharmacy.medicines') }}" class="{{ request()->routeIs('pharmacy.medicines') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-tablets"></i></span> Medicines List
+            </a>
+            <a href="{{ route('pharmacy.batches') }}" class="{{ request()->routeIs('pharmacy.batches') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-boxes-stacked"></i></span> Batches & Stock
+            </a>
+        @endcan
+
+        <div class="nav-label">Laboratory & Radiology</div>
+
+        @can('view lab orders')
+            <a href="{{ route('samples.index') }}" class="{{ request()->routeIs('samples.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-vial text-info"></i></span> Sample Collection
+            </a>
+            <a href="{{ route('diagnostic-orders.index') }}" class="{{ request()->routeIs('diagnostic-orders.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-vial-circle-check"></i></span> Lab Orders
+            </a>
+        @endcan
+
+        @can('view lab results')
+            <a href="{{ route('test-results.index') }}" class="{{ request()->routeIs('test-results.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-file-medical"></i></span> Lab Results
+            </a>
+        @endcan
+
+        @can('view radiology')
+            <a href="{{ route('radiology.index') }}" class="{{ request()->routeIs('radiology.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-x-ray text-warning"></i></span> Radiology (X-Ray/USG)
+            </a>
+        @endcan
 
         @can('view tests')
             <a href="{{ route('tests.index') }}" class="{{ request()->routeIs('tests.*') ? 'active' : '' }}">
@@ -673,31 +762,40 @@
             </a>
         @endcan
 
-        @can('view lab orders')
-            <a href="{{ route('diagnostic-orders.index') }}"
-                class="{{ request()->routeIs('diagnostic-orders.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-vial-circle-check"></i></span> Lab Orders
+        <div class="nav-label">Logistics & Services</div>
+
+        @can('view blood bank')
+            <a href="{{ route('blood-bank.index') }}" class="{{ request()->routeIs('blood-bank.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-droplet text-danger"></i></span> Blood Bank
             </a>
         @endcan
 
-        @can('view lab results')
-            <a href="{{ route('test-results.index') }}"
-                class="{{ request()->routeIs('test-results.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-file-medical"></i></span> Lab Results
+        @can('view ambulance')
+            <a href="{{ route('ambulance.index') }}" class="{{ request()->routeIs('ambulance.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-van-shuttle text-primary"></i></span> Ambulance Fleet
             </a>
         @endcan
 
-        <div class="nav-label">Finance & Reports</div>
+        @can('view certificates')
+            <a href="{{ route('certificates.index') }}" class="{{ request()->routeIs('certificates.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-stamp text-secondary"></i></span> Vital Certificates
+            </a>
+        @endcan
+
+        <div class="nav-label">Finance & Accounts</div>
 
         @can('view billing')
             <a href="{{ route('invoices.index') }}" class="{{ request()->routeIs('invoices.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span> Billing
+                <span class="nav-icon"><i class="fa-solid fa-file-invoice-dollar text-success"></i></span> Billing & Invoices
             </a>
         @endcan
 
         @can('view accounts')
+            <a href="{{ route('expenses.index') }}" class="{{ request()->routeIs('expenses.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-receipt text-danger"></i></span> Operating Expenses
+            </a>
             <a href="{{ route('accounts.index') }}" class="{{ request()->routeIs('accounts.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-wallet"></i></span> Accounts
+                <span class="nav-icon"><i class="fa-solid fa-scale-balanced text-primary"></i></span> Accounts Ledger
             </a>
         @endcan
 
@@ -707,22 +805,21 @@
                 <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span> Reports
             </a>
             <div class="collapse {{ request()->routeIs('reports.*') ? 'show' : '' }}" id="reportsMenu">
-                <a href="{{ route('reports.account') }}"
-                    class="{{ request()->routeIs('reports.account') ? 'text-info' : '' }}">Account Report</a>
-                <a href="{{ route('reports.patient') }}"
-                    class="{{ request()->routeIs('reports.patient') ? 'text-info' : '' }}">Patient Report</a>
-                <a href="{{ route('reports.doctor') }}"
-                    class="{{ request()->routeIs('reports.doctor') ? 'text-info' : '' }}">Doctor Report</a>
-                <a href="{{ route('reports.labOrder') }}"
-                    class="{{ request()->routeIs('reports.labOrder') ? 'text-info' : '' }}">Lab Order Report</a>
+                <a href="{{ route('reports.account') }}" class="{{ request()->routeIs('reports.account') ? 'text-info' : '' }}">Account Report</a>
+                <a href="{{ route('reports.patient') }}" class="{{ request()->routeIs('reports.patient') ? 'text-info' : '' }}">Patient Report</a>
+                <a href="{{ route('reports.doctor') }}" class="{{ request()->routeIs('reports.doctor') ? 'text-info' : '' }}">Doctor Report</a>
+                <a href="{{ route('reports.labOrder') }}" class="{{ request()->routeIs('reports.labOrder') ? 'text-info' : '' }}">Lab Order Report</a>
             </div>
         @endcan
 
-        <div class="nav-label">Administration</div>
+        <div class="nav-label">HR & Administration</div>
 
         @can('view staff')
             <a href="{{ route('staff.index') }}" class="{{ request()->routeIs('staff.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-user-tie"></i></span> Staff
+                <span class="nav-icon"><i class="fa-solid fa-user-tie"></i></span> Staff Directory
+            </a>
+            <a href="{{ route('payroll.index') }}" class="{{ request()->routeIs('payroll.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-money-check-dollar"></i></span> Attendance & Payroll
             </a>
         @endcan
 
@@ -730,47 +827,20 @@
             <a href="{{ route('roles.index') }}" class="{{ request()->routeIs('roles.*') ? 'active' : '' }}">
                 <span class="nav-icon"><i class="fa-solid fa-user-shield"></i></span> Roles & Permissions
             </a>
+            <a href="{{ route('branches.index') }}" class="{{ request()->routeIs('branches.*') ? 'active' : '' }}">
+                <span class="nav-icon"><i class="fa-solid fa-building"></i></span> Hospital Branches
+            </a>
             <a href="{{ route('cms.index') }}" class="{{ request()->routeIs('cms.*') ? 'active' : '' }}">
                 <span class="nav-icon"><i class="fa-solid fa-desktop"></i></span> Frontend CMS
             </a>
-            <a href="{{ route('about-page.index') }}" class="{{ request()->routeIs('about-page.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-circle-info"></i></span> About Page
-            </a>
-            <a href="{{ route('branches.index') }}" class="{{ request()->routeIs('branches.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-building"></i></span> Branches
-            </a>
-            <a href="{{ route('testimonials.index') }}" class="{{ request()->routeIs('testimonials.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-comments"></i></span> Testimonials
-            </a>
-            <a href="{{ route('blogs.index') }}" class="{{ request()->routeIs('blogs.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-newspaper"></i></span> Blogs
-            </a>
-            <a href="{{ route('admin-packages.index') }}" class="{{ request()->routeIs('admin-packages.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-box-open"></i></span> Packages
-            </a>
-            <a href="{{ route('home-collection-page.index') }}" class="{{ request()->routeIs('home-collection-page.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-house-medical"></i></span> Home Collection Page
-            </a>
             <a href="{{ route('home-collection-requests.index') }}" class="{{ request()->routeIs('home-collection-requests.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-truck-medical"></i></span> Booking Requests
-            </a>
-            <a href="{{ route('pricing-page.index') }}" class="{{ request()->routeIs('pricing-page.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-tags"></i></span> Pricing Page
-            </a>
-            <a href="{{ route('faqs.index') }}" class="{{ request()->routeIs('faqs.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-circle-question"></i></span> FAQs
-            </a>
-            <a href="{{ route('contact-page.index') }}" class="{{ request()->routeIs('contact-page.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-address-card"></i></span> Contact Page
+                <span class="nav-icon"><i class="fa-solid fa-house-medical"></i></span> Booking Requests
             </a>
             <a href="{{ route('contact-messages.index') }}" class="{{ request()->routeIs('contact-messages.*') ? 'active' : '' }}">
                 <span class="nav-icon"><i class="fa-solid fa-inbox"></i></span> Contact Messages
             </a>
             <a href="{{ route('settings.index') }}" class="{{ request()->routeIs('settings.*') ? 'active' : '' }}">
                 <span class="nav-icon"><i class="fa-solid fa-gear"></i></span> Settings
-            </a>
-            <a href="{{ route('footer-settings.index') }}" class="{{ request()->routeIs('footer-settings.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-window-maximize"></i></span> Footer Settings
             </a>
         @endcan
 
