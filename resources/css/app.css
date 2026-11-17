@@ -10,15 +10,20 @@
    CSS Variables / Tokens
    ====================== */
 :root {
-    --primary:        #0b5ed7;
-    --primary-dark:   #094eb3;
-    --secondary:      #20c997;
-    --secondary-dark: #1aa179;
-    --dark:           #1a1d20;
-    --dark-medium:    #212529;
-    --light-bg:       #f4f7f6;
-    --text-muted:     #6c757d;
+    --primary:        #142D4E;
+    --primary-dark:   #0f223c;
+    --secondary:      #0D9488;
+    --secondary-dark: #0f766e;
+    --dark:           #142D4E;
+    --dark-medium:    #1E293B;
+    --light-bg:       #F4F7FA;
+    --text-muted:     #64748B;
     --white:          #ffffff;
+    --border:         #E2E8F0;
+    --success:        #16A34A;
+    --warning:        #F59E0B;
+    --danger:         #DC2626;
+    --info:           #0284C7;
 
     --shadow-sm:   0 .125rem .25rem rgba(0,0,0,.075);
     --shadow-md:   0 .5rem 1rem rgba(0,0,0,.15);

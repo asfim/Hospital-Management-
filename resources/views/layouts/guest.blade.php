@@ -39,7 +39,7 @@
             display: flex;
         }
         .auth-left {
-            background: linear-gradient(135deg, #0b5ed7 0%, #20c997 100%);
+            background: linear-gradient(135deg, #142D4E 0%, #0d1e34 50%, #0D9488 100%);
             padding: 3rem;
             color: #fff;
             display: flex;
@@ -52,8 +52,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>') center/cover;
-            opacity: 0.5;
+            background: radial-gradient(circle, rgba(45, 212, 191, 0.15) 0%, transparent 70%);
             pointer-events: none;
         }
         .auth-right {
@@ -80,26 +79,26 @@
             padding: 0.75rem 1rem;
             border-radius: 0.5rem;
             background: #f8f9fa;
-            border: 1px solid #e9ecef;
+            border: 1px solid #e2e8f0;
         }
         .form-control:focus {
-            box-shadow: none;
-            border-color: #0b5ed7;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+            border-color: #0D9488;
             background: #fff;
         }
         .btn-auth {
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
             font-weight: 600;
-            background: #0b5ed7;
+            background: #142D4E;
             color: #fff;
             border: none;
             transition: all 0.3s;
         }
         .btn-auth:hover {
-            background: #0a53be;
+            background: #0D9488;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(11,94,215,0.2);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.35);
         }
         @media (max-width: 768px) {
             .auth-card { flex-direction: column; }
@@ -112,20 +111,30 @@
 <body>
 
     <div class="auth-card">
-        <!-- Left Side: Branding -->
+        <!-- Left Side: Hospital Branding -->
         <div class="auth-left">
             <a href="{{ url('/') }}" class="auth-logo">
                 @if(!empty($siteSettings['site_logo']))
                     <img src="{{ asset('storage/' . $siteSettings['site_logo']) }}" alt="Logo">
                 @else
-                    <i class="bi bi-heart-pulse-fill"></i>
+                    <i class="bi bi-hospital-fill text-teal" style="color: #2dd4bf;"></i>
                 @endif
-                {{ $siteSettings['site_name'] ?? 'MediDiag' }}
+                {{ $siteSettings['site_name'] ?? 'Dhaka Central Hospital' }}
             </a>
-            <h2 class="fw-bold mb-3" style="position:relative; z-index:2;">Welcome to the Portal</h2>
-            <p style="opacity: 0.9; position:relative; z-index:2; line-height: 1.6;">
-                Secure access to your diagnostic management system. Please login with your authorized credentials to continue.
+            <h2 class="fw-bold mb-3 text-white" style="position:relative; z-index:2;">Hospital ERP Portal</h2>
+            <p style="opacity: 0.9; position:relative; z-index:2; line-height: 1.6; color: #cbd5e1;">
+                Authorized clinical workspace for physicians, nursing staff, emergency intake, laboratory specialists, pharmacists, and hospital administrators.
             </p>
+            <div class="mt-4 pt-3 border-top border-white border-opacity-15 position-relative" style="z-index: 2;">
+                <div class="d-flex align-items-center gap-2 mb-2 text-white-50 small">
+                    <i class="bi bi-shield-check text-success" style="color: #4ade80 !important;"></i>
+                    <span>Secure Healthcare Audit & Role-based Access</span>
+                </div>
+                <div class="d-flex align-items-center gap-2 text-white-50 small">
+                    <i class="bi bi-clock-history" style="color: #2dd4bf !important;"></i>
+                    <span>24/7 Real-time Emergency & Bed Management</span>
+                </div>
+            </div>
         </div>
 
         <!-- Right Side: Form -->

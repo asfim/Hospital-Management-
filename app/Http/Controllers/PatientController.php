@@ -9,9 +9,18 @@ use Illuminate\Support\Str;
 
 class PatientController extends Controller
 {
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        $patients = Patient::latest()->paginate(10);
+        $query = Patient::query();
+        if ($search = $request->input('search')) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('patient_id', 'like', "%{$search}%")
+                  ->orWhere('mobile', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%");
+            });
+        }
+        $patients = $query->latest()->paginate(10)->withQueryString();
         return view('patients.index', compact('patients'));
     }
 

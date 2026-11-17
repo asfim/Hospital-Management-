@@ -469,81 +469,104 @@
 </section>
 
 {{-- ============================================================
-     PATIENT REVIEWS & TESTIMONIALS
+     PATIENT REVIEWS & TESTIMONIALS (LIVE CAROUSEL)
      ============================================================ --}}
-<section class="section-padding py-5 bg-gradient-navy text-white" style="background: linear-gradient(135deg, #091427 0%, #0f1f38 100%);">
+<section class="section-padding py-5 bg-gradient-navy text-white position-relative" style="background: linear-gradient(135deg, #091427 0%, #0f1f38 100%);">
     <div class="container py-4">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <span class="badge bg-teal bg-opacity-25 text-teal px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2" style="color: #2dd4bf; letter-spacing: 0.5px;">
-                <i class="fa-solid fa-heart-pulse me-1"></i> Patient Experiences & Stories
-            </span>
-            <h2 class="fw-bold text-white mb-2">What Our Patients Say</h2>
-            <p class="text-white-50 mx-auto" style="max-width: 680px; font-size: 1.05rem;">
-                Real experiences from patients and families who trusted our specialized doctors, critical care units, inpatient cabins, and automated diagnostic laboratories.
-            </p>
+        {{-- Section Header with Live Badge and Carousel Controls --}}
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3" data-aos="fade-up">
+            <div class="text-center text-md-start">
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2" style="background: rgba(45, 212, 191, 0.15); border: 1px solid rgba(45, 212, 191, 0.3);">
+                    <span class="pulse-indicator"></span>
+                    <span class="text-teal small fw-bold text-uppercase" style="color: #2dd4bf !important; letter-spacing: 0.5px;">Live Patient Experiences</span>
+                </div>
+                <h2 class="fw-bold text-white mb-2">What Our Patients Say</h2>
+                <p class="text-white-50 mb-0" style="max-width: 640px; font-size: 1.05rem;">
+                    Real experiences from patients and families who trusted our specialized doctors, critical care units, inpatient cabins, and automated diagnostic laboratories.
+                </p>
+            </div>
+
+            {{-- Carousel Navigation Controls --}}
+            <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                <button type="button" class="testimonial-ctrl-btn testimonial-prev-btn" aria-label="Previous Testimonial" title="Previous Review">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button type="button" class="testimonial-ctrl-btn testimonial-play-btn" id="testimonialPlayPauseBtn" aria-label="Pause or Play Auto-scroll" title="Pause / Play Live Auto-scroll">
+                    <i class="fa-solid fa-pause" id="carouselPlayPauseIcon"></i>
+                </button>
+                <button type="button" class="testimonial-ctrl-btn testimonial-next-btn" aria-label="Next Testimonial" title="Next Review">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
         </div>
 
         @if($testimonials->isNotEmpty())
-        <div class="row g-4 justify-content-center">
-            @foreach($testimonials->sortBy('id') as $testimonial)
-            <div class="col-lg-4 col-md-6" data-aos="fade-up">
-                <div class="testimonial-card-premium p-4 rounded-4 h-100 d-flex flex-column justify-content-between position-relative overflow-hidden" 
-                     style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);">
-                    <div>
-                        {{-- Top Row: Stars + Verified Badge --}}
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="text-warning">
-                                @for($star = 1; $star <= 5; $star++)
-                                    <i class="fa-solid fa-star {{ $star <= $testimonial->rating ? 'text-warning' : 'text-secondary' }} small"></i>
-                                @endfor
-                            </div>
-                            <span class="badge bg-success bg-opacity-20 text-white border border-success border-opacity-30 rounded-pill px-2.5 py-1 small" style="font-size: 0.72rem; color: #86efac !important;">
-                                <i class="fa-solid fa-circle-check text-success me-1"></i>Verified Patient
-                            </span>
-                        </div>
-
-                        {{-- Decorative Quote Icon --}}
-                        <div class="mb-2">
-                            <i class="fa-solid fa-quote-left fa-2x" style="color: #2dd4bf; opacity: 0.35;"></i>
-                        </div>
-
-                        {{-- Review Text --}}
-                        <p class="text-light fst-italic mb-4" style="line-height: 1.75; font-size: 0.95rem; color: #e2e8f0 !important;">
-                            &ldquo;{{ $testimonial->review }}&rdquo;
-                        </p>
-                    </div>
-
-                    {{-- Patient Profile Footer --}}
-                    <div class="d-flex align-items-center gap-3 pt-3 border-top border-white border-opacity-15">
-                        @if(!empty($testimonial->photo))
-                            <img src="{{ asset('storage/' . $testimonial->photo) }}" 
-                                 alt="{{ $testimonial->name }}" 
-                                 class="rounded-circle object-fit-cover shadow-sm border border-2 flex-shrink-0" 
-                                 style="width: 48px; height: 48px; border-color: #2dd4bf !important;"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="rounded-circle text-white fw-bold align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; background: linear-gradient(135deg, #0d9488, #14b8a6); display: none;">
-                                {{ strtoupper(substr($testimonial->name, 0, 1)) }}
-                            </div>
-                        @else
-                            <div class="rounded-circle text-white fw-bold d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; background: linear-gradient(135deg, #0d9488, #14b8a6);">
-                                {{ strtoupper(substr($testimonial->name, 0, 1)) }}
-                            </div>
-                        @endif
+        {{-- Swiper Live Carousel Container --}}
+        <div class="swiper testimonialSwiper position-relative" data-aos="fade-up" data-aos-delay="100">
+            <div class="swiper-wrapper py-2">
+                @foreach($testimonials as $testimonial)
+                <div class="swiper-slide h-auto">
+                    <div class="testimonial-card-premium p-4 rounded-4 h-100 d-flex flex-column justify-content-between position-relative overflow-hidden w-100" 
+                         style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);">
                         <div>
-                            <h6 class="fw-bold text-white mb-0" style="font-size: 1rem;">{{ $testimonial->name }}</h6>
-                            <small class="text-white-50 d-flex align-items-center gap-1 mt-0.5">
-                                <i class="fa-solid fa-location-dot small" style="color: #2dd4bf;"></i>
-                                {{ $testimonial->location ?? 'Dhaka, Bangladesh' }}
-                            </small>
+                            {{-- Top Row: Stars + Verified Badge --}}
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="text-warning">
+                                    @for($star = 1; $star <= 5; $star++)
+                                        <i class="fa-solid fa-star {{ $star <= $testimonial->rating ? 'text-warning' : 'text-secondary' }} small"></i>
+                                    @endfor
+                                </div>
+                                <span class="badge bg-success bg-opacity-20 text-white border border-success border-opacity-30 rounded-pill px-2.5 py-1 small" style="font-size: 0.72rem; color: #86efac !important;">
+                                    <i class="fa-solid fa-circle-check text-success me-1"></i>Verified Patient
+                                </span>
+                            </div>
+
+                            {{-- Decorative Quote Icon --}}
+                            <div class="mb-2">
+                                <i class="fa-solid fa-quote-left fa-2x" style="color: #2dd4bf; opacity: 0.35;"></i>
+                            </div>
+
+                            {{-- Review Text --}}
+                            <p class="text-light fst-italic mb-4" style="line-height: 1.75; font-size: 0.95rem; color: #e2e8f0 !important;">
+                                &ldquo;{{ $testimonial->review }}&rdquo;
+                            </p>
+                        </div>
+
+                        {{-- Patient Profile Footer --}}
+                        <div class="d-flex align-items-center gap-3 pt-3 border-top border-white border-opacity-15">
+                            @if(!empty($testimonial->photo))
+                                <img src="{{ asset('storage/' . $testimonial->photo) }}" 
+                                     alt="{{ $testimonial->name }}" 
+                                     class="rounded-circle object-fit-cover shadow-sm border border-2 flex-shrink-0" 
+                                     style="width: 48px; height: 48px; border-color: #2dd4bf !important;"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="rounded-circle text-white fw-bold align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; background: linear-gradient(135deg, #0d9488, #14b8a6); display: none;">
+                                    {{ strtoupper(substr($testimonial->name, 0, 1)) }}
+                                </div>
+                            @else
+                                <div class="rounded-circle text-white fw-bold d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; background: linear-gradient(135deg, #0d9488, #14b8a6);">
+                                    {{ strtoupper(substr($testimonial->name, 0, 1)) }}
+                                </div>
+                            @endif
+                            <div>
+                                <h6 class="fw-bold text-white mb-0" style="font-size: 1rem;">{{ $testimonial->name }}</h6>
+                                <small class="text-white-50 d-flex align-items-center gap-1 mt-0.5">
+                                    <i class="fa-solid fa-location-dot small" style="color: #2dd4bf;"></i>
+                                    {{ $testimonial->location ?? 'Dhaka, Bangladesh' }}
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
+
+            {{-- Live Carousel Pagination Bullets --}}
+            <div class="swiper-pagination testimonial-pagination position-relative mt-4"></div>
         </div>
 
         {{-- Hospital Trust & Patient Satisfaction Metrics --}}
-        <div class="mt-5 p-4 rounded-4" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);" data-aos="fade-up">
+        <div class="mt-4 p-4 rounded-4" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);" data-aos="fade-up">
             <div class="row g-4 text-center align-items-center">
                 <div class="col-6 col-md-3 border-end border-white border-opacity-10">
                     <div class="d-flex align-items-center justify-content-center gap-1 mb-1">
@@ -631,8 +654,8 @@
 @php
     $waNumber = \App\Models\Setting::get('site_whatsapp', '8801711000000');
 @endphp
-<a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $waNumber) }}" class="floating-wa-btn d-flex align-items-center justify-content-center shadow-lg" title="Live WhatsApp Chat" target="_blank" style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #25d366; color: #fff; border-radius: 50%; font-size: 2rem; z-index: 999; transition: all 0.3s ease;">
-    <i class="fa-brands fa-whatsapp"></i>
+<a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $waNumber) }}" class="floating-wa-btn d-flex align-items-center justify-content-center shadow-lg text-decoration-none" title="Live WhatsApp Chat" target="_blank" style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #25d366; color: #fff; border-radius: 50%; font-size: 2rem; z-index: 999; transition: all 0.3s ease; text-decoration: none !important;">
+    <i class="fa-brands fa-whatsapp text-white" style="text-decoration: none !important; line-height: 1;"></i>
 </a>
 
 {{-- Mobile Sticky Bottom Action Bar --}}
@@ -706,8 +729,23 @@
     box-shadow: 0 20px 35px rgba(15, 23, 42, 0.09) !important;
 }
 
+.floating-wa-btn {
+    text-decoration: none !important;
+}
+.floating-wa-btn:hover,
+.floating-wa-btn:focus,
+.floating-wa-btn:active,
+.floating-wa-btn:visited {
+    text-decoration: none !important;
+    color: #fff !important;
+    outline: none !important;
+}
+.floating-wa-btn i {
+    text-decoration: none !important;
+}
 .floating-wa-btn:hover {
     transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 28px rgba(37, 211, 102, 0.45) !important;
 }
 
 .hover-primary:hover {
@@ -723,7 +761,138 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45) !important;
     border-color: rgba(45, 212, 191, 0.45) !important;
 }
+
+/* Swiper Live Carousel Styles */
+.testimonialSwiper {
+    width: 100%;
+    padding: 10px 4px 35px 4px !important;
+    overflow: hidden;
+}
+.testimonialSwiper .swiper-slide {
+    height: auto !important;
+    display: flex;
+}
+.testimonialSwiper .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.35);
+    opacity: 1;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    margin: 0 5px !important;
+}
+.testimonialSwiper .swiper-pagination-bullet-active {
+    width: 30px;
+    background: #2dd4bf !important;
+    box-shadow: 0 0 12px rgba(45, 212, 191, 0.7);
+    border-radius: 6px;
+}
+.testimonial-ctrl-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+}
+.testimonial-ctrl-btn:hover {
+    background: #0d9488 !important;
+    border-color: #2dd4bf !important;
+    color: #fff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(13, 148, 136, 0.4);
+}
+.testimonial-ctrl-btn:active {
+    transform: translateY(0);
+}
+.testimonial-play-btn {
+    color: #2dd4bf;
+    border-color: rgba(45, 212, 191, 0.35);
+    background: rgba(13, 148, 136, 0.15);
+}
+.testimonial-play-btn:hover {
+    background: rgba(45, 212, 191, 0.3) !important;
+    color: #fff !important;
+}
 </style>
+<link rel="stylesheet" href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof Swiper !== 'undefined') {
+        const testimonialSwiper = new Swiper('.testimonialSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 24,
+            loop: true,
+            speed: 700,
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+            },
+            pagination: {
+                el: '.testimonial-pagination',
+                clickable: true,
+                dynamicBullets: true,
+            },
+            navigation: {
+                nextEl: '.testimonial-next-btn',
+                prevEl: '.testimonial-prev-btn',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 24,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 28,
+                },
+            },
+        });
+
+        // Live Auto-scroll Play / Pause Toggle Button
+        const playPauseBtn = document.getElementById('testimonialPlayPauseBtn');
+        const playPauseIcon = document.getElementById('carouselPlayPauseIcon');
+        let isPlaying = true;
+
+        if (playPauseBtn && playPauseIcon) {
+            playPauseBtn.addEventListener('click', function () {
+                if (isPlaying) {
+                    testimonialSwiper.autoplay.stop();
+                    playPauseIcon.classList.remove('fa-pause');
+                    playPauseIcon.classList.add('fa-play');
+                    playPauseBtn.setAttribute('title', 'Resume Live Auto-scroll');
+                    playPauseBtn.classList.remove('testimonial-play-btn');
+                    playPauseBtn.style.color = '#fff';
+                    isPlaying = false;
+                } else {
+                    testimonialSwiper.autoplay.start();
+                    playPauseIcon.classList.remove('fa-play');
+                    playPauseIcon.classList.add('fa-pause');
+                    playPauseBtn.setAttribute('title', 'Pause Live Auto-scroll');
+                    playPauseBtn.classList.add('testimonial-play-btn');
+                    playPauseBtn.style.color = '#2dd4bf';
+                    isPlaying = true;
+                }
+            });
+        }
+    }
+});
+</script>
 @endpush
 
 @endsection

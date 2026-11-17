@@ -1,11 +1,16 @@
 :root {
-    /* Brand Colors */
-    --primary-color: #0b5ed7; /* Modern Medical Blue */
-    --secondary-color: #20c997; /* Teal / Health */
-    --dark-color: #212529;
-    --light-color: #f8f9fa;
-    --text-muted: #6c757d;
+    /* Brand Colors - Hospital Management ERP Palette */
+    --primary-color: #142D4E;   /* Deep Navy */
+    --secondary-color: #0D9488; /* Medical Teal */
+    --dark-color: #1E293B;
+    --light-color: #F4F7FA;
+    --text-muted: #64748B;
     --white: #ffffff;
+    --border-color: #E2E8F0;
+    --success-color: #16A34A;
+    --warning-color: #F59E0B;
+    --danger-color: #DC2626;
+    --info-color: #0284C7;
     
     /* Typography */
     --font-primary: 'Inter', sans-serif;

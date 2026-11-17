@@ -76,6 +76,7 @@ Route::middleware('auth')->group(function () {
 
     // Wards, Cabins & Beds Management
     Route::resource('wards', \App\Http\Controllers\WardController::class);
+    Route::get('beds/matrix', [\App\Http\Controllers\BedController::class, 'matrix']);
     Route::get('beds-matrix', [\App\Http\Controllers\BedController::class, 'matrix'])->name('beds.matrix');
     Route::patch('beds/{bed}/status', [\App\Http\Controllers\BedController::class, 'updateStatus'])->name('beds.updateStatus');
     Route::resource('beds', \App\Http\Controllers\BedController::class);
@@ -106,6 +107,7 @@ Route::middleware('auth')->group(function () {
     Route::post('pharmacy/batches', [\App\Http\Controllers\PharmacyController::class, 'storeBatch'])->name('pharmacy.batches.store');
     Route::get('pharmacy/pos', [\App\Http\Controllers\PharmacyController::class, 'pos'])->name('pharmacy.pos');
     Route::post('pharmacy/pos/checkout', [\App\Http\Controllers\PharmacyController::class, 'checkout'])->name('pharmacy.pos.checkout');
+    Route::post('pharmacy/store-sale', [\App\Http\Controllers\PharmacyController::class, 'storeSale'])->name('pharmacy.storeSale');
     Route::get('pharmacy/sales/{sale}/print', [\App\Http\Controllers\PharmacyController::class, 'printSale'])->name('pharmacy.print');
 
     // Laboratory Pathology Samples

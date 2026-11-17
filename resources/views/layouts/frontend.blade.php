@@ -36,6 +36,9 @@
             font-family: 'Plus Jakarta Sans', sans-serif !important;
             color: #0f172a;
         }
+        .floating-wa-btn, .floating-wa-btn:hover, .floating-wa-btn:focus, .floating-wa-btn:active, .floating-wa-btn i {
+            text-decoration: none !important;
+        }
     </style>
 
     <!-- Custom CSS (via Vite) -->

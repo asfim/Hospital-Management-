@@ -4,939 +4,596 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard') - {{ config('app.name', 'Diagnostic ERP') }}</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title', 'Hospital Executive Dashboard') - {{ config('app.name', 'Dhaka Central Hospital') }}</title>
+
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome 6.4 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --primary: #4e73df;
-            --primary-dark: #2e59d9;
-            --secondary: #858796;
-            --success: #1cc88a;
-            --info: #36b9cc;
-            --warning: #f6c23e;
-            --danger: #e74a3b;
-            --dark: #1a2035;
-            --light: #f8f9fc;
-            --sidebar-bg: #1e293b;
-            --sidebar-hover: #334155;
-            --sidebar-text: #e2e8f0;
-            --card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-        }
+    <!-- Core Hospital Management ERP Design System -->
+    <link rel="stylesheet" href="{{ asset('css/hospital-erp.css') }}">
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9;
-            color: #334155;
-            overflow-x: hidden;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            width: 265px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-            color: #e2e8f0;
-            padding-top: 0;
-            z-index: 1000;
-            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
-            transition: all 0.3s;
-            overflow-y: auto;
-            scrollbar-gutter: stable;
-        }
-
-        .sidebar .collapsing {
-            transition: none !important;
-        }
-
-        .sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .sidebar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-        }
-
-        /* Brand / Logo */
-        .sidebar .brand {
-            padding: 24px 20px 20px;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(78,115,223,0.25) 0%, rgba(37,99,235,0.1) 100%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            margin-bottom: 10px;
-            position: relative;
-        }
-        .sidebar .brand::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 20%; right: 20%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(99,179,237,0.4), transparent);
-        }
-        .sidebar .brand .brand-icon {
-            width: 48px; height: 48px;
-            background: linear-gradient(135deg, #4e73df, #2563eb);
-            border-radius: 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 15px rgba(78,115,223,0.45);
-        }
-        .sidebar .brand h4 {
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 0.5px;
-            margin: 0;
-            font-size: 1rem;
-        }
-        .sidebar .brand p {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.45);
-            margin: 0;
-            letter-spacing: 1px;
-        }
-
-        /* Section Labels */
-        .sidebar .nav-label {
-            padding: 16px 20px 6px;
-            font-size: 0.62rem;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            color: rgba(255,255,255,0.3);
-            text-transform: uppercase;
-        }
-
-        /* Nav Links */
-        .sidebar a {
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            color: rgba(226, 232, 240, 0.75);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.875rem;
-            margin: 2px 12px;
-            border-radius: 10px;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .sidebar a .nav-icon {
-            width: 34px; height: 34px;
-            border-radius: 9px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            margin-right: 10px;
-            background: rgba(255,255,255,0.05);
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-        }
-
-        .sidebar a:hover {
-            background: rgba(255, 255, 255, 0.07);
-            color: #fff;
-        }
-
-        .sidebar a:hover .nav-icon {
-            background: rgba(78, 115, 223, 0.25);
-            color: #93c5fd;
-        }
-
-        .sidebar a.active {
-            background: linear-gradient(135deg, rgba(78,115,223,0.35) 0%, rgba(37,99,235,0.2) 100%);
-            color: #fff;
-            border: 1px solid rgba(78,115,223,0.3);
-        }
-
-        .sidebar a.active .nav-icon {
-            background: linear-gradient(135deg, #4e73df, #2563eb);
-            color: #fff;
-            box-shadow: 0 3px 10px rgba(78,115,223,0.45);
-        }
-
-        /* Sidebar Dropdown */
-        .sidebar .collapse {
-            background: rgba(0, 0, 0, 0.15);
-            margin: 0 12px;
-            border-radius: 10px;
-        }
-
-        .sidebar .collapse a {
-            padding: 8px 12px 8px 50px;
-            margin: 1px 0;
-            font-size: 0.82rem;
-            font-weight: 400;
-            border-radius: 0;
-            color: rgba(226, 232, 240, 0.6);
-        }
-
-        .sidebar .collapse a::before {
-            content: '';
-            width: 5px; height: 5px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.25);
-            display: inline-block;
-            margin-right: 10px;
-            margin-left: -15px;
-            flex-shrink: 0;
-        }
-
-        .sidebar .collapse a:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-        }
-        .sidebar .collapse a:hover::before {
-            background: #4e73df;
-        }
-
-        .sidebar .collapse a.text-info {
-            color: #93c5fd !important;
-            background: rgba(78,115,223,0.1);
-        }
-        .sidebar .collapse a.text-info::before {
-            background: #4e73df;
-        }
-
-        .dropdown-toggle::after {
-            margin-left: auto;
-            opacity: 0.5;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 260px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s;
-        }
-
-        /* Top Navbar */
-        .top-navbar {
-            background: #fff;
-            padding: 15px 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
-
-        .top-navbar .page-title {
-            margin: 0;
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 1.25rem;
-        }
-
-        .top-navbar .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .top-navbar .user-profile img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary);
-            padding: 2px;
-        }
-
-        .content-body {
-            padding: 30px;
-            flex-grow: 1;
-        }
-
-        /* Global UI Overrides */
-        .card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            margin-bottom: 25px;
-        }
-
-        .card-header {
-            background-color: #fff;
-            border-bottom: 1px solid #e3e6f0;
-            padding: 1.25rem 1.5rem;
-            border-radius: 12px 12px 0 0 !important;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .btn {
-            border-radius: 8px;
-            font-weight: 500;
-            padding: 0.5rem 1.25rem;
-            transition: all 0.2s;
-        }
-
-        .btn-sm {
-            padding: 0.35rem 0.75rem;
-            border-radius: 6px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            border-color: var(--primary);
-            box-shadow: 0 3px 8px rgba(78, 115, 223, 0.3);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(78, 115, 223, 0.4);
-        }
-
-        /* Table Styling */
-        .table {
-            color: #475569;
-        }
-
-        .table> :not(caption)>*>* {
-            padding: 1rem 1.25rem;
-            border-bottom-color: #e2e8f0;
-        }
-
-        .table-dark {
-            background-color: var(--primary);
-            color: #fff;
-            border-bottom: 2px solid var(--primary-dark);
-        }
-
-        .table-dark th {
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
-            color: #ffffff;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: #f1f5f9;
-        }
-
-        .table-bordered {
-            border: 1px solid #e2e8f0;
-        }
-
-        /* Badges */
-        .badge {
-            padding: 0.4em 0.8em;
-            border-radius: 6px;
-            font-weight: 500;
-        }
-
-        /* Form Inputs */
-        .form-control,
-        .form-select {
-            border-radius: 8px;
-            border: 1px solid #cbd5e1;
-            padding: 0.6rem 1rem;
-            font-size: 0.95rem;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.15);
-        }
-
-        .form-label {
-            font-weight: 500;
-            color: #475569;
-            margin-bottom: 0.4rem;
-        }
-
-        /* --- Premium UI Classes --- */
-        .page-header-premium {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
-            border-radius: 16px;
-            padding: 28px 32px;
-            margin-bottom: 28px;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        .page-header-premium::before {
-            content: '';
-            position: absolute;
-            top: -40px; right: -40px;
-            width: 180px; height: 180px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.07);
-        }
-        .page-header-premium::after {
-            content: '';
-            position: absolute;
-            bottom: -60px; left: 30%;
-            width: 280px; height: 180px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-        }
-        .page-header-premium h4 { font-weight: 700; font-size: 1.5rem; margin-bottom: 4px; }
-        .page-header-premium p { opacity: 0.75; margin: 0; font-size: 0.9rem; }
-
-        .btn-premium-new {
-            background: rgba(255,255,255,0.15);
-            border: 1.5px solid rgba(255,255,255,0.35);
-            color: #fff;
-            backdrop-filter: blur(6px);
-            border-radius: 10px;
-            padding: 10px 22px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            position: relative;
-            z-index: 1;
-        }
-        .btn-premium-new:hover {
-            background: #fff;
-            color: #2563eb;
-            border-color: #fff;
-        }
-
-        .card-premium {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-            overflow: hidden;
-        }
-
-        .table-premium thead th {
-            background: #f8fafd;
-            color: #64748b;
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.7px;
-            border-bottom: 2px solid #e9eef6;
-            padding: 14px 16px;
-            white-space: nowrap;
-        }
-        .table-premium tbody tr {
-            transition: background 0.15s ease;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .table-premium tbody tr:last-child { border-bottom: none; }
-        .table-premium tbody tr:hover { background: #f8fafd; }
-        .table-premium tbody td {
-            padding: 13px 16px;
-            vertical-align: middle;
-            font-size: 0.875rem;
-            color: #334155;
-        }
-
-        .id-badge {
-            font-family: 'Courier New', monospace;
-            font-weight: 700;
-            background: #eef2ff;
-            color: #4f46e5;
-            border-radius: 6px;
-            padding: 3px 10px;
-            font-size: 0.78rem;
-            letter-spacing: 0.3px;
-        }
-        
-        .status-pill {
-            border-radius: 9px;
-            padding: 4px 12px;
-            font-size: 0.74rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .status-dropdown {
-            border-radius: 9px !important;
-            padding: 4px 30px 4px 12px !important;
-            font-size: 0.78rem !important;
-            font-weight: 700 !important;
-            height: auto !important;
-            width: auto !important;
-            min-width: 100px;
-        }
-        .pill-success  { background: #dcfce7; color: #15803d; }
-        .pill-warning  { background: #fef9c3; color: #92400e; }
-        .pill-danger   { background: #fee2e2; color: #b91c1c; }
-        .pill-primary  { background: #dbeafe; color: #1d4ed8; }
-        .pill-secondary{ background: #f1f5f9; color: #475569; }
-
-        .action-btn {
-            width: 32px; height: 32px;
-            border-radius: 8px;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            transition: all 0.18s ease;
-            cursor: pointer;
-        }
-        .action-btn:hover { transform: translateY(-1px); }
-        .action-btn-view  { background: #eff6ff; color: #2563eb; }
-        .action-btn-view:hover  { background: #2563eb; color: #fff; }
-        .action-btn-edit  { background: #fffbeb; color: #d97706; }
-        .action-btn-edit:hover  { background: #f59e0b; color: #fff; }
-        .action-btn-del   { background: #fff1f2; color: #e11d48; }
-        .action-btn-del:hover   { background: #e11d48; color: #fff; }
-
-        .empty-state {
-            padding: 60px 20px;
-            text-align: center;
-            color: #94a3b8;
-        }
-        .empty-state i { font-size: 3rem; margin-bottom: 16px; opacity: 0.4; display: block; }
-        
-        /* --- Mobile Responsive Layout Styles --- */
-        .sidebar-backdrop {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 1039;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .sidebar-backdrop.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        @media (max-width: 991.98px) {
-            .sidebar {
-                transform: translateX(-100%);
-                z-index: 1040;
-                width: 270px;
-                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.4);
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            .sidebar.show {
-                transform: translateX(0);
-            }
-            .main-content {
-                margin-left: 0 !important;
-                width: 100% !important;
-            }
-            .top-navbar {
-                padding: 12px 16px;
-            }
-            .content-body {
-                padding: 16px 12px;
-            }
-            .page-header-premium {
-                padding: 20px 20px;
-                flex-direction: column;
-                align-items: flex-start !important;
-                gap: 14px;
-            }
-            .page-header-premium .btn-premium-new {
-                width: 100%;
-                text-align: center;
-                justify-content: center;
-                display: flex;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .top-navbar .page-title {
-                font-size: 1.05rem;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 170px;
-            }
-            .card-header {
-                padding: 1rem;
-                flex-direction: column;
-                align-items: flex-start !important;
-                gap: 10px;
-            }
-            .card-header .btn, .card-header form, .card-header .d-flex {
-                width: 100%;
-            }
-            .table-premium th, .table-premium td {
-                padding: 10px 12px;
-            }
-            .action-btn {
-                width: 34px; height: 34px;
-            }
-        }
-
-        .table-responsive {
-            -webkit-overflow-scrolling: touch;
-            border-radius: 10px;
-        }
-
-        @media print {
-            .sidebar, .top-navbar, .page-header-premium, .d-print-none {
-                display: none !important;
-            }
-            .main-content {
-                margin-left: 0 !important;
-            }
-            .content-body {
-                padding: 0 !important;
-            }
-            .card, .card-premium {
-                box-shadow: none !important;
-                border: none !important;
-            }
-            body {
-                background: #fff !important;
-            }
-        }
-    </style>
     @stack('styles')
 </head>
 
-<body>
+<body class="erp-body">
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="brand">
+    <!-- ====================================================================
+         SIDEBAR NAVIGATION (DEEP NAVY ENTERPRISE LAYOUT)
+         ==================================================================== -->
+    <aside class="erp-sidebar" id="erpSidebar">
+        <!-- Sidebar Brand Header -->
+        <div class="sidebar-brand">
             @php
                 $adminLogo = \App\Models\Setting::get('site_logo');
+                $siteName  = \App\Models\Setting::get('site_name', 'Dhaka Central Hospital');
             @endphp
             @if($adminLogo)
-                <img src="{{ asset('storage/' . $adminLogo) }}" alt="{{ config('app.name') }}" style="max-height: 60px; max-width: 100%; padding-top: 10px;">
+                <img src="{{ asset('storage/' . $adminLogo) }}" alt="{{ $siteName }}" style="max-height: 42px; max-width: 150px; object-fit: contain;">
             @else
-                <div class="brand-icon">
-                    <i class="fa-solid fa-hospital text-white fs-5"></i>
+                <div class="sidebar-brand-icon">
+                    <i class="fa-solid fa-hospital-user"></i>
+                </div>
+                <div class="sidebar-brand-text">
+                    <h5 class="sidebar-brand-title">{{ $siteName }}</h5>
+                    <p class="sidebar-brand-sub">Hospital ERP</p>
                 </div>
             @endif
         </div>
 
-        <div class="nav-label">Core</div>
+        <!-- Scrollable Navigation Menu -->
+        <nav class="sidebar-nav">
+            <!-- GROUP 1: DASHBOARD -->
+            <div class="nav-group-title">Dashboard</div>
 
-        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            <span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span> Dashboard
-        </a>
-
-        @can('view appointments')
-            <a href="{{ route('appointments.queue') }}" class="{{ request()->routeIs('appointments.queue') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-tv"></i></span> OPD Live Calling
-            </a>
-        @endcan
-
-        <div class="nav-label">Emergency & IPD</div>
-
-        @can('view emergency')
-            <a href="{{ route('emergency.index') }}" class="{{ request()->routeIs('emergency.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-truck-medical text-danger"></i></span> Emergency (ER)
-            </a>
-        @endcan
-
-        @can('view ipd')
-            <a href="{{ route('admissions.index') }}" class="{{ request()->routeIs('admissions.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-hospital-user text-primary"></i></span> IPD Admissions
-            </a>
-        @endcan
-
-        @can('view beds')
-            <a href="{{ route('beds.matrix') }}" class="{{ request()->routeIs('beds.matrix') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-bed text-success"></i></span> Bed Matrix
-            </a>
-            <a href="{{ route('wards.index') }}" class="{{ request()->routeIs('wards.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-door-open"></i></span> Wards & Cabins
-            </a>
-            <a href="{{ route('beds.index') }}" class="{{ request()->routeIs('beds.index') || request()->routeIs('beds.create') || request()->routeIs('beds.edit') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-bed-pulse"></i></span> Bed Units
-            </a>
-        @endcan
-
-        <div class="nav-label">Clinical Care & OT</div>
-
-        @can('view nursing')
-            <a href="{{ route('nursing.index') }}" class="{{ request()->routeIs('nursing.index') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-user-nurse"></i></span> Nursing Station
-            </a>
-            <a href="{{ route('nursing.mar') }}" class="{{ request()->routeIs('nursing.mar') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-pills text-warning"></i></span> MAR Medication
-            </a>
-            <a href="{{ route('nursing.roster') }}" class="{{ request()->routeIs('nursing.roster') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-calendar-days"></i></span> Nurse Roster
-            </a>
-        @endcan
-
-        @can('view ot')
-            <a href="{{ route('ot.index') }}" class="{{ request()->routeIs('ot.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-syringe text-danger"></i></span> Operation Theatre
-            </a>
-        @endcan
-
-        <div class="nav-label">Outpatient (OPD)</div>
-
-        @can('view patients')
-            <a href="{{ route('patients.index') }}" class="{{ request()->routeIs('patients.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-users"></i></span> Patients
-            </a>
-        @endcan
-
-        @can('view doctors')
-            <a href="{{ route('doctors.index') }}" class="{{ request()->routeIs('doctors.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-user-doctor"></i></span> Doctors
-            </a>
-        @endcan
-
-        @can('view appointments')
-            <a href="{{ route('appointments.index') }}" class="{{ request()->routeIs('appointments.index') || request()->routeIs('appointments.create') || request()->routeIs('appointments.show') || request()->routeIs('appointments.edit') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span> Appointments
-            </a>
-        @endcan
-
-        @can('view consultations')
-            <a href="{{ route('consultations.index') }}" class="{{ request()->routeIs('consultations.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-stethoscope"></i></span> Consultations
-            </a>
-        @endcan
-
-        <div class="nav-label">Pharmacy</div>
-
-        @can('view pharmacy')
-            <a href="{{ route('pharmacy.pos') }}" class="{{ request()->routeIs('pharmacy.pos') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-cash-register text-success"></i></span> Pharmacy POS
-            </a>
-            <a href="{{ route('pharmacy.index') }}" class="{{ request()->routeIs('pharmacy.index') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-prescription-bottle-medical"></i></span> Dispensary
-            </a>
-            <a href="{{ route('pharmacy.medicines') }}" class="{{ request()->routeIs('pharmacy.medicines') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-tablets"></i></span> Medicines List
-            </a>
-            <a href="{{ route('pharmacy.batches') }}" class="{{ request()->routeIs('pharmacy.batches') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-boxes-stacked"></i></span> Batches & Stock
-            </a>
-        @endcan
-
-        <div class="nav-label">Laboratory & Radiology</div>
-
-        @can('view lab orders')
-            <a href="{{ route('samples.index') }}" class="{{ request()->routeIs('samples.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-vial text-info"></i></span> Sample Collection
-            </a>
-            <a href="{{ route('diagnostic-orders.index') }}" class="{{ request()->routeIs('diagnostic-orders.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-vial-circle-check"></i></span> Lab Orders
-            </a>
-        @endcan
-
-        @can('view lab results')
-            <a href="{{ route('test-results.index') }}" class="{{ request()->routeIs('test-results.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-file-medical"></i></span> Lab Results
-            </a>
-        @endcan
-
-        @can('view radiology')
-            <a href="{{ route('radiology.index') }}" class="{{ request()->routeIs('radiology.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-x-ray text-warning"></i></span> Radiology (X-Ray/USG)
-            </a>
-        @endcan
-
-        @can('view tests')
-            <a href="{{ route('tests.index') }}" class="{{ request()->routeIs('tests.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-microscope"></i></span> Master Tests
-            </a>
-        @endcan
-
-        <div class="nav-label">Logistics & Services</div>
-
-        @can('view blood bank')
-            <a href="{{ route('blood-bank.index') }}" class="{{ request()->routeIs('blood-bank.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-droplet text-danger"></i></span> Blood Bank
-            </a>
-        @endcan
-
-        @can('view ambulance')
-            <a href="{{ route('ambulance.index') }}" class="{{ request()->routeIs('ambulance.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-van-shuttle text-primary"></i></span> Ambulance Fleet
-            </a>
-        @endcan
-
-        @can('view certificates')
-            <a href="{{ route('certificates.index') }}" class="{{ request()->routeIs('certificates.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-stamp text-secondary"></i></span> Vital Certificates
-            </a>
-        @endcan
-
-        <div class="nav-label">Finance & Accounts</div>
-
-        @can('view billing')
-            <a href="{{ route('invoices.index') }}" class="{{ request()->routeIs('invoices.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-file-invoice-dollar text-success"></i></span> Billing & Invoices
-            </a>
-        @endcan
-
-        @can('view accounts')
-            <a href="{{ route('expenses.index') }}" class="{{ request()->routeIs('expenses.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-receipt text-danger"></i></span> Operating Expenses
-            </a>
-            <a href="{{ route('accounts.index') }}" class="{{ request()->routeIs('accounts.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-scale-balanced text-primary"></i></span> Accounts Ledger
-            </a>
-        @endcan
-
-        @can('view reports')
-            <a class="dropdown-toggle" data-bs-toggle="collapse" href="#reportsMenu" role="button"
-                aria-expanded="{{ request()->routeIs('reports.*') ? 'true' : 'false' }}">
-                <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span> Reports
-            </a>
-            <div class="collapse {{ request()->routeIs('reports.*') ? 'show' : '' }}" id="reportsMenu">
-                <a href="{{ route('reports.account') }}" class="{{ request()->routeIs('reports.account') ? 'text-info' : '' }}">Account Report</a>
-                <a href="{{ route('reports.patient') }}" class="{{ request()->routeIs('reports.patient') ? 'text-info' : '' }}">Patient Report</a>
-                <a href="{{ route('reports.doctor') }}" class="{{ request()->routeIs('reports.doctor') ? 'text-info' : '' }}">Doctor Report</a>
-                <a href="{{ route('reports.labOrder') }}" class="{{ request()->routeIs('reports.labOrder') ? 'text-info' : '' }}">Lab Order Report</a>
+            <div class="sidebar-item">
+                <a href="{{ route('dashboard') }}" class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                    <span>Executive Overview</span>
+                </a>
             </div>
-        @endcan
 
-        <div class="nav-label">HR & Administration</div>
+            @can('view appointments')
+            <div class="sidebar-item">
+                <a href="{{ route('appointments.queue') }}" class="sidebar-link {{ request()->routeIs('appointments.queue') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-tv"></i></span>
+                    <span>OPD Live Queue</span>
+                </a>
+            </div>
+            @endcan
 
-        @can('view staff')
-            <a href="{{ route('staff.index') }}" class="{{ request()->routeIs('staff.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-user-tie"></i></span> Staff Directory
-            </a>
-            <a href="{{ route('payroll.index') }}" class="{{ request()->routeIs('payroll.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-money-check-dollar"></i></span> Attendance & Payroll
-            </a>
-        @endcan
+            <!-- GROUP 2: PATIENT SERVICES -->
+            <div class="nav-group-title">Patient Services</div>
 
-        @can('view settings')
-            <a href="{{ route('roles.index') }}" class="{{ request()->routeIs('roles.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-user-shield"></i></span> Roles & Permissions
-            </a>
-            <a href="{{ route('branches.index') }}" class="{{ request()->routeIs('branches.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-building"></i></span> Hospital Branches
-            </a>
-            <a href="{{ route('cms.index') }}" class="{{ request()->routeIs('cms.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-desktop"></i></span> Frontend CMS
-            </a>
-            <a href="{{ route('home-collection-requests.index') }}" class="{{ request()->routeIs('home-collection-requests.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-house-medical"></i></span> Booking Requests
-            </a>
-            <a href="{{ route('contact-messages.index') }}" class="{{ request()->routeIs('contact-messages.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-inbox"></i></span> Contact Messages
-            </a>
-            <a href="{{ route('settings.index') }}" class="{{ request()->routeIs('settings.*') ? 'active' : '' }}">
-                <span class="nav-icon"><i class="fa-solid fa-gear"></i></span> Settings
-            </a>
-        @endcan
+            @can('view patients')
+            <div class="sidebar-item">
+                <a href="{{ route('patients.index') }}" class="sidebar-link {{ request()->routeIs('patients.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-users"></i></span>
+                    <span>Patient Registry</span>
+                </a>
+            </div>
+            @endcan
 
-        <div style="height: 50px;"></div> <!-- Bottom Padding -->
-    </div>
+            @can('view appointments')
+            <div class="sidebar-item">
+                <a href="{{ route('appointments.index') }}" class="sidebar-link {{ request()->routeIs('appointments.index') || request()->routeIs('appointments.create') || request()->routeIs('appointments.show') || request()->routeIs('appointments.edit') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span>
+                    <span>OPD Appointments</span>
+                </a>
+            </div>
+            @endcan
 
-    <!-- Main Content -->
-    <div class="main-content">
+            @can('view consultations')
+            <div class="sidebar-item">
+                <a href="{{ route('consultations.index') }}" class="sidebar-link {{ request()->routeIs('consultations.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-stethoscope"></i></span>
+                    <span>Doctor Consultations</span>
+                </a>
+            </div>
+            @endcan
 
-        <!-- Top Navbar -->
-        <div class="top-navbar">
-            <div class="d-flex align-items-center">
-                <button id="sidebarToggle" class="btn btn-light border-0 shadow-none me-2 d-lg-none p-2 rounded-3" type="button" aria-label="Toggle navigation">
-                    <i class="fa-solid fa-bars fs-4 text-primary"></i>
+            @can('view emergency')
+            <div class="sidebar-item">
+                <a href="{{ route('emergency.index') }}" class="sidebar-link {{ request()->routeIs('emergency.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-truck-medical text-danger"></i></span>
+                    <span>Emergency (ER)</span>
+                </a>
+            </div>
+            @endcan
+
+            <!-- GROUP 3: HOSPITAL OPERATIONS (IPD, BEDS, NURSING, OT) -->
+            <div class="nav-group-title">Hospital Operations</div>
+
+            @can('view ipd')
+            <div class="sidebar-item">
+                <a href="{{ route('admissions.index') }}" class="sidebar-link {{ request()->routeIs('admissions.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-hospital-user text-primary"></i></span>
+                    <span>IPD Admissions</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view beds')
+            <div class="sidebar-item">
+                <a href="{{ route('beds.matrix') }}" class="sidebar-link {{ request()->routeIs('beds.matrix') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-bed text-success"></i></span>
+                    <span>Bed Matrix & Status</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('wards.index') }}" class="sidebar-link {{ request()->routeIs('wards.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-door-open"></i></span>
+                    <span>Wards & Cabins</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('beds.index') }}" class="sidebar-link {{ request()->routeIs('beds.index') || request()->routeIs('beds.create') || request()->routeIs('beds.edit') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-bed-pulse"></i></span>
+                    <span>Bed Units List</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view nursing')
+            <div class="sidebar-item">
+                <a href="{{ route('nursing.index') }}" class="sidebar-link {{ request()->routeIs('nursing.index') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-user-nurse"></i></span>
+                    <span>Nursing Station</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('nursing.mar') }}" class="sidebar-link {{ request()->routeIs('nursing.mar') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-pills text-warning"></i></span>
+                    <span>MAR Medication</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('nursing.roster') }}" class="sidebar-link {{ request()->routeIs('nursing.roster') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                    <span>Nurse Duty Roster</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view ot')
+            <div class="sidebar-item">
+                <a href="{{ route('ot.index') }}" class="sidebar-link {{ request()->routeIs('ot.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-syringe text-danger"></i></span>
+                    <span>Operation Theatre</span>
+                </a>
+            </div>
+            @endcan
+
+            <!-- GROUP 4: MEDICAL SERVICES -->
+            <div class="nav-group-title">Medical Services</div>
+
+            @can('view doctors')
+            <div class="sidebar-item">
+                <a href="{{ route('doctors.index') }}" class="sidebar-link {{ request()->routeIs('doctors.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-user-doctor"></i></span>
+                    <span>Specialist Doctors</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view tests')
+            <div class="sidebar-item">
+                <a href="{{ route('tests.index') }}" class="sidebar-link {{ request()->routeIs('tests.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-microscope"></i></span>
+                    <span>Master Tests Catalog</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view lab orders')
+            <div class="sidebar-item">
+                <a href="{{ route('samples.index') }}" class="sidebar-link {{ request()->routeIs('samples.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-vial text-info"></i></span>
+                    <span>Sample Collection</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('diagnostic-orders.index') }}" class="sidebar-link {{ request()->routeIs('diagnostic-orders.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-vial-circle-check"></i></span>
+                    <span>Diagnostic Orders</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view lab results')
+            <div class="sidebar-item">
+                <a href="{{ route('test-results.index') }}" class="sidebar-link {{ request()->routeIs('test-results.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-file-medical"></i></span>
+                    <span>Lab Results & Reports</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view radiology')
+            <div class="sidebar-item">
+                <a href="{{ route('radiology.index') }}" class="sidebar-link {{ request()->routeIs('radiology.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-x-ray text-warning"></i></span>
+                    <span>Radiology (X-Ray/USG)</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view pharmacy')
+            <div class="sidebar-item">
+                <a href="{{ route('pharmacy.pos') }}" class="sidebar-link {{ request()->routeIs('pharmacy.pos') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-cash-register text-success"></i></span>
+                    <span>Pharmacy POS</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('pharmacy.index') }}" class="sidebar-link {{ request()->routeIs('pharmacy.index') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-prescription-bottle-medical"></i></span>
+                    <span>Pharmacy Dispensary</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('pharmacy.medicines') }}" class="sidebar-link {{ request()->routeIs('pharmacy.medicines') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-tablets"></i></span>
+                    <span>Medicines Directory</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('pharmacy.batches') }}" class="sidebar-link {{ request()->routeIs('pharmacy.batches') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-boxes-stacked"></i></span>
+                    <span>Stock & Expiry Batches</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view blood bank')
+            <div class="sidebar-item">
+                <a href="{{ route('blood-bank.index') }}" class="sidebar-link {{ request()->routeIs('blood-bank.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-droplet text-danger"></i></span>
+                    <span>Blood Bank Logistics</span>
+                </a>
+            </div>
+            @endcan
+
+            <!-- GROUP 5: FINANCE & ACCOUNTS -->
+            <div class="nav-group-title">Finance & Billing</div>
+
+            @can('view billing')
+            <div class="sidebar-item">
+                <a href="{{ route('invoices.index') }}" class="sidebar-link {{ request()->routeIs('invoices.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-file-invoice-dollar text-success"></i></span>
+                    <span>Billing & Invoices</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view accounts')
+            <div class="sidebar-item">
+                <a href="{{ route('expenses.index') }}" class="sidebar-link {{ request()->routeIs('expenses.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-receipt text-danger"></i></span>
+                    <span>Operating Expenses</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('accounts.index') }}" class="sidebar-link {{ request()->routeIs('accounts.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-scale-balanced text-primary"></i></span>
+                    <span>Accounts Ledger</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view reports')
+            <div class="sidebar-item">
+                <a class="sidebar-link dropdown-toggle" data-bs-toggle="collapse" href="#reportsMenu" role="button"
+                    aria-expanded="{{ request()->routeIs('reports.*') ? 'true' : 'false' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
+                    <span>Financial Reports</span>
+                </a>
+                <div class="collapse {{ request()->routeIs('reports.*') ? 'show' : '' }}" id="reportsMenu">
+                    <ul class="sidebar-dropdown-menu">
+                        <li><a href="{{ route('reports.account') }}" class="{{ request()->routeIs('reports.account') ? 'active' : '' }}">Account Summary</a></li>
+                        <li><a href="{{ route('reports.patient') }}" class="{{ request()->routeIs('reports.patient') ? 'active' : '' }}">Patient Demographics</a></li>
+                        <li><a href="{{ route('reports.doctor') }}" class="{{ request()->routeIs('reports.doctor') ? 'active' : '' }}">Doctor Analytics</a></li>
+                        <li><a href="{{ route('reports.labOrder') }}" class="{{ request()->routeIs('reports.labOrder') ? 'active' : '' }}">Lab Order Stats</a></li>
+                    </ul>
+                </div>
+            </div>
+            @endcan
+
+            <!-- GROUP 6: ADMINISTRATION -->
+            <div class="nav-group-title">Administration</div>
+
+            @can('view staff')
+            <div class="sidebar-item">
+                <a href="{{ route('staff.index') }}" class="sidebar-link {{ request()->routeIs('staff.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-user-tie"></i></span>
+                    <span>Staff Directory</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('payroll.index') }}" class="sidebar-link {{ request()->routeIs('payroll.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-money-check-dollar"></i></span>
+                    <span>Attendance & Payroll</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view ambulance')
+            <div class="sidebar-item">
+                <a href="{{ route('ambulance.index') }}" class="sidebar-link {{ request()->routeIs('ambulance.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-van-shuttle text-primary"></i></span>
+                    <span>Ambulance Dispatch</span>
+                </a>
+            </div>
+            @endcan
+
+            @can('view certificates')
+            <div class="sidebar-item">
+                <a href="{{ route('certificates.index') }}" class="sidebar-link {{ request()->routeIs('certificates.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-stamp text-secondary"></i></span>
+                    <span>Vital Certificates</span>
+                </a>
+            </div>
+            @endcan
+
+            <!-- GROUP 7: SETTINGS & CONFIG -->
+            <div class="nav-group-title">Settings & System</div>
+
+            @can('view settings')
+            <div class="sidebar-item">
+                <a href="{{ route('roles.index') }}" class="sidebar-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-user-shield"></i></span>
+                    <span>Roles & Permissions</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('branches.index') }}" class="sidebar-link {{ request()->routeIs('branches.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-building"></i></span>
+                    <span>Hospital Branches</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('cms.index') }}" class="sidebar-link {{ request()->routeIs('cms.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-desktop"></i></span>
+                    <span>Website CMS</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('home-collection-requests.index') }}" class="sidebar-link {{ request()->routeIs('home-collection-requests.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-house-medical"></i></span>
+                    <span>Booking Requests</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('contact-messages.index') }}" class="sidebar-link {{ request()->routeIs('contact-messages.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+                    <span>Contact Inbox</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{{ route('settings.index') }}" class="sidebar-link {{ request()->routeIs('settings.*') ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+                    <span>General Settings</span>
+                </a>
+            </div>
+            @endcan
+        </nav>
+
+        <!-- Sidebar Footer with User Details & Direct Logout -->
+        <div class="sidebar-footer">
+            <div class="sidebar-footer-user">
+                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'A') }}&background=0D9488&color=fff&bold=true" 
+                     alt="User" class="sidebar-footer-avatar">
+                <div class="sidebar-footer-info">
+                    <p class="sidebar-footer-name">{{ Auth::user()->name ?? 'Administrator' }}</p>
+                    <p class="sidebar-footer-role">{{ Auth::user()->roles->first()->name ?? 'Admin' }}</p>
+                </div>
+            </div>
+            <form method="POST" action="{{ route('logout') }}" class="m-0">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-outline-danger p-1 rounded-circle" style="width: 30px; height: 30px;" title="Sign Out">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 </button>
-                <h5 class="page-title mb-0">@yield('title', 'Dashboard')</h5>
+            </form>
+        </div>
+    </aside>
+
+    <!-- Sidebar Backdrop for Mobile Screens -->
+    <div class="erp-sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- ====================================================================
+         MAIN CONTENT WRAPPER & TOP NAVBAR
+         ==================================================================== -->
+    <div class="erp-main-wrapper">
+        <!-- Top Sticky Navbar -->
+        <header class="erp-navbar">
+            <div class="d-flex align-items-center gap-3">
+                <!-- Mobile Offcanvas Sidebar Toggle Button -->
+                <button id="sidebarToggle" class="btn btn-light border p-2 rounded-3 d-lg-none" type="button" aria-label="Toggle Navigation">
+                    <i class="fa-solid fa-bars fs-5" style="color: var(--erp-primary);"></i>
+                </button>
+
+                <!-- Desktop Sidebar Compact Toggle Button -->
+                <button id="desktopSidebarToggle" class="btn btn-light border p-2 rounded-3 d-none d-lg-inline-flex" type="button" title="Collapse / Expand Sidebar">
+                    <i class="fa-solid fa-bars-staggered fs-6 text-secondary"></i>
+                </button>
+
+                <!-- Hospital Operational Status Pill -->
+                <div class="d-none d-md-flex align-items-center gap-2 px-3 py-1 rounded-pill" style="background: rgba(13, 148, 136, 0.1); border: 1px solid rgba(13, 148, 136, 0.25);">
+                    <span style="width: 8px; height: 8px; background: #0D9488; border-radius: 50%; display: inline-block;"></span>
+                    <span style="font-size: 0.78rem; font-weight: 700; color: #0D9488; text-transform: uppercase; letter-spacing: 0.5px;">24/7 Clinical Active</span>
+                </div>
             </div>
 
-            <div class="user-profile dropdown">
-                <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="text-end me-3 d-none d-md-block">
-                        <div class="fw-bold" style="font-size: 0.9rem; color: #1e293b;">
-                            {{ Auth::user()->name ?? 'Administrator' }}</div>
-                        <div class="text-secondary" style="font-size: 0.75rem;">
-                            {{ Auth::user()->roles->first()->name ?? 'Admin' }}</div>
-                    </div>
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'A') }}&background=4e73df&color=fff"
-                        alt="User">
+            <!-- Global Patient Search Input -->
+            <div class="erp-global-search d-none d-sm-block">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <form action="{{ route('patients.index') }}" method="GET" class="m-0">
+                    <input type="text" name="search" id="globalPatientSearch" placeholder="Search patient by ID, name, or phone..." autocomplete="off">
+                </form>
+                <span class="search-shortcut">/</span>
+            </div>
+
+            <!-- Navbar Right Actions -->
+            <div class="d-flex align-items-center gap-2">
+                <!-- Quick Hospital Action Dropdown -->
+                <div class="dropdown">
+                    <button class="btn btn-erp-teal btn-sm dropdown-toggle rounded-pill px-3 py-1.5 shadow-sm fw-semibold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-circle-plus me-1"></i> Quick Action
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" style="font-size: 0.88rem; min-width: 200px;">
+                        <li><h6 class="dropdown-header text-uppercase small fw-bold">Emergency & Inpatient</h6></li>
+                        <li>
+                            <a class="dropdown-item py-2 text-danger fw-semibold" href="{{ route('emergency.create') }}">
+                                <i class="fa-solid fa-truck-medical me-2"></i> Emergency Intake
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2 text-primary fw-semibold" href="{{ route('admissions.create') }}">
+                                <i class="fa-solid fa-bed-pulse me-2"></i> IPD Admission
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><h6 class="dropdown-header text-uppercase small fw-bold">Outpatient & Registration</h6></li>
+                        <li>
+                            <a class="dropdown-item py-2" href="{{ route('patients.create') }}">
+                                <i class="fa-solid fa-user-plus me-2 text-success"></i> Register Patient
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2" href="{{ route('appointments.create') }}">
+                                <i class="fa-solid fa-calendar-plus me-2 text-warning"></i> Book Appointment
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2" href="{{ route('pharmacy.pos') }}">
+                                <i class="fa-solid fa-cash-register me-2 text-teal"></i> Pharmacy POS
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
-                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm"
-                    style="border-radius: 12px; margin-top: 10px;">
-                    <li><a class="dropdown-item py-2" href="#"><i
-                                class="fa-regular fa-user me-2 text-secondary"></i> My Profile</a></li>
-                    <li><a class="dropdown-item py-2" href="#"><i
-                                class="fa-solid fa-gear me-2 text-secondary"></i> Settings</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="dropdown-item py-2 text-danger"><i
-                                    class="fa-solid fa-arrow-right-from-bracket me-2"></i> Logout</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
+                <!-- Live Public Site Shortcut -->
+                <a href="{{ url('/') }}" target="_blank" class="btn btn-light border p-2 rounded-circle d-none d-md-inline-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" title="View Public Website">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-secondary"></i>
+                </a>
 
-        <!-- Page Content -->
-        <div class="content-body">
+                <!-- User Profile Dropdown -->
+                <div class="dropdown">
+                    <div class="d-flex align-items-center gap-2 p-1 px-2 rounded-pill bg-light border cursor-pointer" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'A') }}&background=142D4E&color=fff&bold=true" 
+                             alt="User" class="rounded-circle" style="width: 32px; height: 32px;">
+                        <div class="d-none d-xl-block text-start line-height-1" style="line-height: 1.15;">
+                            <div class="fw-bold" style="font-size: 0.82rem; color: var(--erp-primary);">{{ Auth::user()->name ?? 'Admin' }}</div>
+                            <small class="text-muted" style="font-size: 0.68rem;">{{ Auth::user()->roles->first()->name ?? 'Staff' }}</small>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-muted small ps-1 pe-1"></i>
+                    </div>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" style="font-size: 0.88rem; min-width: 220px;">
+                        <li class="px-3 py-2 border-bottom">
+                            <div class="fw-bold text-dark">{{ Auth::user()->name }}</div>
+                            <small class="text-muted">{{ Auth::user()->email }}</small>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2" href="{{ route('settings.index') }}">
+                                <i class="fa-solid fa-gear me-2 text-secondary"></i> System Settings
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2" href="{{ route('beds.matrix') }}">
+                                <i class="fa-solid fa-bed text-success me-2"></i> Live Bed Matrix
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item py-2 text-danger fw-semibold">
+                                    <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Sign Out
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Page Content -->
+        <main class="erp-content-body">
             @yield('content')
-        </div>
+        </main>
     </div>
 
-    <!-- Sidebar Backdrop for Mobile -->
-    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-
     <!-- Bootstrap 5.3 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Global Layout Interactions Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const sidebarToggle = document.getElementById('sidebarToggle');
-            const sidebar = document.querySelector('.sidebar');
+            // Mobile Offcanvas Sidebar
+            const mobileToggle = document.getElementById('sidebarToggle');
+            const desktopToggle = document.getElementById('desktopSidebarToggle');
+            const sidebar = document.getElementById('erpSidebar');
             const backdrop = document.getElementById('sidebarBackdrop');
 
-            function toggleSidebar() {
+            function toggleMobileSidebar() {
                 if (sidebar) sidebar.classList.toggle('show');
                 if (backdrop) backdrop.classList.toggle('show');
             }
 
-            function closeSidebar() {
+            function closeMobileSidebar() {
                 if (sidebar) sidebar.classList.remove('show');
                 if (backdrop) backdrop.classList.remove('show');
             }
 
-            if (sidebarToggle) {
-                sidebarToggle.addEventListener('click', toggleSidebar);
-            }
-            if (backdrop) {
-                backdrop.addEventListener('click', closeSidebar);
+            if (mobileToggle) mobileToggle.addEventListener('click', toggleMobileSidebar);
+            if (backdrop) backdrop.addEventListener('click', closeMobileSidebar);
+
+            // Desktop Compact Sidebar Collapse
+            if (desktopToggle) {
+                desktopToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('erp-sidebar-collapsed');
+                    // Persist state in localStorage
+                    const isCollapsed = document.body.classList.contains('erp-sidebar-collapsed');
+                    localStorage.setItem('hospital_sidebar_collapsed', isCollapsed ? '1' : '0');
+                });
+
+                // Restore saved desktop state
+                if (localStorage.getItem('hospital_sidebar_collapsed') === '1' && window.innerWidth >= 992) {
+                    document.body.classList.add('erp-sidebar-collapsed');
+                }
             }
 
+            // Keyboard shortcut for Global Patient Search ('/')
+            const searchInput = document.getElementById('globalPatientSearch');
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '/' && document.activeElement !== searchInput && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+                    e.preventDefault();
+                    if (searchInput) searchInput.focus();
+                }
+            });
+
+            // Auto-close mobile sidebar when clicking menu links
             if (sidebar) {
                 sidebar.querySelectorAll('a:not(.dropdown-toggle)').forEach(link => {
                     link.addEventListener('click', function() {
                         if (window.innerWidth < 992) {
-                            closeSidebar();
+                            closeMobileSidebar();
                         }
                     });
                 });
             }
         });
     </script>
+
     @stack('scripts')
 </body>
-
 </html>

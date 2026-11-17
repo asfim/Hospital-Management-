@@ -16,14 +16,17 @@
             </div>
         </div>
     </div>
-    <div class="d-flex gap-2">
+    <div class="d-flex flex-wrap gap-2">
+        <button type="button" onclick="window.print()" class="btn btn-outline-light btn-sm fw-semibold">
+            <i class="fa-solid fa-print me-1"></i> Print Card
+        </button>
         <a href="{{ route('patients.edit', $patient->id) }}" class="btn btn-premium-new btn-sm">
             <i class="fa-solid fa-user-pen me-1"></i> Edit Profile
         </a>
         <a href="{{ route('appointments.create', ['patient_id' => $patient->id]) }}" class="btn btn-warning text-dark btn-sm fw-bold shadow-sm">
             <i class="fa-solid fa-calendar-plus me-1"></i> New OPD
         </a>
-        <a href="{{ route('admissions.create', ['patient_id' => $patient->id]) }}" class="btn btn-light text-primary btn-sm fw-bold shadow-sm">
+        <a href="{{ route('admissions.create', ['patient_id' => $patient->id]) }}" class="btn btn-erp-teal btn-sm fw-bold shadow-sm text-white">
             <i class="fa-solid fa-bed-pulse me-1"></i> Admit (IPD)
         </a>
     </div>
