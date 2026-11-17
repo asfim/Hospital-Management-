@@ -180,5 +180,8 @@ class DatabaseSeeder extends Seeder
 
         // 11. Seed Hospital Branches
         $this->call(BranchSeeder::class);
+
+        // 12. Seed Patient Testimonials
+        $this->call(TestimonialSeeder::class);
     }
 }

@@ -1,446 +1,575 @@
 @extends('layouts.frontend')
 
-@section('title', 'MediDiag – Advanced Diagnostic Care You Can Trust')
+@section('title', 'DHAKA CENTRAL HOSPITAL & ADVANCED DIAGNOSTICS – 24/7 Comprehensive Healthcare')
 
 @section('content')
 
 {{-- ============================================================
-     HERO SECTION
+     HERO SECTION - WORLD CLASS HEALTHCARE & 24/7 EMERGENCY
      ============================================================ --}}
-@if(!isset($hero) || (isset($hero) && $hero->status == 1))
-<section class="hero-section" style="
+<section class="hero-premium-section position-relative overflow-hidden" style="
+    background: linear-gradient(135deg, #091427 0%, #0f1f38 50%, #0a2540 100%);
     @if(!empty($hero->bg_image)) 
-        background-image: url('{{ asset('storage/' . $hero->bg_image) }}'); 
+        background-image: linear-gradient(135deg, rgba(9, 20, 39, 0.92) 0%, rgba(15, 31, 56, 0.88) 100%), url('{{ asset('storage/' . $hero->bg_image) }}'); 
         background-size: cover; 
         background-position: center; 
     @endif
+    padding: 100px 0 140px 0;
 ">
-    <div class="hero-bg" style="
-        @if(!empty($hero->bg_image) && !empty($hero->overlay_color)) 
-            background: {{ $hero->overlay_color }}; 
-        @endif
-    ">
-        <div class="container" style="position:relative; z-index:2;">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-7" data-aos="fade-right" data-aos-duration="800">
-                    {{-- Badge --}}
-                    <div class="hero-badge mb-3">
-                        <i class="bi bi-check-circle-fill text-success"></i>
-                        Bangladesh's Most Trusted Diagnostic Network
-                    </div>
+    {{-- Ambient Glow Orbs --}}
+    <div class="ambient-orb orb-teal position-absolute" style="top: -80px; left: -80px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(13,148,136,0.25) 0%, transparent 70%); filter: blur(50px); pointer-events: none;"></div>
+    <div class="ambient-orb orb-blue position-absolute" style="bottom: 20px; right: -50px; width: 450px; height: 450px; background: radial-gradient(circle, rgba(37,99,235,0.2) 0%, transparent 70%); filter: blur(60px); pointer-events: none;"></div>
 
-                    {{-- Title --}}
-                    <h1 class="display-4 fw-bold text-white mb-3">
-                        {!! nl2br(e($hero->title ?? "Advanced Care &\nPrecision Diagnostics\nYou Can Trust")) !!}
-                    </h1>
-
-                    <p class="text-white-50 mb-4" style="font-size:1.1rem; max-width:520px; line-height:1.8;">
-                        {!! nl2br(e($hero->subtitle ?? "Expert consultants, state-of-the-art labs & compassionate care —\navailable 24/7 for you and your family.")) !!}
-                    </p>
-
-                    {{-- Search Bar --}}
-                    <div class="hero-search mb-4">
-                        <i class="bi bi-search text-muted fs-5 me-2 flex-shrink-0"></i>
-                        <input type="text" class="form-control" placeholder="Search tests, packages, doctors…" id="heroSearchInput">
-                        <button class="btn btn-primary fw-bold" onclick="window.location.href='{{ url('/tests') }}'">Search</button>
-                    </div>
-
-                    {{-- CTAs --}}
-                    <div class="d-flex flex-wrap gap-3 mb-4">
-                        <a href="{{ $hero->button_link ?? url('/appointment') }}" class="btn btn-light text-primary fw-bold px-4 py-2 rounded-pill shadow">
-                            <i class="bi bi-calendar-check-fill me-2"></i>{{ $hero->button_text ?? 'Book Appointment' }}
-                        </a>
-                        <a href="{{ url('/packages') }}" class="btn btn-outline-light fw-bold px-4 py-2 rounded-pill">
-                            <i class="bi bi-box-seam me-2"></i>View Packages
-                        </a>
-                    </div>
-
-                    {{-- Stats Strip --}}
-                    <div class="hero-stats">
-                        <div class="hero-stat">
-                            <div class="stat-value">{{ $stats['doctors'] ?? '50+' }}</div>
-                            <span class="stat-label">Expert Doctors</span>
-                        </div>
-                        <div class="hero-stat" style="border-left:1px solid rgba(255,255,255,.2); padding-left:2rem;">
-                            <div class="stat-value">{{ $stats['tests'] ?? '500+' }}</div>
-                            <span class="stat-label">Diagnostic Tests</span>
-                        </div>
-                        <div class="hero-stat" style="border-left:1px solid rgba(255,255,255,.2); padding-left:2rem;">
-                            <div class="stat-value">{{ $stats['patients'] ?? '100k+' }}</div>
-                            <span class="stat-label">Happy Patients</span>
-                        </div>
-                        <div class="hero-stat" style="border-left:1px solid rgba(255,255,255,.2); padding-left:2rem;">
-                            <div class="stat-value">{{ $stats['support'] ?? '24/7' }}</div>
-                            <span class="stat-label">Emergency Support</span>
-                        </div>
-                    </div>
+    <div class="container position-relative" style="z-index: 3;">
+        <div class="row align-items-center g-5">
+            {{-- Left Hero Content --}}
+            <div class="col-lg-7" data-aos="fade-right" data-aos-duration="800">
+                {{-- Live Emergency Pulsing Badge --}}
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill mb-4 border border-teal-subtle" style="background: rgba(13, 148, 136, 0.15); backdrop-filter: blur(8px); border: 1px solid rgba(45, 212, 191, 0.3);">
+                    <span class="pulse-indicator"></span>
+                    <span class="text-teal-bright fw-semibold small" style="color: #2dd4bf; letter-spacing: 0.5px;">
+                        <i class="fa-solid fa-hospital me-1"></i> 24/7 Multi-Specialty Hospital & Emergency Trauma Center
+                    </span>
                 </div>
 
-                @if(!empty($hero->image))
-                <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left" data-aos-duration="1000">
-                    <img src="{{ asset('storage/' . $hero->image) }}" class="img-fluid rounded-4 shadow-lg" alt="Hero Image">
+                {{-- Hero Headline --}}
+                <h1 class="display-4 fw-extrabold text-white mb-3 lh-sm" style="font-weight: 800; letter-spacing: -0.5px;">
+                    {!! nl2br(e($hero->title ?? "World-Class Healthcare,\nCompassion in Healing")) !!}
+                </h1>
+
+                {{-- Subtitle --}}
+                <p class="text-slate-light mb-4" style="color: #cbd5e1; font-size: 1.12rem; line-height: 1.8; max-width: 580px;">
+                    {!! nl2br(e($hero->subtitle ?? "Round-the-clock Emergency & Critical Care, renowned specialist physicians, modern Inpatient Cabins, and ISO-certified automated diagnostics — delivering excellence for you and your loved ones.")) !!}
+                </p>
+
+                {{-- Live Search Input --}}
+                <div class="hero-search-box p-2 rounded-4 mb-4 shadow-lg border" style="background: rgba(255, 255, 255, 0.95); border-color: rgba(255, 255, 255, 0.4); max-width: 580px;">
+                    <form action="{{ url('/tests') }}" method="GET" class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass text-muted fs-5 ps-3 flex-shrink-0"></i>
+                        <input type="text" name="search" class="form-control border-0 shadow-none bg-transparent ps-2 text-dark" placeholder="Search tests, specialist doctors, departments..." style="font-size: 0.95rem;">
+                        <button type="submit" class="btn btn-teal px-4 py-2 rounded-3 text-white fw-bold text-nowrap" style="background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);">
+                            Find Now
+                        </button>
+                    </form>
                 </div>
-                @else
-                {{-- Right side visual card --}}
-                <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-                    <div class="bg-white bg-opacity-10 rounded-4 p-4 border border-white border-opacity-25" style="backdrop-filter:blur(12px);">
-                        <h6 class="text-white fw-bold mb-3"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Quick Actions</h6>
-                        <div class="d-flex flex-column gap-3">
-                            <a href="{{ url('/appointment') }}" class="d-flex align-items-center gap-3 bg-white bg-opacity-10 rounded-3 p-3 text-white text-decoration-none" style="transition:all .3s; border:1px solid rgba(255,255,255,.15);" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">
-                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:44px;height:44px;">
-                                    <i class="bi bi-calendar-check fs-5"></i>
-                                </div>
-                                <div>
-                                    <div class="fw-bold" style="font-size:.95rem;">Book Appointment</div>
-                                    <div style="font-size:.78rem; opacity:.7;">Schedule with our specialists</div>
-                                </div>
-                                <i class="bi bi-chevron-right ms-auto opacity-50"></i>
-                            </a>
-                            <a href="{{ url('/reports') }}" class="d-flex align-items-center gap-3 bg-white bg-opacity-10 rounded-3 p-3 text-white text-decoration-none" style="transition:all .3s; border:1px solid rgba(255,255,255,.15);" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">
-                                <div class="bg-success rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:44px;height:44px;">
-                                    <i class="bi bi-file-earmark-medical fs-5"></i>
-                                </div>
-                                <div>
-                                    <div class="fw-bold" style="font-size:.95rem;">Download Report</div>
-                                    <div style="font-size:.78rem; opacity:.7;">Access results securely online</div>
-                                </div>
-                                <i class="bi bi-chevron-right ms-auto opacity-50"></i>
-                            </a>
-                            <a href="{{ url('/home-collection') }}" class="d-flex align-items-center gap-3 bg-white bg-opacity-10 rounded-3 p-3 text-white text-decoration-none" style="transition:all .3s; border:1px solid rgba(255,255,255,.15);" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">
-                                <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:44px;height:44px;">
-                                    <i class="bi bi-truck fs-5 text-dark"></i>
-                                </div>
-                                <div>
-                                    <div class="fw-bold" style="font-size:.95rem;">Home Collection</div>
-                                    <div style="font-size:.78rem; opacity:.7;">Sample pickup at your doorstep</div>
-                                </div>
-                                <i class="bi bi-chevron-right ms-auto opacity-50"></i>
-                            </a>
-                        </div>
-                        <div class="mt-3 pt-3 border-top border-white border-opacity-15 text-center">
-                            <small class="text-white-50"><i class="bi bi-lock-fill me-1 text-success"></i>Your data is safe & encrypted</small>
-                        </div>
+
+                {{-- Key Action Buttons --}}
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-5">
+                    <a href="{{ $hero->button_link ?? url('/appointment') }}" class="btn btn-primary-gradient px-4 py-3 rounded-pill fw-bold text-white shadow-lg text-decoration-none d-inline-flex align-items-center gap-2">
+                        <i class="fa-regular fa-calendar-check fs-5"></i>
+                        <span>Book Doctor Appointment</span>
+                    </a>
+                    <a href="tel:{{ $siteSettings['site_phone'] ?? '01711000000' }}" class="btn btn-emergency-pulse px-4 py-3 rounded-pill fw-bold text-white shadow text-decoration-none d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);">
+                        <i class="fa-solid fa-truck-medical fs-5"></i>
+                        <span>Emergency: 24/7 Hotline</span>
+                    </a>
+                </div>
+
+                {{-- Counter Strip --}}
+                <div class="row g-3 pt-3 border-top border-secondary border-opacity-25" style="max-width: 600px;">
+                    <div class="col-3">
+                        <div class="h3 fw-bold text-white mb-0">{{ $stats['doctors'] ?? '50+' }}</div>
+                        <small class="text-muted" style="color: #94a3b8 !important;">Specialist Doctors</small>
+                    </div>
+                    <div class="col-3">
+                        <div class="h3 fw-bold text-white mb-0">40+</div>
+                        <small class="text-muted" style="color: #94a3b8 !important;">Beds & Cabins</small>
+                    </div>
+                    <div class="col-3">
+                        <div class="h3 fw-bold text-white mb-0">{{ $stats['tests'] ?? '500+' }}</div>
+                        <small class="text-muted" style="color: #94a3b8 !important;">Diagnostic Tests</small>
+                    </div>
+                    <div class="col-3">
+                        <div class="h3 fw-bold text-teal-bright mb-0" style="color: #2dd4bf;">24/7</div>
+                        <small class="text-muted" style="color: #94a3b8 !important;">ICU & Emergency</small>
                     </div>
                 </div>
-                @endif
             </div>
-        </div>
-    </div>
-</section>
-@endif
 
-    {{-- ============================================================
-         QUICK ACTION CARDS (overlap hero bottom)
-         ============================================================ --}}
-    <div class="quick-actions">
-        <div class="container">
-            <div class="row g-4">
-                @foreach($quickActions as $index => $action)
-                <div class="col-lg-4 col-md-6 {{ $index == 2 ? 'mx-auto' : '' }}" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
-                    <div class="quick-card">
-                        <div class="q-icon bg-{{ $action['color'] ?? 'primary' }} bg-opacity-10 text-{{ $action['color'] ?? 'primary' }} mx-auto">
-                            <i class="bi {{ $action['icon'] ?? 'bi-star' }}"></i>
+            {{-- Right Hero Floating Healthcare Image & Interactive Badges --}}
+            <div class="col-lg-5" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                <div class="position-relative text-center">
+                    {{-- Doctor Hero Image Wrapper with Ambient Glow --}}
+                    <div class="hero-image-wrapper position-relative d-inline-block">
+                        <img src="{{ !empty($hero->image) ? asset('storage/' . $hero->image) : asset('storage/cms/08sJHJqIoNDw4aBajEyAzjv5mp6amU1km0teG9PO.jpg') }}" 
+                             alt="Hospital Specialist Physician" 
+                             class="img-fluid rounded-4 shadow-2xl" 
+                             style="max-height: 480px; object-fit: cover; border: 3px solid rgba(255, 255, 255, 0.2); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);">
+
+                        {{-- Floating Badge: Specialist Team --}}
+                        <div class="position-absolute top-0 start-0 translate-middle-y bg-white p-2.5 px-3 rounded-pill shadow-lg d-flex align-items-center gap-2" style="border: 1px solid #e2e8f0; margin-top: 40px; margin-left: -20px;">
+                            <span class="pulse-indicator"></span>
+                            <span class="text-dark fw-bold small"><i class="fa-solid fa-user-doctor text-primary me-1"></i> 50+ Doctors</span>
                         </div>
-                        <h4 class="fw-bold">{{ $action['title'] ?? '' }}</h4>
-                        <p>{{ $action['description'] ?? '' }}</p>
-                        <a href="{{ $action['link'] ?? '#' }}" class="text-{{ $action['color'] ?? 'primary' }}">{{ $action['button_text'] ?? 'View More' }} <i class="bi bi-arrow-right"></i></a>
+
+                        {{-- Floating Badge: Emergency ICU Ready --}}
+                        <div class="position-absolute bottom-0 end-0 translate-middle-y bg-dark text-white p-3 rounded-4 shadow-lg text-start" style="background: rgba(15, 23, 42, 0.95) !important; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px); margin-bottom: 20px; margin-right: -15px;">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="rounded-circle bg-danger p-2 d-flex align-items-center justify-content-center text-white" style="width: 38px; height: 38px;">
+                                    <i class="fa-solid fa-truck-medical fs-6"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold small">Emergency & ICU</div>
+                                    <small class="text-white-50" style="font-size: 0.72rem;">24/7 Rapid Response</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Floating Badge: ISO Certified Labs --}}
+                        <div class="position-absolute bottom-0 start-0 translate-middle-y bg-white p-2 px-3 rounded-pill shadow-lg d-flex align-items-center gap-2" style="border: 1px solid #e2e8f0; margin-bottom: 30px; margin-left: -15px;">
+                            <i class="fa-solid fa-shield-halved text-success"></i>
+                            <span class="text-dark fw-bold small" style="font-size: 0.75rem;">ISO 9001:2015 Lab</span>
+                        </div>
                     </div>
                 </div>
-                @endforeach
             </div>
         </div>
     </div>
 </section>
 
 {{-- ============================================================
-     ABOUT SECTION
+     HOSPITAL SERVICES STRIP (OVERLAPPING CARDS)
      ============================================================ --}}
-<section class="section-padding bg-white" style="padding-top: 120px;">
+<div class="hospital-services-strip position-relative" style="margin-top: -60px; z-index: 10;">
     <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="hospital-service-card bg-white p-4 rounded-4 shadow-sm h-100 border transition-all">
+                    <div class="service-icon-box rounded-circle d-flex align-items-center justify-content-center mb-3 text-danger" style="width: 56px; height: 56px; background: rgba(225, 29, 72, 0.1);">
+                        <i class="fa-solid fa-truck-medical fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">24/7 Emergency & ICU</h5>
+                    <p class="text-muted small mb-3">Critical trauma care, ventilator support, resuscitation & round-the-clock ambulance dispatch.</p>
+                    <a href="tel:{{ $siteSettings['site_phone'] ?? '01711000000' }}" class="fw-bold text-danger small text-decoration-none">
+                        Call Emergency Hotline &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="hospital-service-card bg-white p-4 rounded-4 shadow-sm h-100 border transition-all">
+                    <div class="service-icon-box rounded-circle d-flex align-items-center justify-content-center mb-3 text-primary" style="width: 56px; height: 56px; background: rgba(37, 99, 235, 0.1);">
+                        <i class="fa-solid fa-user-doctor fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Specialist OPD Clinics</h5>
+                    <p class="text-muted small mb-3">Consult with professors & specialized doctors across Medicine, Surgery, Gynae, Pediatrics & more.</p>
+                    <a href="{{ url('/doctors') }}" class="fw-bold text-primary small text-decoration-none">
+                        View Specialist Doctors &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="hospital-service-card bg-white p-4 rounded-4 shadow-sm h-100 border transition-all">
+                    <div class="service-icon-box rounded-circle d-flex align-items-center justify-content-center mb-3 text-teal" style="width: 56px; height: 56px; background: rgba(13, 148, 136, 0.1); color: #0d9488;">
+                        <i class="fa-solid fa-microscope fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Pathology & Imaging</h5>
+                    <p class="text-muted small mb-3">Automated biochemistry, 3T MRI, 128-Slice CT, 4D Ultrasonography & digital X-ray with fast reports.</p>
+                    <a href="{{ url('/tests') }}" class="fw-bold text-teal small text-decoration-none" style="color: #0d9488;">
+                        Explore Diagnostic Tests &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="hospital-service-card bg-white p-4 rounded-4 shadow-sm h-100 border transition-all">
+                    <div class="service-icon-box rounded-circle d-flex align-items-center justify-content-center mb-3 text-success" style="width: 56px; height: 56px; background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                        <i class="fa-solid fa-bed-pulse fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Inpatient Wards & Cabins</h5>
+                    <p class="text-muted small mb-3">Air-conditioned VIP cabins, specialized general wards, central oxygen & dedicated 24-hour nursing care.</p>
+                    <a href="{{ url('/appointment') }}" class="fw-bold text-success small text-decoration-none" style="color: #10b981;">
+                        Admission Inquiries &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- ============================================================
+     HOSPITAL DEPARTMENTS & CLINICAL SPECIALTIES
+     ============================================================ --}}
+<section class="section-padding py-5 mt-5">
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-end mb-5 flex-wrap gap-3" data-aos="fade-up">
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2">Centers of Excellence</span>
+                <h2 class="fw-bold text-dark mb-0">Our Clinical Departments</h2>
+                <p class="text-muted mt-2 mb-0">Comprehensive medical care backed by specialized multi-disciplinary doctor teams.</p>
+            </div>
+            <a href="{{ url('/departments') }}" class="btn btn-outline-primary rounded-pill px-4 fw-semibold">
+                Explore All Departments <i class="fa-solid fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            @forelse($departments as $i => $dept)
+            <div class="col-xl-3 col-lg-4 col-sm-6" data-aos="zoom-in" data-aos-delay="{{ ($i+1)*60 }}">
+                <a href="{{ url('/departments/' . ($dept->slug ?? '')) }}" class="text-decoration-none">
+                    <div class="department-card-premium bg-white p-4 rounded-4 shadow-sm text-center h-100 border transition-all">
+                        <div class="dept-icon-circle mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle" style="width: 64px; height: 64px; background: rgba(37, 99, 235, 0.08); color: #2563eb;">
+                            <i class="fa-solid {{ $dept->icon ?? 'fa-stethoscope' }} fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">{{ $dept->name }}</h5>
+                        <p class="text-muted small mb-3">{{ Str::limit($dept->description ?? 'Specialized tertiary healthcare and diagnostic services.', 65) }}</p>
+                        <div class="d-flex justify-content-center gap-3 pt-3 border-top text-muted small">
+                            <span><i class="fa-solid fa-user-doctor text-primary me-1"></i>{{ $dept->doctors_count ?? 0 }} Doctors</span>
+                            <span><i class="fa-solid fa-vial text-teal me-1" style="color: #0d9488;"></i>{{ $dept->tests_count ?? 0 }} Tests</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @empty
+            <div class="col-12 text-center py-4 text-muted">
+                No clinical departments listed.
+            </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+{{-- ============================================================
+     24/7 EMERGENCY & AMBULANCE DISPATCH HOTLINE BANNER
+     ============================================================ --}}
+<section class="py-5 bg-gradient-navy text-white position-relative overflow-hidden my-4" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);">
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8" data-aos="fade-right">
+                <div class="d-inline-flex align-items-center gap-2 bg-danger bg-opacity-25 px-3 py-1 rounded-pill text-danger border border-danger border-opacity-25 small fw-bold mb-3">
+                    <i class="fa-solid fa-bell fa-shake"></i> Critical Emergency Response
+                </div>
+                <h3 class="fw-extrabold text-white mb-2">Medical Emergency or Ambulance Needed?</h3>
+                <p class="text-white-50 mb-0" style="font-size: 1.05rem;">Our fleet of ICU & Cardiac Support Ambulances with certified paramedics is stationed across Dhaka for prompt dispatch.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end" data-aos="fade-left">
+                <div class="d-flex flex-column flex-sm-row justify-content-lg-end gap-3">
+                    <a href="tel:{{ $siteSettings['site_phone'] ?? '01711000000' }}" class="btn btn-danger btn-lg rounded-pill px-4 py-3 fw-bold d-inline-flex align-items-center justify-content-center gap-2 shadow">
+                        <i class="fa-solid fa-phone-volume"></i>
+                        <span>{{ $siteSettings['site_phone'] ?? '+880 1711 000 000' }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- ============================================================
+     POPULAR DIAGNOSTIC TESTS & PACKAGES
+     ============================================================ --}}
+<section class="section-padding py-5 bg-light-soft">
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-end mb-5 flex-wrap gap-3" data-aos="fade-up">
+            <div>
+                <span class="badge bg-teal bg-opacity-10 text-teal px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2" style="background: rgba(13,148,136,0.1); color: #0d9488;">Laboratory & Radiology</span>
+                <h2 class="fw-bold text-dark mb-0">Popular Diagnostic Tests</h2>
+                <p class="text-muted mt-2 mb-0">High-accuracy automated testing with same-day digital report delivery.</p>
+            </div>
+            <a href="{{ url('/tests') }}" class="btn btn-outline-teal rounded-pill px-4 fw-semibold" style="border-color: #0d9488; color: #0d9488;">
+                View All Tests <i class="fa-solid fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            @forelse($tests->take(6) as $i => $test)
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ ($i+1)*80 }}">
+                <div class="test-card-modern bg-white rounded-4 p-4 shadow-sm h-100 border d-flex flex-column justify-content-between transition-all">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-light text-secondary border px-2.5 py-1.5 rounded-pill small">
+                                <i class="fa-solid fa-flask-vial me-1 text-teal" style="color: #0d9488;"></i> {{ $test->category->name ?? 'Pathology' }}
+                            </span>
+                            <span class="text-teal fw-bold fs-5" style="color: #0d9488;">৳{{ number_format($test->price, 0) }}</span>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">
+                            <a href="{{ url('/tests/'.$test->id) }}" class="text-dark text-decoration-none hover-primary">{{ $test->name }}</a>
+                        </h5>
+                        <p class="text-muted small mb-3">{{ Str::limit($test->description ?? 'Reliable laboratory test with automated analyzer verification.', 80) }}</p>
+                    </div>
+                    <div class="d-flex gap-2 pt-3 border-top">
+                        <a href="{{ url('/tests/'.$test->id) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 flex-grow-1">Details</a>
+                        <a href="{{ url('/appointment') }}?test={{ $test->id }}" class="btn btn-sm btn-primary rounded-pill px-4 fw-semibold flex-grow-1" style="background: #0d9488; border-color: #0d9488;">Book Test</a>
+                    </div>
+                </div>
+            </div>
+            @empty
+            <div class="col-12 text-center py-4 text-muted">No diagnostic tests available.</div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+{{-- ============================================================
+     FEATURED SPECIALIST DOCTORS
+     ============================================================ --}}
+<section class="section-padding py-5 bg-white">
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-end mb-5 flex-wrap gap-3" data-aos="fade-up">
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2">Medical Team</span>
+                <h2 class="fw-bold text-dark mb-0">Our Specialist Consultants</h2>
+                <p class="text-muted mt-2 mb-0">Highly qualified professors and doctors providing expert care.</p>
+            </div>
+            <a href="{{ url('/doctors') }}" class="btn btn-outline-primary rounded-pill px-4 fw-semibold">
+                All Doctors Directory <i class="fa-solid fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            @forelse($doctors as $i => $doc)
+            <div class="col-xl-3 col-lg-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ ($i+1)*100 }}">
+                <div class="doctor-card-modern bg-white rounded-4 shadow-sm overflow-hidden border h-100 d-flex flex-column transition-all">
+                    <div class="doc-avatar-container position-relative bg-light text-center" style="height: 250px; overflow: hidden;">
+                        <img src="{{ $doc->photo ? asset('storage/'.$doc->photo) : 'https://images.unsplash.com/photo-1594824436998-058a23116fc7?auto=format&fit=crop&w=500&q=80' }}" alt="{{ $doc->name }}" class="w-100 h-100 object-fit-cover">
+                        <span class="badge bg-primary position-absolute bottom-0 start-0 m-3 rounded-pill px-3 py-1.5 shadow-sm">
+                            {{ $doc->department ? $doc->department->name : 'Consultant' }}
+                        </span>
+                    </div>
+                    <div class="p-4 text-center d-flex flex-column flex-grow-1 justify-content-between">
+                        <div>
+                            <h5 class="fw-bold text-dark mb-1">{{ $doc->name }}</h5>
+                            <div class="text-muted small mb-2">{{ $doc->qualification ?? 'MBBS' }}</div>
+                            <div class="badge bg-light text-secondary border px-2.5 py-1 small mb-3">
+                                <i class="fa-solid fa-stethoscope text-primary me-1"></i>{{ $doc->specialization ?? 'Specialist' }}
+                            </div>
+                        </div>
+                        <div class="pt-3 border-top">
+                            <div class="d-flex justify-content-between align-items-center mb-3 text-muted small">
+                                <span>Chamber Fee:</span>
+                                <strong class="text-dark fs-6">৳{{ number_format($doc->consultation_fee ?? 0, 0) }}</strong>
+                            </div>
+                            <a href="{{ url('/appointment') }}?doctor={{ $doc->id }}" class="btn btn-primary rounded-pill w-100 fw-bold py-2" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);">
+                                <i class="fa-regular fa-calendar-check me-1"></i> Book Chamber
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @empty
+            <div class="col-12 text-center py-4 text-muted">No doctors currently listed.</div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+{{-- ============================================================
+     HOSPITAL INFRASTRUCTURE & AMENITIES (WHY CHOOSE US)
+     ============================================================ --}}
+<section class="section-padding py-5 bg-light-soft">
+    <div class="container py-4">
         <div class="row align-items-center g-5">
             <div class="col-lg-6" data-aos="fade-right">
                 <div class="position-relative">
-                    <img src="{{ !empty($about['image']) ? asset('storage/' . $about['image']) : 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80' }}"
-                         alt="{{ $about['title'] ?? 'About MediDiag' }}" class="img-fluid rounded-4 shadow-lg w-100" style="object-fit:cover; max-height:440px;">
-                    <div class="position-absolute bottom-0 start-0 bg-primary text-white p-4 rounded-4 shadow-lg m-3">
+                    <img src="{{ !empty($whyChoose['image']) ? asset('storage/' . $whyChoose['image']) : asset('storage/cms/ZrjUOCnrPbxzgKvSCkPn8fOQMSkGKXLW0MGqrDkH.webp') }}"
+                         alt="Hospital Infrastructure" class="img-fluid rounded-4 shadow-lg w-100 object-fit-cover" style="max-height: 480px;">
+                    <div class="position-absolute bottom-0 end-0 bg-dark text-white p-4 rounded-4 shadow-lg m-3" style="background: rgba(15, 23, 42, 0.95) !important; backdrop-filter: blur(8px);">
                         <div class="d-flex align-items-center gap-3">
-                            <span class="display-6 fw-bold">{{ $about['years_number'] ?? '15+' }}</span>
-                            <span class="fw-semibold lh-sm">{!! nl2br(e($about['years_text'] ?? "Years of\nExcellence")) !!}</span>
+                            <i class="fa-solid fa-award text-warning display-6"></i>
+                            <div>
+                                <div class="h5 fw-bold mb-0">Tertiary Level Care</div>
+                                <small class="text-white-50">Accredited Clinical Protocols</small>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6" data-aos="fade-left">
-                <div class="section-header mb-4">
-                    <span class="label">{{ $about['label'] ?? 'About MediDiag' }}</span>
-                    <h2>{{ $about['title'] ?? 'Leading the Way in Medical Diagnostics' }}</h2>
-                    <p class="mt-3">{{ $about['description'] ?? '' }}</p>
-                </div>
-                <div class="row g-3 mb-4">
-                    @if(!empty($about['features']) && is_array($about['features']))
-                        @foreach($about['features'] as $feature)
-                        @if(!empty($feature))
-                        <div class="col-6">
-                            <div class="d-flex align-items-center gap-2">
-                                <i class="bi bi-check-circle-fill text-success fs-5"></i>
-                                <span class="fw-semibold">{{ $feature }}</span>
-                            </div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2">Hospital Standards</span>
+                <h2 class="fw-bold text-dark mb-3">Why Patients Trust Dhaka Central Hospital</h2>
+                <p class="text-muted mb-4">We merge clinical expertise with world-class medical engineering to deliver safe, effective, and patient-centered hospital care.</p>
+
+                <div class="d-flex flex-column gap-3">
+                    <div class="d-flex gap-3 p-3 bg-white rounded-3 shadow-sm border">
+                        <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px;">
+                            <i class="fa-solid fa-bed-pulse fs-5"></i>
                         </div>
-                        @endif
-                        @endforeach
-                    @endif
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">State-of-the-Art Inpatient Cabins & ICU</h6>
+                            <p class="text-muted small mb-0">Spacious VIP cabins, dedicated ICU, CCU & NICU beds with 24-hour vital monitoring.</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 p-3 bg-white rounded-3 shadow-sm border">
+                        <div class="rounded-circle bg-teal bg-opacity-10 text-teal d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px; background: rgba(13,148,136,0.1); color: #0d9488;">
+                            <i class="fa-solid fa-microscope fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Fully Automated Pathology & 3T MRI</h6>
+                            <p class="text-muted small mb-0">Zero manual error rate with robotic analyzers, 128-Slice CT scan, and digital X-ray.</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 p-3 bg-white rounded-3 shadow-sm border">
+                        <div class="rounded-circle bg-danger bg-opacity-10 text-danger d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px;">
+                            <i class="fa-solid fa-droplet fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">24/7 Central Pharmacy & Blood Bank</h6>
+                            <p class="text-muted small mb-0">Genuine prescription medicines dispensed instantly with complete blood unit storage.</p>
+                        </div>
+                    </div>
                 </div>
-                {{-- Stats Row --}}
-                <div class="row g-3 mb-4 text-center">
-                    <div class="col-4 py-3 bg-light-soft rounded-3">
-                        <h3 class="fw-bold text-primary mb-0">{{ $stats['doctors'] ?? '50+' }}</h3>
-                        <small class="text-muted">Doctors</small>
-                    </div>
-                    <div class="col-4 py-3 bg-light-soft rounded-3">
-                        <h3 class="fw-bold text-primary mb-0">{{ $stats['patients'] ?? '100k+' }}</h3>
-                        <small class="text-muted">Patients</small>
-                    </div>
-                    <div class="col-4 py-3 bg-light-soft rounded-3">
-                        <h3 class="fw-bold text-primary mb-0">{{ $stats['tests'] ?? '500+' }}</h3>
-                        <small class="text-muted">Tests</small>
-                    </div>
-                </div>
-                <a href="{{ $about['button_link'] ?? url('/about') }}" class="btn btn-primary rounded-pill px-4">{{ $about['button_text'] ?? 'Learn More' }} <i class="bi bi-arrow-right ms-1"></i></a>
             </div>
         </div>
     </div>
 </section>
 
 {{-- ============================================================
-     POPULAR DIAGNOSTIC TESTS
+     HOW IT WORKS (4-STEP PATIENT JOURNEY)
      ============================================================ --}}
-<section class="section-padding bg-light-soft">
-    <div class="container">
-        <div class="section-header centered mb-5" data-aos="fade-up">
-            <span class="label">Diagnostics</span>
-            <h2>Popular Diagnostic Tests</h2>
-            <p class="mt-2">Explore our most requested tests. We ensure precise and timely results.</p>
-        </div>
-
-            <div class="row g-4 justify-content-center">
-            @foreach($tests->take(3) as $i => $test)
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ ($i+1)*80 }}">
-                <div class="test-card-premium h-100 d-flex flex-column" style="cursor: pointer;" onclick="window.location.href='{{ url('/tests/'.$test->id) }}'">
-                    <div class="t-icon bg-primary bg-opacity-10 text-primary mx-auto mb-3" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="bi bi-activity fs-4"></i>
-                    </div>
-                    <div class="test-card-body p-4 text-center flex-grow-1">
-                        <h5 class="fw-bold"><a href="{{ url('/tests/'.$test->id) }}" class="text-dark text-decoration-none">{{ $test->name }}</a></h5>
-                        <p class="text-muted text-truncate mb-0">{{ $test->description ?? 'Accurate and reliable diagnostic test.' }}</p>
-                    </div>
-                    <div class="test-card-footer bg-light-soft border-top p-3 d-flex justify-content-between align-items-center">
-                        <span class="price fw-bold text-primary fs-5">৳ {{ number_format($test->price, 0) }}</span>
-                        <div class="d-flex gap-2">
-                            <a href="{{ url('/tests/'.$test->id) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3">Details</a>
-                            <a href="{{ url('/appointment') }}?test={{ $test->id }}" class="btn btn-sm btn-primary rounded-pill px-4">Book</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-            </div>
-        </div>
-
-        <div class="text-center mt-5" data-aos="fade-up">
-            <a href="{{ url('/tests') }}" class="btn btn-outline-primary rounded-pill px-5">View All Tests</a>
-        </div>
-    </div>
-</section>
-
-
-{{-- ============================================================
-     DEPARTMENTS
-     ============================================================ --}}
-<section class="section-padding bg-light-soft">
-    <div class="container">
-        <div class="section-header centered mb-5" data-aos="fade-up">
-            <span class="label">Specialties</span>
-            <h2>Our Departments</h2>
-        </div>
+<section class="section-padding py-5 bg-white">
+    <div class="container py-4 text-center">
+        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2">Seamless Experience</span>
+        <h2 class="fw-bold text-dark mb-2">How It Works</h2>
+        <p class="text-muted mb-5">Hassle-free access to hospital consultations, diagnostics, and patient care.</p>
 
         <div class="row g-4">
-            @foreach($departments as $i => $dept)
-            <div class="col-lg-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="{{ ($i+1)*60 }}">
-                <a href="{{ url('/departments/' . ($dept->slug ?? '')) }}" class="text-decoration-none">
-                    <div class="dept-card-premium h-100 p-4 text-center">
-                        <div class="dept-icon-wrapper mx-auto mb-3">
-                            <i class="bi {{ $dept->icon ?? 'bi-heart-pulse' }} text-primary"></i>
-                        </div>
-                        <h5 class="fw-bold text-dark mb-2">{{ $dept->name }}</h5>
-                        <div class="d-flex justify-content-center gap-3 mt-3 opacity-75">
-                            <div class="text-muted small">
-                                <i class="bi bi-person-fill text-primary"></i> {{ $dept->doctors_count }} Doctors
-                            </div>
-                            <div class="text-muted small">
-                                <i class="bi bi-clipboard2-pulse text-success"></i> {{ $dept->tests_count }} Tests
-                            </div>
-                        </div>
+            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-card p-4 rounded-4 bg-light-soft border h-100">
+                    <div class="step-badge-number mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-sm" style="width: 50px; height: 50px; background: linear-gradient(135deg, #2563eb, #1d4ed8); font-size: 1.2rem;">
+                        1
                     </div>
-                </a>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- ============================================================
-     EXPERT DOCTORS
-     ============================================================ --}}
-<section class="section-padding bg-white">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-end mb-5 flex-wrap gap-3" data-aos="fade-up">
-            <div class="section-header mb-0">
-                <span class="label">Medical Team</span>
-                <h2 class="mb-0">Our Expert Doctors</h2>
-            </div>
-            <a href="{{ url('/doctors') }}" class="btn btn-outline-primary rounded-pill">View All Doctors</a>
-        </div>
-
-        <div class="row g-4">
-            @foreach($doctors as $i => $doc)
-            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ ($i+1)*100 }}">
-                <div class="doctor-card-premium h-100">
-                    <div class="doc-img-wrapper">
-                        <img src="{{ $doc->photo ? asset('storage/'.$doc->photo) : 'https://images.unsplash.com/photo-1594824436998-058a23116fc7?auto=format&fit=crop&w=500&q=80' }}" alt="{{ $doc->name }}" class="img-fluid w-100">
-                    </div>
-                    <div class="doc-body p-4 text-center">
-                        <h5 class="fw-bold mb-1">{{ $doc->name }}</h5>
-                        <p class="specialty text-primary fw-semibold mb-2">
-                            <i class="bi bi-heart-pulse-fill me-1"></i>{{ $doc->department ? $doc->department->name : 'Specialist' }}
-                        </p>
-                        <p class="degree small text-muted mb-3">{{ $doc->specialization }}</p>
-                        
-                        <div class="d-flex justify-content-center gap-3 mb-3 border-top pt-3 opacity-75">
-                            @if(!empty($doc->experience_years) && $doc->experience_years > 0)
-                            <div class="text-muted small" title="Experience">
-                                <i class="bi bi-briefcase-fill text-primary"></i> {{ $doc->experience_years }} Yrs
-                            </div>
-                            @endif
-                            <div class="text-muted small" title="Fee">
-                                <i class="bi bi-cash-coin text-success"></i> ৳{{ $doc->consultation_fee ?? 0 }}
-                            </div>
-                        </div>
-
-                        <div class="d-flex gap-2 justify-content-center">
-                            <a href="{{ url('/appointment') }}?doctor={{ $doc->id }}" class="btn btn-primary rounded-pill px-4 w-100 fw-bold">Book Now</a>
-                        </div>
-                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Choose Service</h5>
+                    <p class="text-muted small mb-0">Select your preferred doctor, diagnostic test, or specialized health package.</p>
                 </div>
             </div>
-            @endforeach
-        </div>
-    </div>
-</section>
 
-{{-- ============================================================
-     WHY CHOOSE US
-     ============================================================ --}}
-<section class="section-padding bg-light-soft">
-    <div class="container">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6 order-lg-2" data-aos="fade-left">
-                <img src="{{ !empty($whyChoose['image']) ? asset('storage/' . $whyChoose['image']) : 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=800&q=80' }}"
-                     alt="Laboratory" class="img-fluid rounded-4 shadow-lg w-100" style="object-fit:cover; max-height:440px;">
+            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-card p-4 rounded-4 bg-light-soft border h-100">
+                    <div class="step-badge-number mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-sm" style="width: 50px; height: 50px; background: linear-gradient(135deg, #0d9488, #0f766e); font-size: 1.2rem;">
+                        2
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Schedule Slot</h5>
+                    <p class="text-muted small mb-0">Pick your convenient date and time online or request home sample pickup.</p>
+                </div>
             </div>
-            <div class="col-lg-6 order-lg-1" data-aos="fade-right">
-                <div class="section-header mb-4">
-                    <span class="label">{{ $whyChoose['label'] ?? 'Why Choose Us' }}</span>
-                    <h2>{{ $whyChoose['title'] ?? 'The MediDiag Difference' }}</h2>
-                    <p class="mt-2">{{ $whyChoose['description'] ?? '' }}</p>
-                </div>
 
-                @if(!empty($whyChoose['features']) && is_array($whyChoose['features']))
-                @foreach($whyChoose['features'] as $f)
-                <div class="d-flex gap-3 mb-4">
-                    <div class="icon-box bg-{{ $f['color'] ?? 'primary' }} bg-opacity-10 text-{{ $f['color'] ?? 'primary' }} rounded-3 flex-shrink-0" style="width:54px;height:54px;">
-                        <i class="bi {{ $f['icon'] ?? 'bi-check-circle' }} fs-4"></i>
+            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-card p-4 rounded-4 bg-light-soft border h-100">
+                    <div class="step-badge-number mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-sm" style="width: 50px; height: 50px; background: linear-gradient(135deg, #f59e0b, #d97706); font-size: 1.2rem;">
+                        3
                     </div>
-                    <div>
-                        <h5 class="fw-bold mb-1">{!! $f['title'] ?? '' !!}</h5>
-                        <p class="text-muted mb-0 small">{{ $f['desc'] ?? '' }}</p>
-                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Consult & Care</h5>
+                    <p class="text-muted small mb-0">Visit our doctor chambers or inpatient hospital wards for personalized treatment.</p>
                 </div>
-                @endforeach
-                @endif
+            </div>
+
+            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="step-card p-4 rounded-4 bg-light-soft border h-100">
+                    <div class="step-badge-number mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-sm" style="width: 50px; height: 50px; background: linear-gradient(135deg, #10b981, #059669); font-size: 1.2rem;">
+                        4
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Get Digital Report</h5>
+                    <p class="text-muted small mb-0">Receive SMS notifications and download verified PDF diagnostic reports online.</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 {{-- ============================================================
-     HOW IT WORKS
+     PATIENT REVIEWS & TESTIMONIALS
      ============================================================ --}}
-<section class="section-padding bg-white">
-    <div class="container text-center">
-        <div class="section-header centered mb-5" data-aos="fade-up">
-            <span class="label">{{ $howItWorks['label'] ?? 'Process' }}</span>
-            <h2>{{ $howItWorks['title'] ?? 'How It Works' }}</h2>
-        </div>
-
-        <div class="row g-4 position-relative">
-            {{-- Connecting line --}}
-            <div class="d-none d-lg-block position-absolute top-0 start-0 w-100" style="top:40px!important;z-index:1;">
-                <div class="border-top border-2 border-primary" style="margin: 0 10%; opacity:.2;"></div>
-            </div>
-
-            @if(!empty($howItWorks['steps']) && is_array($howItWorks['steps']))
-            @foreach($howItWorks['steps'] as $i => $step)
-            <div class="col-lg-3 col-md-6 position-relative" style="z-index:2;" data-aos="fade-up" data-aos-delay="{{ ($i+1)*100 }}">
-                <div class="step-circle mx-auto">{{ $step['n'] }}</div>
-                <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle mx-auto mb-3" style="width:56px;height:56px;">
-                    <i class="bi {{ $step['icon'] }} fs-4"></i>
-                </div>
-                <h5 class="fw-bold mb-2">{{ $step['title'] }}</h5>
-                <p class="text-muted small mb-0">{{ $step['desc'] }}</p>
-            </div>
-            @endforeach
-            @endif
-        </div>
-    </div>
-</section>
-
-{{-- ============================================================
-     TESTIMONIALS
-     ============================================================ --}}
-<section class="section-padding bg-primary">
-    <div class="container">
-        <div class="section-header centered text-white mb-5" data-aos="fade-up">
-            <span class="label" style="color:rgba(255,255,255,.6);">Patient Reviews</span>
-            <h2 style="color:#fff;">What Our Patients Say</h2>
+<section class="section-padding py-5 bg-gradient-navy text-white" style="background: linear-gradient(135deg, #091427 0%, #0f1f38 100%);">
+    <div class="container py-4">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-teal bg-opacity-25 text-teal px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2" style="color: #2dd4bf; letter-spacing: 0.5px;">
+                <i class="fa-solid fa-heart-pulse me-1"></i> Patient Experiences & Stories
+            </span>
+            <h2 class="fw-bold text-white mb-2">What Our Patients Say</h2>
+            <p class="text-white-50 mx-auto" style="max-width: 680px; font-size: 1.05rem;">
+                Real experiences from patients and families who trusted our specialized doctors, critical care units, inpatient cabins, and automated diagnostic laboratories.
+            </p>
         </div>
 
         @if($testimonials->isNotEmpty())
-        <div class="testimonial-marquee" aria-label="Patient reviews">
-            <div class="testimonial-track">
-                @foreach($testimonials->concat($testimonials) as $testimonial)
-            <div class="testimonial-slide">
-                <div class="testimonial-card">
-                    <i class="bi bi-quote quote-icon"></i>
-                    <div class="stars mb-2">
-                        @for($star = 1; $star <= 5; $star++)
-                            <i class="bi {{ $star <= $testimonial->rating ? 'bi-star-fill' : 'bi-star' }}"></i>
-                        @endfor
+        <div class="row g-4 justify-content-center">
+            @foreach($testimonials->sortBy('id') as $testimonial)
+            <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                <div class="testimonial-card-premium p-4 rounded-4 h-100 d-flex flex-column justify-content-between position-relative overflow-hidden" 
+                     style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);">
+                    <div>
+                        {{-- Top Row: Stars + Verified Badge --}}
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="text-warning">
+                                @for($star = 1; $star <= 5; $star++)
+                                    <i class="fa-solid fa-star {{ $star <= $testimonial->rating ? 'text-warning' : 'text-secondary' }} small"></i>
+                                @endfor
+                            </div>
+                            <span class="badge bg-success bg-opacity-20 text-white border border-success border-opacity-30 rounded-pill px-2.5 py-1 small" style="font-size: 0.72rem; color: #86efac !important;">
+                                <i class="fa-solid fa-circle-check text-success me-1"></i>Verified Patient
+                            </span>
+                        </div>
+
+                        {{-- Decorative Quote Icon --}}
+                        <div class="mb-2">
+                            <i class="fa-solid fa-quote-left fa-2x" style="color: #2dd4bf; opacity: 0.35;"></i>
+                        </div>
+
+                        {{-- Review Text --}}
+                        <p class="text-light fst-italic mb-4" style="line-height: 1.75; font-size: 0.95rem; color: #e2e8f0 !important;">
+                            &ldquo;{{ $testimonial->review }}&rdquo;
+                        </p>
                     </div>
-                    <p>&ldquo;{{ $testimonial->review }}&rdquo;</p>
-                    <div class="avatar d-flex align-items-center gap-3">
-                        @if($testimonial->photo)
-                            <img src="{{ asset('storage/' . $testimonial->photo) }}" alt="{{ $testimonial->name }}">
+
+                    {{-- Patient Profile Footer --}}
+                    <div class="d-flex align-items-center gap-3 pt-3 border-top border-white border-opacity-15">
+                        @if(!empty($testimonial->photo))
+                            <img src="{{ asset('storage/' . $testimonial->photo) }}" 
+                                 alt="{{ $testimonial->name }}" 
+                                 class="rounded-circle object-fit-cover shadow-sm border border-2 flex-shrink-0" 
+                                 style="width: 48px; height: 48px; border-color: #2dd4bf !important;"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="rounded-circle text-white fw-bold align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; background: linear-gradient(135deg, #0d9488, #14b8a6); display: none;">
+                                {{ strtoupper(substr($testimonial->name, 0, 1)) }}
+                            </div>
                         @else
-                            <span class="testimonial-avatar-fallback">{{ strtoupper(substr($testimonial->name, 0, 1)) }}</span>
+                            <div class="rounded-circle text-white fw-bold d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; background: linear-gradient(135deg, #0d9488, #14b8a6);">
+                                {{ strtoupper(substr($testimonial->name, 0, 1)) }}
+                            </div>
                         @endif
                         <div>
-                            <h6 class="mb-0">{{ $testimonial->name }}</h6>
-                            <small>{{ $testimonial->location }}</small>
+                            <h6 class="fw-bold text-white mb-0" style="font-size: 1rem;">{{ $testimonial->name }}</h6>
+                            <small class="text-white-50 d-flex align-items-center gap-1 mt-0.5">
+                                <i class="fa-solid fa-location-dot small" style="color: #2dd4bf;"></i>
+                                {{ $testimonial->location ?? 'Dhaka, Bangladesh' }}
+                            </small>
                         </div>
                     </div>
                 </div>
             </div>
-                @endforeach
+            @endforeach
+        </div>
+
+        {{-- Hospital Trust & Patient Satisfaction Metrics --}}
+        <div class="mt-5 p-4 rounded-4" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);" data-aos="fade-up">
+            <div class="row g-4 text-center align-items-center">
+                <div class="col-6 col-md-3 border-end border-white border-opacity-10">
+                    <div class="d-flex align-items-center justify-content-center gap-1 mb-1">
+                        <span class="h3 fw-bold text-white mb-0">4.9</span>
+                        <div class="text-warning small">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <small class="text-white-50">15,000+ Verified Reviews</small>
+                </div>
+                <div class="col-6 col-md-3 border-end border-white border-opacity-10">
+                    <h3 class="fw-bold mb-1" style="color: #2dd4bf;">99.4%</h3>
+                    <small class="text-white-50">Clinical Satisfaction Rate</small>
+                </div>
+                <div class="col-6 col-md-3 border-end border-white border-opacity-10">
+                    <h3 class="fw-bold text-white mb-1">100%</h3>
+                    <small class="text-white-50">Online Report Delivery</small>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h3 class="fw-bold mb-1" style="color: #2dd4bf;">24/7</h3>
+                    <small class="text-white-50">Emergency & Critical Care</small>
+                </div>
             </div>
         </div>
         @endif
@@ -448,233 +577,151 @@
 </section>
 
 {{-- ============================================================
-     BLOG / HEALTH ARTICLES
+     LATEST HEALTH ARTICLES & NEWS
      ============================================================ --}}
-<section class="section-padding bg-light-soft">
-    <div class="container">
+@if($blogs->isNotEmpty())
+<section class="section-padding py-5 bg-light-soft">
+    <div class="container py-4">
         <div class="d-flex justify-content-between align-items-end mb-5 flex-wrap gap-3" data-aos="fade-up">
-            <div class="section-header mb-0">
-                <span class="label">Health Articles</span>
-                <h2 class="mb-0">Latest Medical News</h2>
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2">Health Articles</span>
+                <h2 class="fw-bold text-dark mb-0">Latest Medical Insights</h2>
+                <p class="text-muted mt-2 mb-0">Expert health advice and wellness guidance from our physicians.</p>
             </div>
-            <a href="{{ url('/blog') }}" class="btn btn-outline-primary rounded-pill">Read All Articles</a>
+            <a href="{{ url('/blog') }}" class="btn btn-outline-primary rounded-pill px-4 fw-semibold">
+                Read All Articles <i class="fa-solid fa-arrow-right ms-1"></i>
+            </a>
         </div>
 
-        @if($blogs->isNotEmpty())
         <div class="row g-4">
             @foreach($blogs as $i => $blog)
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ ($i+1)*100 }}">
-                <div class="blog-card">
-                    <div class="overflow-hidden">
+                <div class="blog-card-modern bg-white rounded-4 shadow-sm overflow-hidden border h-100 transition-all">
+                    <div class="blog-img-container" style="height: 200px; overflow: hidden;">
                         @if($blog->image)
-                            <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
+                            <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}" class="w-100 h-100 object-fit-cover">
                         @else
-                            <div class="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary" style="height:210px;"><i class="bi bi-newspaper fs-1"></i></div>
+                            <div class="w-100 h-100 bg-light d-flex align-items-center justify-content-center text-muted">
+                                <i class="fa-solid fa-newspaper fs-1 opacity-25"></i>
+                            </div>
                         @endif
                     </div>
-                    <div class="blog-body">
-                        <div class="blog-meta d-flex gap-3">
-                            <span><i class="bi bi-tag-fill"></i> {{ $blog->category }}</span>
-                            <span><i class="bi bi-calendar3"></i> {{ $blog->published_at?->format('M d, Y') }}</span>
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2 text-muted small">
+                            <span><i class="fa-regular fa-folder text-primary me-1"></i>{{ $blog->category ?? 'Health' }}</span>
+                            <span><i class="fa-regular fa-clock me-1"></i>{{ $blog->published_at?->format('M d, Y') ?? 'Recent' }}</span>
                         </div>
-                        <h5 class="fw-bold mb-2"><a href="{{ route('frontend.blog.show', $blog) }}">{{ $blog->title }}</a></h5>
-                        <p class="mb-3">{{ $blog->excerpt }}</p>
-                        <a href="{{ route('frontend.blog.show', $blog) }}" class="text-primary fw-bold text-decoration-none">Read More <i class="bi bi-arrow-right"></i></a>
+                        <h5 class="fw-bold text-dark mb-2">
+                            <a href="{{ route('frontend.blog.show', $blog) }}" class="text-dark text-decoration-none hover-primary">{{ $blog->title }}</a>
+                        </h5>
+                        <p class="text-muted small mb-3">{{ Str::limit($blog->excerpt ?? '', 90) }}</p>
+                        <a href="{{ route('frontend.blog.show', $blog) }}" class="fw-bold text-primary small text-decoration-none">
+                            Read Full Article &rarr;
+                        </a>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
-        @endif
     </div>
 </section>
+@endif
 
-{{-- WhatsApp Floating Button --}}
+{{-- WhatsApp Floating Quick Button --}}
 @php
     $waNumber = \App\Models\Setting::get('site_whatsapp', '8801711000000');
 @endphp
-<a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $waNumber) }}" class="btn-whatsapp" title="Chat on WhatsApp" target="_blank">
-    <i class="bi bi-whatsapp"></i>
+<a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $waNumber) }}" class="floating-wa-btn d-flex align-items-center justify-content-center shadow-lg" title="Live WhatsApp Chat" target="_blank" style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #25d366; color: #fff; border-radius: 50%; font-size: 2rem; z-index: 999; transition: all 0.3s ease;">
+    <i class="fa-brands fa-whatsapp"></i>
 </a>
 
-{{-- Mobile Sticky Bottom Bar --}}
-<div class="mobile-bottom-bar">
-    <a href="{{ url('/appointment') }}" class="btn btn-primary rounded-pill">
-        <i class="bi bi-calendar-check me-1"></i> Book Appointment
-    </a>
-    <a href="{{ url('/reports') }}" class="btn btn-outline-primary rounded-pill">
-        <i class="bi bi-file-medical me-1"></i> Reports
-    </a>
+{{-- Mobile Sticky Bottom Action Bar --}}
+<div class="d-lg-none fixed-bottom bg-white border-top p-2 shadow-lg" style="z-index: 998;">
+    <div class="container d-flex gap-2">
+        <a href="{{ url('/appointment') }}" class="btn btn-primary rounded-pill w-50 fw-bold py-2">
+            <i class="fa-regular fa-calendar-check me-1"></i> Appointment
+        </a>
+        <a href="{{ url('/reports') }}" class="btn btn-outline-primary rounded-pill w-50 fw-bold py-2">
+            <i class="fa-solid fa-file-medical me-1"></i> Reports
+        </a>
+    </div>
 </div>
 
 @push('styles')
 <style>
-/* Premium Card Styles for Homepage */
-.quick-card {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 1.25rem !important;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
-    padding: 2.25rem 1.75rem !important;
-    text-align: center !important;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    height: 100% !important;
-    position: relative !important;
-    overflow: hidden !important;
-}
-.quick-card:hover {
-    transform: translateY(-8px) !important;
-    box-shadow: 0 20px 45px rgba(37, 99, 235, 0.18) !important;
-    border-color: #2563eb !important;
-}
-.quick-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #2563eb, #06b6d4);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-.quick-card:hover::before {
-    opacity: 1;
-}
+/* Micro-interaction & Polish Styles */
+.fw-extrabold { font-weight: 800; }
+.text-teal { color: #0d9488 !important; }
+.bg-teal { background-color: #0d9488 !important; }
+.bg-light-soft { background-color: #f8fafc !important; }
 
-.test-card-premium {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 1.25rem !important;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    position: relative !important;
-    overflow: hidden !important;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06) !important;
-}
-.test-card-premium:hover {
-    transform: translateY(-8px) !important;
-    box-shadow: 0 22px 45px rgba(37, 99, 235, 0.16) !important;
-    border-color: #2563eb !important;
-}
-.test-card-premium::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #2563eb, #00b4d8);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-.test-card-premium:hover::before {
-    opacity: 1;
-}
-
-.dept-card-premium {
-    background: #ffffff !important;
-    border-radius: 1.25rem !important;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06) !important;
-    border: 1px solid #e2e8f0 !important;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    position: relative !important;
-    overflow: hidden !important;
-}
-.dept-card-premium:hover {
-    transform: translateY(-8px) !important;
-    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15) !important;
-    border-color: #2563eb !important;
-}
-.dept-card-premium::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #2563eb, #3b82f6);
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 0.35s ease;
-}
-.dept-card-premium:hover::before {
-    transform: scaleX(1);
-}
-.dept-icon-wrapper {
-    width: 64px;
-    height: 64px;
+/* Pulse Indicator */
+.pulse-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: #2dd4bf;
     border-radius: 50%;
-    background: rgba(37, 99, 235, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.7);
+    animation: pulsing 1.8s infinite;
 }
-.dept-card-premium:hover .dept-icon-wrapper {
-    background: #2563eb;
-    color: #ffffff !important;
-}
-.dept-card-premium:hover .dept-icon-wrapper i {
-    color: #ffffff !important;
+@keyframes pulsing {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(45, 212, 191, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
 }
 
-.doctor-card-premium {
-    background: #ffffff !important;
-    border-radius: 1.25rem !important;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06) !important;
-    border: 1px solid #e2e8f0 !important;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    overflow: hidden !important;
-    display: flex !important;
-    flex-direction: column !important;
+/* Hero Quick Tile */
+.hero-quick-tile {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.25s ease;
 }
-.doctor-card-premium:hover {
-    transform: translateY(-8px) !important;
-    box-shadow: 0 22px 45px rgba(37, 99, 235, 0.16) !important;
-    border-color: #2563eb !important;
-}
-.doc-img-wrapper {
-    position: relative;
-    overflow: hidden;
-    height: 240px;
-}
-.doc-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    transition: transform 0.5s ease;
-}
-.doctor-card-premium:hover .doc-img-wrapper img {
-    transform: scale(1.05);
-}
-.doctor-card-premium .doc-body {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+.hero-quick-tile:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateX(4px);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
-.blog-card {
-    background: #ffffff !important;
-    border-radius: 1.25rem !important;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06) !important;
-    border: 1px solid #e2e8f0 !important;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    overflow: hidden !important;
-    height: 100% !important;
-}
-.blog-card:hover {
-    transform: translateY(-8px) !important;
-    box-shadow: 0 22px 45px rgba(37, 99, 235, 0.16) !important;
-    border-color: #2563eb !important;
+/* Hover effects */
+.transition-all { transition: all 0.3s ease; }
+.hospital-service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 35px rgba(15, 23, 42, 0.08) !important;
+    border-color: #0d9488 !important;
 }
 
-.testimonial-card {
-    background: #ffffff !important;
-    border-radius: 1.25rem !important;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1) !important;
-    border: 1px solid #e2e8f0 !important;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-.testimonial-card:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18) !important;
+.department-card-premium:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 35px rgba(37, 99, 235, 0.1) !important;
     border-color: #2563eb !important;
+}
+.department-card-premium:hover .dept-icon-circle {
+    background: #2563eb !important;
+    color: #fff !important;
+}
+
+.test-card-modern:hover, .doctor-card-modern:hover, .blog-card-modern:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 35px rgba(15, 23, 42, 0.09) !important;
+}
+
+.floating-wa-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.hover-primary:hover {
+    color: #2563eb !important;
+}
+
+/* Testimonial Card Micro-interactions */
+.testimonial-card-premium {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.testimonial-card-premium:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45) !important;
+    border-color: rgba(45, 212, 191, 0.45) !important;
 }
 </style>
 @endpush
