@@ -7,21 +7,21 @@
 {{-- ============================================================
      1. HERO SECTION - WORLD CLASS HEALTHCARE & 24/7 EMERGENCY
      ============================================================ --}}
-<section class="hero-premium-section position-relative overflow-hidden" style="
+<section class="hero-premium-section position-relative overflow-hidden py-5 py-lg-6" style="
     background: linear-gradient(135deg, #142D4E 0%, #0d1e35 55%, #091427 100%);
     @if(!empty($hero->bg_image)) 
         background-image: linear-gradient(135deg, rgba(20, 45, 78, 0.92) 0%, rgba(9, 20, 39, 0.90) 100%), url('{{ asset('storage/' . $hero->bg_image) }}'); 
         background-size: cover; 
         background-position: center; 
     @endif
-    padding: 110px 0 140px 0;
+    min-height: 480px;
 ">
     {{-- Ambient Glow Orbs --}}
-    <div class="position-absolute" style="top: -100px; left: -100px; width: 420px; height: 420px; background: radial-gradient(circle, rgba(13,148,136,0.22) 0%, transparent 70%); filter: blur(60px); pointer-events: none;"></div>
-    <div class="position-absolute" style="bottom: 0px; right: -80px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(20,45,78,0.35) 0%, transparent 70%); filter: blur(70px); pointer-events: none;"></div>
+    <div class="position-absolute" style="top: -100px; left: -100px; width: 420px; height: 420px; max-width: 100%; background: radial-gradient(circle, rgba(13,148,136,0.22) 0%, transparent 70%); filter: blur(60px); pointer-events: none;"></div>
+    <div class="position-absolute" style="bottom: 0px; right: 0px; width: 500px; height: 500px; max-width: 100%; background: radial-gradient(circle, rgba(20,45,78,0.35) 0%, transparent 70%); filter: blur(70px); pointer-events: none;"></div>
 
     <div class="container position-relative" style="z-index: 3;">
-        <div class="row align-items-center g-5">
+        <div class="row align-items-center g-4 g-lg-5">
             {{-- Left Hero Content --}}
             <div class="col-lg-7" data-aos="fade-right" data-aos-duration="800">
                 {{-- Live Emergency Pulsing Badge --}}
@@ -47,8 +47,8 @@
                 <div class="p-2 rounded-4 mb-4 shadow-lg border" style="background: rgba(255, 255, 255, 0.98); border-color: rgba(255, 255, 255, 0.4); max-width: 580px;">
                     <form action="{{ url('/tests') }}" method="GET" class="d-flex align-items-center gap-2">
                         <i class="fa-solid fa-magnifying-glass text-muted fs-5 ps-3 flex-shrink-0"></i>
-                        <input type="text" name="search" class="form-control border-0 shadow-none bg-transparent ps-2 text-dark" placeholder="Search doctor, department, or diagnostic test..." style="font-size: 0.95rem;">
-                        <button type="submit" class="btn px-4 py-2 rounded-3 text-white fw-bold text-nowrap" style="background: linear-gradient(135deg, #0D9488 0%, #0f766e 100%);">
+                        <input type="text" name="search" class="form-control border-0 shadow-none bg-transparent ps-2 text-dark" placeholder="Search doctor, department, or test..." style="font-size: 0.95rem;">
+                        <button type="submit" class="btn px-3 px-sm-4 py-2 rounded-3 text-white fw-bold text-nowrap flex-shrink-0" style="background: linear-gradient(135deg, #0D9488 0%, #0f766e 100%);">
                             Find Now
                         </button>
                     </form>
@@ -56,11 +56,11 @@
 
                 {{-- Key Action Buttons --}}
                 <div class="d-flex flex-wrap align-items-center gap-3 mb-5">
-                    <a href="{{ $hero->button_link ?? url('/appointment') }}" class="btn px-4 py-3 rounded-pill fw-bold text-white shadow-lg text-decoration-none d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #0D9488 0%, #0f766e 100%); border: none;">
+                    <a href="{{ $hero->button_link ?? url('/appointment') }}" class="btn px-4 py-3 rounded-pill fw-bold text-white shadow-lg text-decoration-none d-inline-flex align-items-center justify-content-center gap-2" style="background: linear-gradient(135deg, #0D9488 0%, #0f766e 100%); border: none;">
                         <i class="fa-regular fa-calendar-check fs-5"></i>
                         <span>Book Doctor Appointment</span>
                     </a>
-                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings['site_phone'] ?? '01711000000') }}" class="btn px-4 py-3 rounded-pill fw-bold text-white shadow text-decoration-none d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #e11d48 0%, #be123c 100%); border: none;">
+                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings['site_phone'] ?? '01711000000') }}" class="btn px-4 py-3 rounded-pill fw-bold text-white shadow text-decoration-none d-inline-flex align-items-center justify-content-center gap-2" style="background: linear-gradient(135deg, #e11d48 0%, #be123c 100%); border: none;">
                         <i class="fa-solid fa-truck-medical fs-5"></i>
                         <span>24/7 Emergency Hotline</span>
                     </a>
@@ -68,19 +68,19 @@
 
                 {{-- Counter Strip --}}
                 <div class="row g-3 pt-3 border-top" style="border-color: rgba(255, 255, 255, 0.12) !important; max-width: 600px;">
-                    <div class="col-3">
+                    <div class="col-6 col-sm-3">
                         <div class="h3 fw-bold text-white mb-0">{{ $stats['doctors'] ?? '50+' }}</div>
                         <small style="color: #94A3B8;">Specialist Doctors</small>
                     </div>
-                    <div class="col-3">
+                    <div class="col-6 col-sm-3">
                         <div class="h3 fw-bold text-white mb-0">40+</div>
                         <small style="color: #94A3B8;">Beds &amp; Cabins</small>
                     </div>
-                    <div class="col-3">
+                    <div class="col-6 col-sm-3">
                         <div class="h3 fw-bold text-white mb-0">{{ $stats['tests'] ?? '500+' }}</div>
                         <small style="color: #94A3B8;">Diagnostic Tests</small>
                     </div>
-                    <div class="col-3">
+                    <div class="col-6 col-sm-3">
                         <div class="h3 fw-bold mb-0" style="color: #2dd4bf;">24/7</div>
                         <small style="color: #94A3B8;">ICU &amp; Emergency</small>
                     </div>
@@ -91,20 +91,20 @@
             <div class="col-lg-5" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
                 <div class="position-relative text-center">
                     {{-- Doctor Hero Image Wrapper with Ambient Glow --}}
-                    <div class="position-relative d-inline-block">
+                    <div class="position-relative d-inline-block w-100" style="max-width: 440px;">
                         <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80" 
                              alt="Hospital Chief Physician" 
-                             class="img-fluid rounded-4 shadow-2xl" 
-                             style="max-height: 480px; width: 100%; object-fit: cover; border: 3px solid rgba(255, 255, 255, 0.2); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65);">
+                             class="img-fluid rounded-4 shadow-2xl w-100" 
+                             style="max-height: 480px; object-fit: cover; border: 3px solid rgba(255, 255, 255, 0.2); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65);">
 
                         {{-- Floating Badge: Specialist Team --}}
-                        <div class="position-absolute top-0 start-0 translate-middle-y bg-white p-2.5 px-3 rounded-pill shadow-lg d-flex align-items-center gap-2" style="border: 1px solid #E2E8F0; margin-top: 25px; margin-left: -15px;">
+                        <div class="position-absolute top-0 start-0 translate-middle-y bg-white p-2.5 px-3 rounded-pill shadow-lg d-flex align-items-center gap-2 hero-badge-top-left" style="border: 1px solid #E2E8F0;">
                             <span class="d-inline-block rounded-circle bg-teal" style="width: 8px; height: 8px; background: #0D9488;"></span>
                             <span class="text-dark fw-bold small"><i class="fa-solid fa-user-doctor text-primary me-1"></i> 50+ Specialists</span>
                         </div>
 
                         {{-- Floating Badge: Emergency ICU Ready --}}
-                        <div class="position-absolute bottom-0 end-0 translate-middle-y text-white p-3 rounded-4 shadow-lg text-start" style="background: rgba(20, 45, 78, 0.95) !important; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px); margin-bottom: 25px; margin-right: -15px;">
+                        <div class="position-absolute bottom-0 end-0 translate-middle-y text-white p-3 rounded-4 shadow-lg text-start hero-badge-bottom-right" style="background: rgba(20, 45, 78, 0.95) !important; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px);">
                             <div class="d-flex align-items-center gap-3">
                                 <div class="rounded-circle bg-danger p-2 d-flex align-items-center justify-content-center text-white" style="width: 38px; height: 38px;">
                                     <i class="fa-solid fa-truck-medical fs-6"></i>
@@ -117,7 +117,7 @@
                         </div>
 
                         {{-- Floating Badge: ISO Certified Labs --}}
-                        <div class="position-absolute bottom-0 start-0 translate-middle-y bg-white p-2 px-3 rounded-pill shadow-lg d-flex align-items-center gap-2" style="border: 1px solid #E2E8F0; margin-bottom: 30px; margin-left: -15px;">
+                        <div class="position-absolute bottom-0 start-0 translate-middle-y bg-white p-2 px-3 rounded-pill shadow-lg d-flex align-items-center gap-2 hero-badge-bottom-left" style="border: 1px solid #E2E8F0;">
                             <i class="fa-solid fa-shield-halved text-success"></i>
                             <span class="text-dark fw-bold small" style="font-size: 0.75rem;">ISO 9001:2015 Lab</span>
                         </div>
@@ -131,7 +131,7 @@
 {{-- ============================================================
      2. QUICK ACCESS SHORTCUTS (6 PATIENT SHORTCUT CARDS)
      ============================================================ --}}
-<div class="position-relative" style="margin-top: -65px; z-index: 10;">
+<div class="position-relative quick-shortcuts-wrapper">
     <div class="container">
         <div class="row g-3">
             {{-- 1. Book Appointment --}}
@@ -220,7 +220,7 @@
      ============================================================ --}}
 <section class="section-padding py-5 mt-4" id="about-hospital">
     <div class="container py-4">
-        <div class="row align-items-center g-5">
+        <div class="row align-items-center g-4 g-lg-5">
             <div class="col-lg-6" data-aos="fade-right">
                 <div class="position-relative">
                     <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1000&q=80"
@@ -274,7 +274,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex flex-wrap align-items-center gap-3">
                     <a href="{{ url('/about') }}" class="btn px-4 py-2.5 rounded-pill fw-bold text-white shadow-sm" style="background: #142D4E; border: none;">
                         Learn More About Us <i class="fa-solid fa-arrow-right ms-1"></i>
                     </a>
@@ -649,7 +649,7 @@
      ============================================================ --}}
 <section class="section-padding py-5 bg-light-soft" style="background-color: #F8FAFC !important;">
     <div class="container py-4">
-        <div class="row align-items-center g-5">
+        <div class="row align-items-center g-4 g-lg-5">
             <div class="col-lg-6" data-aos="fade-right">
                 <span class="badge px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2" style="background: rgba(13, 148, 136, 0.1); color: #0D9488;">Quality &amp; Standards</span>
                 <h2 class="display-6 fw-bold text-dark mb-3" style="color: #142D4E !important;">Why Patients Choose Dhaka Central Hospital</h2>
@@ -1014,6 +1014,51 @@
 
 @push('styles')
 <style>
+/* Responsive adjustments for hero badges and shortcuts */
+.quick-shortcuts-wrapper {
+    margin-top: -30px;
+    position: relative;
+    z-index: 10;
+}
+@media (min-width: 992px) {
+    .quick-shortcuts-wrapper {
+        margin-top: -65px;
+    }
+}
+@media (max-width: 767.98px) {
+    .hero-badge-top-left {
+        margin-top: 12px !important;
+        margin-left: 8px !important;
+        font-size: 0.75rem !important;
+        padding: 6px 10px !important;
+    }
+    .hero-badge-bottom-right {
+        margin-bottom: 12px !important;
+        margin-right: 8px !important;
+        padding: 8px 12px !important;
+    }
+    .hero-badge-bottom-left {
+        margin-bottom: 12px !important;
+        margin-left: 8px !important;
+        padding: 6px 10px !important;
+        font-size: 0.7rem !important;
+    }
+}
+@media (min-width: 768px) {
+    .hero-badge-top-left {
+        margin-top: 25px;
+        margin-left: -15px;
+    }
+    .hero-badge-bottom-right {
+        margin-bottom: 25px;
+        margin-right: -15px;
+    }
+    .hero-badge-bottom-left {
+        margin-bottom: 30px;
+        margin-left: -15px;
+    }
+}
+
 /* Hospital ERP Redesign Utility Tokens */
 .hover-lift {
     transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;

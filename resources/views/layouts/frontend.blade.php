@@ -35,15 +35,28 @@
             --hospital-navy: #142D4E;
             --hospital-teal: #0D9488;
         }
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100%;
+            position: relative;
+        }
         body {
             font-family: 'Inter', 'Plus Jakarta Sans', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
             color: #1E293B;
             background-color: #F4F7FA;
-            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Inter', 'Plus Jakarta Sans', sans-serif !important;
             color: #142D4E;
+        }
+        /* Prevent AOS horizontal translation from causing body overflow on mobile */
+        @media (max-width: 991.98px) {
+            [data-aos="fade-left"],
+            [data-aos="fade-right"] {
+                transform: none !important;
+            }
         }
         /* Definitively eliminate any underline on floating WhatsApp button */
         a.floating-wa-btn, 
@@ -69,6 +82,16 @@
         a.btn-whatsapp::before {
             display: none !important;
             content: none !important;
+        }
+        /* WhatsApp button positioning on mobile to avoid overlapping fixed bottom bar */
+        @media (max-width: 991.98px) {
+            a.floating-wa-btn {
+                bottom: 75px !important;
+                right: 18px !important;
+                width: 52px !important;
+                height: 52px !important;
+                font-size: 1.7rem !important;
+            }
         }
     </style>
     

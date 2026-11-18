@@ -9,7 +9,7 @@
 @endif
 
 <section class="section-padding bg-white">
-    <div class="container"><div class="row align-items-center g-5">
+    <div class="container"><div class="row align-items-center g-4 g-lg-5">
         <div class="col-lg-6" data-aos="fade-right">
             @if(!empty($content['image']))
                 <img src="{{ asset('storage/' . $content['image']) }}" alt="{{ $content['title'] }}" class="home-collection-hero-image">

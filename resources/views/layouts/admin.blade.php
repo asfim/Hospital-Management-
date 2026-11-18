@@ -31,22 +31,28 @@
          ==================================================================== -->
     <aside class="erp-sidebar" id="erpSidebar">
         <!-- Sidebar Brand Header -->
-        <div class="sidebar-brand">
+        <div class="sidebar-brand d-flex align-items-center justify-content-between">
             @php
                 $adminLogo = \App\Models\Setting::get('site_logo');
                 $siteName  = \App\Models\Setting::get('site_name', 'Dhaka Central Hospital');
             @endphp
-            @if($adminLogo)
-                <img src="{{ asset('storage/' . $adminLogo) }}" alt="{{ $siteName }}" style="max-height: 42px; max-width: 150px; object-fit: contain;">
-            @else
-                <div class="sidebar-brand-icon">
-                    <i class="fa-solid fa-hospital-user"></i>
-                </div>
-                <div class="sidebar-brand-text">
-                    <h5 class="sidebar-brand-title">{{ $siteName }}</h5>
-                    <p class="sidebar-brand-sub">Hospital ERP</p>
-                </div>
-            @endif
+            <div class="d-flex align-items-center gap-2 overflow-hidden">
+                @if($adminLogo)
+                    <img src="{{ asset('storage/' . $adminLogo) }}" alt="{{ $siteName }}" style="max-height: 42px; max-width: 150px; object-fit: contain;">
+                @else
+                    <div class="sidebar-brand-icon">
+                        <i class="fa-solid fa-hospital-user"></i>
+                    </div>
+                    <div class="sidebar-brand-text">
+                        <h5 class="sidebar-brand-title text-truncate" style="max-width: 155px;">{{ $siteName }}</h5>
+                        <p class="sidebar-brand-sub">Hospital ERP</p>
+                    </div>
+                @endif
+            </div>
+            <!-- Mobile Sidebar Close Button -->
+            <button type="button" class="btn btn-sm text-white-50 p-1 d-lg-none" id="sidebarCloseBtn" aria-label="Close Sidebar" style="font-size: 1.15rem; line-height: 1;">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
 
         <!-- Scrollable Navigation Menu -->
@@ -445,8 +451,8 @@
             <div class="d-flex align-items-center gap-2">
                 <!-- Quick Hospital Action Dropdown -->
                 <div class="dropdown">
-                    <button class="btn btn-erp-teal btn-sm dropdown-toggle rounded-pill px-3 py-1.5 shadow-sm fw-semibold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-circle-plus me-1"></i> Quick Action
+                    <button class="btn btn-erp-teal btn-sm dropdown-toggle rounded-pill px-2.5 px-sm-3 py-1.5 shadow-sm fw-semibold text-nowrap" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-circle-plus"></i> <span class="d-none d-sm-inline ms-1">Quick Action</span><span class="d-sm-none ms-1">New</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" style="font-size: 0.88rem; min-width: 200px;">
                         <li><h6 class="dropdown-header text-uppercase small fw-bold">Emergency & Inpatient</h6></li>
@@ -540,6 +546,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile Offcanvas Sidebar
             const mobileToggle = document.getElementById('sidebarToggle');
+            const mobileClose = document.getElementById('sidebarCloseBtn');
             const desktopToggle = document.getElementById('desktopSidebarToggle');
             const sidebar = document.getElementById('erpSidebar');
             const backdrop = document.getElementById('sidebarBackdrop');
@@ -555,6 +562,7 @@
             }
 
             if (mobileToggle) mobileToggle.addEventListener('click', toggleMobileSidebar);
+            if (mobileClose) mobileClose.addEventListener('click', closeMobileSidebar);
             if (backdrop) backdrop.addEventListener('click', closeMobileSidebar);
 
             // Desktop Compact Sidebar Collapse

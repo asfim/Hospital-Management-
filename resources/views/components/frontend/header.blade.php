@@ -54,31 +54,32 @@
         <div class="container">
 
             <!-- Hospital Logo & Brand -->
-            <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none me-3" href="{{ url('/') }}">
+            <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none me-auto me-lg-3 py-0" href="{{ url('/') }}">
                 @if(!empty($siteSettings['site_logo']))
-                    <img src="{{ asset('storage/' . $siteSettings['site_logo']) }}" alt="{{ $siteSettings['site_name'] ?? 'Hospital' }}" class="site-logo-img" style="height: 42px; object-fit: contain;">
+                    <img src="{{ asset('storage/' . $siteSettings['site_logo']) }}" alt="{{ $siteSettings['site_name'] ?? 'Hospital' }}" class="site-logo-img" style="height: 38px; max-height: 42px; object-fit: contain;">
                 @else
-                    <div class="d-flex align-items-center justify-content-center rounded-3 text-white flex-shrink-0 shadow-sm" style="width: 40px; height: 40px; background: linear-gradient(135deg, #142D4E 0%, #0D9488 100%);">
+                    <div class="d-flex align-items-center justify-content-center rounded-3 text-white flex-shrink-0 shadow-sm" style="width: 38px; height: 38px; background: linear-gradient(135deg, #142D4E 0%, #0D9488 100%);">
                         <i class="fa-solid fa-hospital-user fs-5"></i>
                     </div>
                     <div class="lh-1">
-                        <span class="fw-bold d-block" style="color: #142D4E; font-size: 1.25rem; letter-spacing: -0.3px;">{{ $siteSettings['site_name'] ?? 'Dhaka Central' }}</span>
-                        <small class="text-uppercase fw-semibold d-block" style="color: #0D9488; font-size: 0.65rem; letter-spacing: 0.07em;">Hospital &amp; Diagnostics</small>
+                        <span class="fw-bold d-block text-truncate" style="color: #142D4E; font-size: clamp(0.95rem, 3.8vw, 1.25rem); letter-spacing: -0.3px; max-width: 170px;">{{ $siteSettings['site_name'] ?? 'Dhaka Central' }}</span>
+                        <small class="text-uppercase fw-semibold d-block text-truncate" style="color: #0D9488; font-size: 0.62rem; letter-spacing: 0.05em; max-width: 170px;">Hospital &amp; Diagnostics</small>
                     </div>
                 @endif
             </a>
 
             <!-- Mobile Header Quick Actions & Hamburger -->
-            <div class="d-flex align-items-center gap-1 d-lg-none">
-                <button class="btn btn-link text-dark p-2 rounded-circle" data-bs-toggle="modal" data-bs-target="#searchModal" title="Search">
+            <div class="d-flex align-items-center gap-1.5 d-lg-none flex-shrink-0">
+                <button class="btn btn-link text-dark p-1.5 rounded-circle" data-bs-toggle="modal" data-bs-target="#searchModal" title="Search">
                     <i class="fa-solid fa-magnifying-glass fs-5"></i>
                 </button>
-                <a href="{{ url('/appointment') }}" class="btn btn-sm rounded-pill px-3 py-1.5 fw-bold text-white d-inline-block shadow-sm" style="background: #0D9488; font-size: 0.8rem;">
-                    <i class="fa-regular fa-calendar-check me-1"></i> Book
+                <a href="{{ url('/appointment') }}" class="btn btn-sm rounded-pill px-2.5 px-sm-3 py-1.5 fw-bold text-white d-inline-flex align-items-center shadow-sm" style="background: #0D9488; font-size: 0.78rem;">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    <span class="d-none d-sm-inline ms-1">Book</span>
                 </a>
-                <button class="navbar-toggler border-0 shadow-none p-1 ms-1" type="button"
+                <button class="navbar-toggler border-0 shadow-none p-1 ms-0.5" type="button"
                         data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Toggle navigation">
-                    <i class="fa-solid fa-bars fs-3" style="color: #142D4E;"></i>
+                    <i class="fa-solid fa-bars fs-4" style="color: #142D4E;"></i>
                 </button>
             </div>
 

@@ -6,11 +6,11 @@
 
 <section class="section-padding">
     <div class="container">
-        <div class="row g-5 justify-content-center">
+        <div class="row g-4 g-lg-5 justify-content-center">
             <div class="col-lg-8" data-aos="fade-up">
 
                 {{-- Step Indicator --}}
-                <div class="d-flex justify-content-center mb-5">
+                <div class="d-flex justify-content-center align-items-center mb-5 flex-nowrap overflow-hidden px-2">
                     @foreach(['Department & Doctor', 'Date & Time', 'Patient Info', 'Confirm'] as $i => $step)
                     <div class="d-flex align-items-center">
                         <div class="step-indicator {{ $i === 0 ? 'active' : '' }}" id="stepDot{{ $i+1 }}">
@@ -236,14 +236,18 @@
 @push('styles')
 <style>
 /* Step Indicator */
-.step-indicator { text-align: center; }
+.step-indicator {
+    text-align: center;
+    position: relative;
+    flex-shrink: 0;
+}
 .step-num {
-    width: 40px; height: 40px;
+    width: 38px; height: 38px;
     border-radius: 50%;
     background: #e9ecef;
     color: #6c757d;
     font-weight: 800;
-    font-size: 1rem;
+    font-size: 0.95rem;
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto .4rem;
     transition: all .3s;
@@ -255,8 +259,42 @@
 .step-indicator.done .step-num::before { content: '✓'; }
 .step-label { font-size: .72rem; font-weight: 600; color: #6c757d; white-space: nowrap; }
 .step-indicator.active .step-label { color: var(--primary); }
-.step-line { width: 60px; height: 2px; background: #dee2e6; margin: 0 .5rem; margin-bottom: 1.8rem; transition: background .3s; }
+.step-line {
+    width: 50px;
+    height: 2px;
+    background: #dee2e6;
+    margin: 0 .4rem;
+    margin-bottom: 1.8rem;
+    transition: background .3s;
+    flex-shrink: 1;
+}
 .step-line.done { background: var(--primary); }
+
+@media (max-width: 575.98px) {
+    .step-num {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+        margin-bottom: 0;
+    }
+    .step-label {
+        display: none;
+    }
+    .step-indicator.active .step-label {
+        display: block;
+        position: absolute;
+        bottom: -22px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.68rem;
+        white-space: nowrap;
+    }
+    .step-line {
+        width: 25px;
+        margin: 0 4px;
+        margin-bottom: 0;
+    }
+}
 </style>
 @endpush
 
