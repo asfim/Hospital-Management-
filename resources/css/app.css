@@ -335,6 +335,170 @@ body {
     color: #FFFFFF !important;
 }
 
+/* ================================================================
+   MOBILE HEADER ACTION BUTTONS (Search, Book, Hamburger)
+   ================================================================ */
+.mobile-header-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-decoration: none !important;
+    border: 1px solid #E2E8F0 !important;
+    background-color: #F8FAFC !important;
+    color: #142D4E !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.mobile-header-btn:focus,
+.mobile-header-btn:hover,
+.mobile-header-btn:active {
+    text-decoration: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Mobile Search Button */
+.mobile-header-search-btn {
+    width: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    border-radius: 50% !important;
+    color: #142D4E !important;
+}
+.mobile-header-search-btn i {
+    font-size: 0.95rem !important;
+    color: #142D4E !important;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    line-height: 1 !important;
+    transition: color 0.2s ease !important;
+}
+.mobile-header-search-btn:hover,
+.mobile-header-search-btn:focus,
+.mobile-header-search-btn:active {
+    background-color: #E2E8F0 !important;
+    border-color: #CBD5E1 !important;
+    color: #0D9488 !important;
+    text-decoration: none !important;
+}
+.mobile-header-search-btn:hover i,
+.mobile-header-search-btn:focus i,
+.mobile-header-search-btn:active i {
+    color: #0D9488 !important;
+    text-decoration: none !important;
+}
+
+/* Mobile Book Appointment Pill Button */
+.mobile-header-book-btn {
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    padding: 0 14px !important;
+    border-radius: 50rem !important;
+    background: linear-gradient(135deg, #0D9488 0%, #0f766e 100%) !important;
+    color: #FFFFFF !important;
+    border: 1px solid transparent !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    text-decoration: none !important;
+    box-shadow: 0 2px 6px rgba(13, 148, 136, 0.28) !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.mobile-header-book-btn i {
+    font-size: 0.9rem !important;
+    color: #FFFFFF !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+}
+.mobile-header-book-btn span {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+}
+.mobile-header-book-btn:hover,
+.mobile-header-book-btn:focus,
+.mobile-header-book-btn:active {
+    background: linear-gradient(135deg, #0f766e 0%, #115e59 100%) !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.38) !important;
+    text-decoration: none !important;
+}
+.mobile-header-book-btn:hover span,
+.mobile-header-book-btn:hover i {
+    color: #FFFFFF !important;
+}
+
+/* Mobile Hamburger Menu Toggler */
+.mobile-header-toggler-btn {
+    width: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    border-radius: 10px !important;
+    background-color: #F8FAFC !important;
+    border: 1px solid #E2E8F0 !important;
+    color: #142D4E !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.mobile-header-toggler-btn i {
+    font-size: 1.05rem !important;
+    color: #142D4E !important;
+    line-height: 1 !important;
+    transition: color 0.2s ease !important;
+}
+.mobile-header-toggler-btn:hover,
+.mobile-header-toggler-btn:focus,
+.mobile-header-toggler-btn:active {
+    background-color: #E2E8F0 !important;
+    border-color: #CBD5E1 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+.mobile-header-toggler-btn:hover i,
+.mobile-header-toggler-btn:focus i,
+.mobile-header-toggler-btn:active i {
+    color: #0D9488 !important;
+}
+
+/* Responsive adjustment for extra compact mobile screens (< 360px) */
+@media (max-width: 360px) {
+    .mobile-header-book-btn {
+        padding: 0 10px !important;
+        font-size: 0.78rem !important;
+        gap: 4px !important;
+    }
+    .mobile-header-search-btn,
+    .mobile-header-toggler-btn {
+        width: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+    }
+}
+
 @media (max-width: 575.98px) {
     .main-header {
         min-height: 64px;
@@ -515,6 +679,27 @@ body {
     color: #fff;
     letter-spacing: .05em;
     margin-bottom: 1.25rem;
+}
+
+/* Hero Live Emergency Badge */
+.hero-live-badge {
+    white-space: nowrap !important;
+    max-width: 100% !important;
+    overflow: hidden;
+}
+.hero-live-badge span {
+    white-space: nowrap !important;
+}
+@media (max-width: 575.98px) {
+    .hero-live-badge {
+        padding: 0.35rem 0.85rem !important;
+        font-size: 0.76rem !important;
+        margin-bottom: 1.25rem !important;
+    }
+    .hero-live-badge-text {
+        font-size: 0.76rem !important;
+        letter-spacing: 0.2px !important;
+    }
 }
 
 /* Hero title */
@@ -1299,10 +1484,19 @@ body {
 
 /* Touch targets optimization */
 @media (pointer: coarse) {
-    .btn, .nav-link, .dropdown-item {
+    .btn:not(.mobile-header-btn):not(.mobile-header-search-btn):not(.mobile-header-book-btn):not(.mobile-header-toggler-btn),
+    .nav-link, .dropdown-item {
         min-height: 42px;
         display: inline-flex;
         align-items: center;
+    }
+    .mobile-header-btn,
+    .mobile-header-search-btn,
+    .mobile-header-book-btn,
+    .mobile-header-toggler-btn {
+        min-height: 38px !important;
+        max-height: 38px !important;
+        height: 38px !important;
     }
 }
 

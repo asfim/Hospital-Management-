@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'DHAKA CENTRAL HOSPITAL & ADVANCED DIAGNOSTICS – 24/7 Comprehensive Healthcare')
+@section('title', ($siteSettings['site_name'] ?? 'Dhaka Central Hospital') . ' – ' . ($siteSettings['site_tagline'] ?? '24/7 Comprehensive Healthcare'))
 
 @section('content')
 
@@ -25,22 +25,25 @@
             {{-- Left Hero Content --}}
             <div class="col-lg-7" data-aos="fade-right" data-aos-duration="800">
                 {{-- Live Emergency Pulsing Badge --}}
-                <div class="d-inline-flex align-items-center gap-2 px-3.5 py-1.5 rounded-pill mb-4" style="background: rgba(13, 148, 136, 0.18); backdrop-filter: blur(8px); border: 1px solid rgba(45, 212, 191, 0.35);">
-                    <span class="d-inline-block rounded-circle bg-teal" style="width: 8px; height: 8px; background-color: #2dd4bf; box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.35);"></span>
-                    <span class="fw-semibold small" style="color: #2dd4bf; letter-spacing: 0.5px; font-size: 0.82rem;">
-                        <i class="fa-solid fa-hospital me-1"></i> 24/7 Multi-Specialty Hospital &amp; Emergency Trauma Center
+                <div class="d-inline-flex align-items-center gap-2 px-3 px-sm-3.5 py-1.5 rounded-pill mb-4 hero-live-badge text-nowrap" style="background: rgba(13, 148, 136, 0.18); backdrop-filter: blur(8px); border: 1px solid rgba(45, 212, 191, 0.35); max-width: 100%;">
+                    <span class="d-inline-block rounded-circle bg-teal flex-shrink-0" style="width: 8px; height: 8px; background-color: #2dd4bf; box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.35);"></span>
+                    <span class="fw-semibold small hero-live-badge-text text-truncate" style="color: #2dd4bf; letter-spacing: 0.4px; font-size: 0.82rem;">
+                        <i class="fa-solid fa-hospital me-1"></i>
+                        <span class="d-none d-lg-inline">{{ $hero->badge_text ?? '24/7 Multi-Specialty Hospital & Emergency Trauma Center' }}</span>
+                        <span class="d-none d-sm-inline d-lg-none">{{ $hero->badge_mobile ?? '24/7 Multi-Specialty & Emergency Care' }}</span>
+                        <span class="d-inline d-sm-none">{{ $hero->badge_compact ?? '24/7 Hospital & Emergency Care' }}</span>
                     </span>
                 </div>
 
                 {{-- Hero Headline --}}
                 <h1 class="display-4 fw-extrabold text-white mb-3 lh-sm" style="font-weight: 800; letter-spacing: -0.5px;">
-                    Your Health, Our Priority<br>
-                    <span style="color: #2dd4bf; font-size: 0.85em;">World-Class Multi-Specialty Hospital</span>
+                    {{ $hero->title ?? 'Your Health, Our Priority' }}<br>
+                    <span style="color: #2dd4bf; font-size: 0.85em;">{{ $hero->subtitle_highlight ?? ($siteSettings['site_tagline'] ?? 'World-Class Multi-Specialty Hospital') }}</span>
                 </h1>
 
                 {{-- Subtitle --}}
                 <p class="mb-4" style="color: #CBD5E1; font-size: 1.12rem; line-height: 1.8; max-width: 600px;">
-                    {!! nl2br(e($hero->subtitle ?? "Round-the-clock Emergency & Critical Care, renowned specialist physicians, modern Inpatient Cabins, and ISO-certified automated diagnostics — delivering excellence for you and your loved ones.")) !!}
+                    {!! nl2br(e($hero->subtitle ?? ($siteSettings['site_description'] ?? "Round-the-clock Emergency & Critical Care, renowned specialist physicians, modern Inpatient Cabins, and ISO-certified automated diagnostics — delivering excellence for you and your loved ones."))) !!}
                 </p>
 
                 {{-- Live Search Input --}}
@@ -58,7 +61,7 @@
                 <div class="d-flex flex-wrap align-items-center gap-3 mb-5">
                     <a href="{{ $hero->button_link ?? url('/appointment') }}" class="btn px-4 py-3 rounded-pill fw-bold text-white shadow-lg text-decoration-none d-inline-flex align-items-center justify-content-center gap-2" style="background: linear-gradient(135deg, #0D9488 0%, #0f766e 100%); border: none;">
                         <i class="fa-regular fa-calendar-check fs-5"></i>
-                        <span>Book Doctor Appointment</span>
+                        <span>{{ $hero->button_text ?? 'Book Doctor Appointment' }}</span>
                     </a>
                     <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings['site_phone'] ?? '01711000000') }}" class="btn px-4 py-3 rounded-pill fw-bold text-white shadow text-decoration-none d-inline-flex align-items-center justify-content-center gap-2" style="background: linear-gradient(135deg, #e11d48 0%, #be123c 100%); border: none;">
                         <i class="fa-solid fa-truck-medical fs-5"></i>
@@ -69,19 +72,19 @@
                 {{-- Counter Strip --}}
                 <div class="row g-3 pt-3 border-top" style="border-color: rgba(255, 255, 255, 0.12) !important; max-width: 600px;">
                     <div class="col-6 col-sm-3">
-                        <div class="h3 fw-bold text-white mb-0">{{ $stats['doctors'] ?? '50+' }}</div>
+                        <div class="h3 fw-bold text-white mb-0">{{ $stats['doctors'] ?? ($doctorCount > 0 ? $doctorCount . '+' : '50+') }}</div>
                         <small style="color: #94A3B8;">Specialist Doctors</small>
                     </div>
                     <div class="col-6 col-sm-3">
-                        <div class="h3 fw-bold text-white mb-0">40+</div>
+                        <div class="h3 fw-bold text-white mb-0">{{ $stats['beds'] ?? ($bedCount > 0 ? $bedCount . '+' : '40+') }}</div>
                         <small style="color: #94A3B8;">Beds &amp; Cabins</small>
                     </div>
                     <div class="col-6 col-sm-3">
-                        <div class="h3 fw-bold text-white mb-0">{{ $stats['tests'] ?? '500+' }}</div>
+                        <div class="h3 fw-bold text-white mb-0">{{ $stats['tests'] ?? ($testCount > 0 ? $testCount . '+' : '500+') }}</div>
                         <small style="color: #94A3B8;">Diagnostic Tests</small>
                     </div>
                     <div class="col-6 col-sm-3">
-                        <div class="h3 fw-bold mb-0" style="color: #2dd4bf;">24/7</div>
+                        <div class="h3 fw-bold mb-0" style="color: #2dd4bf;">{{ $stats['support'] ?? '24/7' }}</div>
                         <small style="color: #94A3B8;">ICU &amp; Emergency</small>
                     </div>
                 </div>
@@ -92,15 +95,16 @@
                 <div class="position-relative text-center">
                     {{-- Doctor Hero Image Wrapper with Ambient Glow --}}
                     <div class="position-relative d-inline-block w-100" style="max-width: 440px;">
-                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80" 
-                             alt="Hospital Chief Physician" 
+                        <img src="{{ !empty($hero->image) ? asset('storage/' . $hero->image) : 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80' }}" 
+                             alt="{{ $siteSettings['site_name'] ?? 'Hospital' }} Chief Physician" 
                              class="img-fluid rounded-4 shadow-2xl w-100" 
-                             style="max-height: 480px; object-fit: cover; border: 3px solid rgba(255, 255, 255, 0.2); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65);">
+                             style="max-height: 480px; object-fit: cover; border: 3px solid rgba(255, 255, 255, 0.2); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65);"
+                             onerror="this.src='https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80'">
 
                         {{-- Floating Badge: Specialist Team --}}
                         <div class="position-absolute top-0 start-0 translate-middle-y bg-white p-2.5 px-3 rounded-pill shadow-lg d-flex align-items-center gap-2 hero-badge-top-left" style="border: 1px solid #E2E8F0;">
                             <span class="d-inline-block rounded-circle bg-teal" style="width: 8px; height: 8px; background: #0D9488;"></span>
-                            <span class="text-dark fw-bold small"><i class="fa-solid fa-user-doctor text-primary me-1"></i> 50+ Specialists</span>
+                            <span class="text-dark fw-bold small"><i class="fa-solid fa-user-doctor text-primary me-1"></i> {{ $stats['doctors'] ?? ($doctorCount > 0 ? $doctorCount . '+' : '50+') }} Specialists</span>
                         </div>
 
                         {{-- Floating Badge: Emergency ICU Ready --}}
@@ -111,7 +115,7 @@
                                 </div>
                                 <div>
                                     <div class="fw-bold small text-white">Emergency &amp; ICU</div>
-                                    <small class="text-white-50" style="font-size: 0.72rem;">24/7 Rapid Response</small>
+                                    <small class="text-white-50" style="font-size: 0.72rem;">{{ $stats['support'] ?? '24/7' }} Rapid Response</small>
                                 </div>
                             </div>
                         </div>
@@ -134,83 +138,19 @@
 <div class="position-relative quick-shortcuts-wrapper">
     <div class="container">
         <div class="row g-3">
-            {{-- 1. Book Appointment --}}
-            <div class="col-lg-2 col-md-4 col-6" data-aos="fade-up" data-aos-delay="100">
-                <a href="{{ url('/appointment') }}" class="text-decoration-none">
+            @foreach($quickActions as $i => $action)
+            <div class="col-lg-2 col-md-4 col-6" data-aos="fade-up" data-aos-delay="{{ 100 + ($i * 50) }}">
+                <a href="{{ $action['link'] ?? '#' }}" class="text-decoration-none">
                     <div class="bg-white p-3 rounded-4 shadow-sm h-100 border text-center transition-all hover-lift" style="border-color: #E2E8F0 !important;">
-                        <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center mb-2.5 text-teal" style="width: 50px; height: 50px; background: rgba(13, 148, 136, 0.12); color: #0D9488;">
-                            <i class="fa-regular fa-calendar-check fs-4"></i>
+                        <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center mb-2.5 text-{{ $action['color'] ?? 'teal' }}" style="width: 50px; height: 50px; background: rgba(13, 148, 136, 0.12);">
+                            <i class="{{ $action['icon'] ?? 'fa-regular fa-calendar-check' }} fs-4"></i>
                         </div>
-                        <h6 class="fw-bold text-dark mb-1 small">Book Appointment</h6>
-                        <small class="text-muted d-block" style="font-size: 0.75rem;">OPD Specialist Visit</small>
+                        <h6 class="fw-bold text-dark mb-1 small">{{ $action['title'] ?? 'Service' }}</h6>
+                        <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;">{{ $action['description'] ?? '' }}</small>
                     </div>
                 </a>
             </div>
-
-            {{-- 2. Find a Doctor --}}
-            <div class="col-lg-2 col-md-4 col-6" data-aos="fade-up" data-aos-delay="150">
-                <a href="{{ url('/doctors') }}" class="text-decoration-none">
-                    <div class="bg-white p-3 rounded-4 shadow-sm h-100 border text-center transition-all hover-lift" style="border-color: #E2E8F0 !important;">
-                        <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center mb-2.5 text-primary" style="width: 50px; height: 50px; background: rgba(20, 45, 78, 0.1); color: #142D4E;">
-                            <i class="fa-solid fa-user-doctor fs-4"></i>
-                        </div>
-                        <h6 class="fw-bold text-dark mb-1 small">Find a Doctor</h6>
-                        <small class="text-muted d-block" style="font-size: 0.75rem;">50+ Specialists</small>
-                    </div>
-                </a>
-            </div>
-
-            {{-- 3. Diagnostic Tests --}}
-            <div class="col-lg-2 col-md-4 col-6" data-aos="fade-up" data-aos-delay="200">
-                <a href="{{ url('/tests') }}" class="text-decoration-none">
-                    <div class="bg-white p-3 rounded-4 shadow-sm h-100 border text-center transition-all hover-lift" style="border-color: #E2E8F0 !important;">
-                        <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center mb-2.5 text-info" style="width: 50px; height: 50px; background: rgba(2, 132, 199, 0.12); color: #0284C7;">
-                            <i class="fa-solid fa-microscope fs-4"></i>
-                        </div>
-                        <h6 class="fw-bold text-dark mb-1 small">Diagnostic Tests</h6>
-                        <small class="text-muted d-block" style="font-size: 0.75rem;">Pathology &amp; Imaging</small>
-                    </div>
-                </a>
-            </div>
-
-            {{-- 4. Online Reports --}}
-            <div class="col-lg-2 col-md-4 col-6" data-aos="fade-up" data-aos-delay="250">
-                <a href="{{ url('/reports') }}" class="text-decoration-none">
-                    <div class="bg-white p-3 rounded-4 shadow-sm h-100 border text-center transition-all hover-lift" style="border-color: #E2E8F0 !important;">
-                        <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center mb-2.5 text-success" style="width: 50px; height: 50px; background: rgba(22, 163, 74, 0.12); color: #16A34A;">
-                            <i class="fa-solid fa-file-pdf fs-4"></i>
-                        </div>
-                        <h6 class="fw-bold text-dark mb-1 small">Online Reports</h6>
-                        <small class="text-muted d-block" style="font-size: 0.75rem;">Instant PDF Download</small>
-                    </div>
-                </a>
-            </div>
-
-            {{-- 5. 24/7 Emergency --}}
-            <div class="col-lg-2 col-md-4 col-6" data-aos="fade-up" data-aos-delay="300">
-                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings['site_phone'] ?? '01711000000') }}" class="text-decoration-none">
-                    <div class="bg-white p-3 rounded-4 shadow-sm h-100 border text-center transition-all hover-lift" style="border-color: #E2E8F0 !important;">
-                        <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center mb-2.5 text-danger" style="width: 50px; height: 50px; background: rgba(220, 38, 38, 0.12); color: #DC2626;">
-                            <i class="fa-solid fa-truck-medical fs-4"></i>
-                        </div>
-                        <h6 class="fw-bold text-dark mb-1 small">24/7 Emergency</h6>
-                        <small class="text-muted d-block" style="font-size: 0.75rem;">Trauma &amp; Ambulance</small>
-                    </div>
-                </a>
-            </div>
-
-            {{-- 6. Patient Portal --}}
-            <div class="col-lg-2 col-md-4 col-6" data-aos="fade-up" data-aos-delay="350">
-                <a href="{{ url('/login') }}" class="text-decoration-none">
-                    <div class="bg-white p-3 rounded-4 shadow-sm h-100 border text-center transition-all hover-lift" style="border-color: #E2E8F0 !important;">
-                        <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center mb-2.5 text-warning" style="width: 50px; height: 50px; background: rgba(245, 158, 11, 0.15); color: #F59E0B;">
-                            <i class="fa-regular fa-id-badge fs-4"></i>
-                        </div>
-                        <h6 class="fw-bold text-dark mb-1 small">Patient Portal</h6>
-                        <small class="text-muted d-block" style="font-size: 0.75rem;">Login to Health Record</small>
-                    </div>
-                </a>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -223,17 +163,18 @@
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-lg-6" data-aos="fade-right">
                 <div class="position-relative">
-                    <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1000&q=80"
-                         alt="About Dhaka Central Hospital" 
+                    <img src="{{ !empty($about['image']) ? asset('storage/' . $about['image']) : 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1000&q=80' }}"
+                         alt="About {{ $siteSettings['site_name'] ?? 'Hospital' }}" 
                          class="img-fluid rounded-4 shadow-lg w-100 object-fit-cover" 
-                         style="max-height: 480px; border: 1px solid #E2E8F0;">
+                         style="max-height: 480px; border: 1px solid #E2E8F0;"
+                         onerror="this.src='https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1000&q=80'">
 
                     {{-- Experience Overlay Badge --}}
                     <div class="position-absolute bottom-0 start-0 text-white p-3.5 rounded-4 shadow-xl m-3.5" style="background: rgba(20, 45, 78, 0.95) !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15);">
                         <div class="d-flex align-items-center gap-3">
                             <div class="display-6 fw-bold text-teal" style="color: #2dd4bf;">{{ $about['years_number'] ?? '15+' }}</div>
                             <div class="lh-sm">
-                                <span class="fw-bold d-block text-white">Years of Clinical</span>
+                                <span class="fw-bold d-block text-white">{{ $about['years_text'] ?? 'Years of Clinical Excellence' }}</span>
                                 <small class="text-white-50">Healthcare Excellence</small>
                             </div>
                         </div>
@@ -243,7 +184,7 @@
 
             <div class="col-lg-6" data-aos="fade-left">
                 <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2" style="background: rgba(13, 148, 136, 0.1); border: 1px solid rgba(13, 148, 136, 0.2);">
-                    <span class="small fw-bold text-uppercase" style="color: #0D9488; letter-spacing: 0.5px;">About Dhaka Central Hospital</span>
+                    <span class="small fw-bold text-uppercase" style="color: #0D9488; letter-spacing: 0.5px;">{{ $about['label'] ?? ('About ' . ($siteSettings['site_name'] ?? 'Our Hospital')) }}</span>
                 </div>
                 <h2 class="display-6 fw-bold text-dark mb-3" style="color: #142D4E !important;">
                     {{ $about['title'] ?? 'Leading the Way in Patient-Centered Healthcare' }}
@@ -258,25 +199,25 @@
                         <div class="p-3 rounded-3 border bg-white h-100" style="border-color: #E2E8F0 !important;">
                             <div class="d-flex align-items-center gap-2 mb-2 text-teal" style="color: #0D9488;">
                                 <i class="fa-solid fa-bullseye fs-5"></i>
-                                <h6 class="fw-bold mb-0 text-dark">Our Mission</h6>
+                                <h6 class="fw-bold mb-0 text-dark">{{ $about['mission_title'] ?? 'Our Mission' }}</h6>
                             </div>
-                            <p class="text-muted small mb-0">Delivering ethical, precise, and affordable medical care to every patient with uncompromising quality.</p>
+                            <p class="text-muted small mb-0">{{ $about['mission_text'] ?? 'Delivering ethical, precise, and affordable medical care to every patient with uncompromising quality.' }}</p>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="p-3 rounded-3 border bg-white h-100" style="border-color: #E2E8F0 !important;">
                             <div class="d-flex align-items-center gap-2 mb-2 text-primary" style="color: #142D4E;">
                                 <i class="fa-solid fa-eye fs-5"></i>
-                                <h6 class="fw-bold mb-0 text-dark">Our Vision</h6>
+                                <h6 class="fw-bold mb-0 text-dark">{{ $about['vision_title'] ?? 'Our Vision' }}</h6>
                             </div>
-                            <p class="text-muted small mb-0">To be South Asia's benchmark healthcare institution recognized for medical innovation and compassion.</p>
+                            <p class="text-muted small mb-0">{{ $about['vision_text'] ?? 'To be South Asia\'s benchmark healthcare institution recognized for medical innovation and compassion.' }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="d-flex flex-wrap align-items-center gap-3">
-                    <a href="{{ url('/about') }}" class="btn px-4 py-2.5 rounded-pill fw-bold text-white shadow-sm" style="background: #142D4E; border: none;">
-                        Learn More About Us <i class="fa-solid fa-arrow-right ms-1"></i>
+                    <a href="{{ $about['button_link'] ?? url('/about') }}" class="btn px-4 py-2.5 rounded-pill fw-bold text-white shadow-sm" style="background: #142D4E; border: none;">
+                        {{ $about['button_text'] ?? 'Learn More About Us' }} <i class="fa-solid fa-arrow-right ms-1"></i>
                     </a>
                     <a href="{{ url('/doctors') }}" class="btn btn-outline-dark px-4 py-2.5 rounded-pill fw-semibold" style="border-color: #CBD5E1;">
                         Meet Specialist Doctors
@@ -306,7 +247,7 @@
         <div class="row g-4">
             @forelse($departments as $i => $dept)
             <div class="col-xl-3 col-lg-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ ($i+1)*60 }}">
-                <a href="{{ url('/departments/' . ($dept->slug ?? '')) }}" class="text-decoration-none">
+                <a href="{{ url('/departments/' . ($dept->slug ?? $dept->id)) }}" class="text-decoration-none">
                     <div class="department-card-premium bg-white p-4 rounded-4 shadow-sm text-center h-100 border transition-all hover-lift" style="border-color: #E2E8F0 !important;">
                         <div class="mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle" style="width: 64px; height: 64px; background: rgba(13, 148, 136, 0.1); color: #0D9488;">
                             <i class="fa-solid {{ $dept->icon ?? 'fa-stethoscope' }} fs-4"></i>
@@ -343,137 +284,31 @@
         </div>
 
         <div class="row g-4" id="hospital-services">
-            {{-- Facility 1: ICU & CCU --}}
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            @foreach($facilities as $i => $fac)
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ 100 + ($i * 50) }}">
                 <div class="p-4 rounded-4 border h-100 shadow-sm transition-all hover-lift bg-white" style="border-color: #E2E8F0 !important;">
                     <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="rounded-3 d-flex align-items-center justify-content-center text-white" style="width: 50px; height: 50px; background: linear-gradient(135deg, #e11d48, #be123c);">
-                            <i class="fa-solid fa-heart-pulse fs-5"></i>
+                        <div class="rounded-3 d-flex align-items-center justify-content-center text-white" style="width: 50px; height: 50px; background: {{ $fac['gradient'] ?? 'linear-gradient(135deg, #0D9488, #0f766e)' }};">
+                            <i class="fa-solid {{ $fac['icon'] ?? 'fa-hospital' }} fs-5"></i>
                         </div>
                         <div>
-                            <h5 class="fw-bold text-dark mb-0">24/7 ICU &amp; CCU Units</h5>
-                            <span class="badge bg-danger bg-opacity-10 text-danger small">Critical Care</span>
+                            <h5 class="fw-bold text-dark mb-0">{{ $fac['title'] }}</h5>
+                            <span class="badge small bg-{{ $fac['badge_color'] ?? 'teal' }} bg-opacity-10 text-{{ $fac['badge_color'] ?? 'teal' }}">{{ $fac['badge'] }}</span>
                         </div>
                     </div>
                     <p class="text-muted small mb-3">
-                        Advanced multi-parameter ventilators, invasive arterial monitoring, central telemetry, and round-the-clock intensivist &amp; critical care nurse presence.
+                        {{ $fac['description'] }}
                     </p>
+                    @if(!empty($fac['points']))
                     <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-1.5">
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> High-end Dräger Ventilators</li>
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> 1:1 Critical Care Nursing Ratio</li>
+                        @foreach($fac['points'] as $pt)
+                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> {{ $pt }}</li>
+                        @endforeach
                     </ul>
+                    @endif
                 </div>
             </div>
-
-            {{-- Facility 2: Modular OT --}}
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
-                <div class="p-4 rounded-4 border h-100 shadow-sm transition-all hover-lift bg-white" style="border-color: #E2E8F0 !important;">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="rounded-3 d-flex align-items-center justify-content-center text-white" style="width: 50px; height: 50px; background: linear-gradient(135deg, #0D9488, #0f766e);">
-                            <i class="fa-solid fa-shield-virus fs-5"></i>
-                        </div>
-                        <div>
-                            <h5 class="fw-bold text-dark mb-0">Modular Operation Theatres</h5>
-                            <span class="badge small" style="background: rgba(13, 148, 136, 0.1); color: #0D9488;">Surgical Suites</span>
-                        </div>
-                    </div>
-                    <p class="text-muted small mb-3">
-                        HEPA-filtered ultra-clean laminar airflow systems, advanced C-Arm fluoroscopy, Zeiss surgical microscopes, and high-definition laparoscopy suites.
-                    </p>
-                    <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-1.5">
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> Class 100 Laminar Airflow (HEPA)</li>
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> Minimally Invasive Laparoscopic Setup</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- Facility 3: Inpatient Cabins & Wards --}}
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="p-4 rounded-4 border h-100 shadow-sm transition-all hover-lift bg-white" style="border-color: #E2E8F0 !important;">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="rounded-3 d-flex align-items-center justify-content-center text-white" style="width: 50px; height: 50px; background: linear-gradient(135deg, #142D4E, #1e3a63);">
-                            <i class="fa-solid fa-bed-pulse fs-5"></i>
-                        </div>
-                        <div>
-                            <h5 class="fw-bold text-dark mb-0">Inpatient Cabins &amp; Wards</h5>
-                            <span class="badge small" style="background: rgba(20, 45, 78, 0.1); color: #142D4E;">40+ Bed Capacity</span>
-                        </div>
-                    </div>
-                    <p class="text-muted small mb-3">
-                        Air-conditioned VIP &amp; Deluxe cabins, specialized male/female general wards, central medical oxygen outlets, and dedicated bedside attendant support.
-                    </p>
-                    <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-1.5">
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> Motorized Hill-Rom ICU Beds</li>
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> Central Medical Gas &amp; Suction</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- Facility 4: 24/7 Trauma Emergency --}}
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="250">
-                <div class="p-4 rounded-4 border h-100 shadow-sm transition-all hover-lift bg-white" style="border-color: #E2E8F0 !important;">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="rounded-3 d-flex align-items-center justify-content-center text-white" style="width: 50px; height: 50px; background: linear-gradient(135deg, #e11d48, #9f1239);">
-                            <i class="fa-solid fa-truck-medical fs-5"></i>
-                        </div>
-                        <div>
-                            <h5 class="fw-bold text-dark mb-0">24/7 Trauma &amp; Emergency</h5>
-                            <span class="badge bg-danger bg-opacity-10 text-danger small">Immediate Triage</span>
-                        </div>
-                    </div>
-                    <p class="text-muted small mb-3">
-                        Dedicated resuscitation bays, acute trauma management, immediate stroke protocols, on-call surgical consultants, and ambulance dispatch.
-                    </p>
-                    <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-1.5">
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> Immediate Resuscitation &amp; Defibrillation</li>
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> Cardiac Ambulances with Paramedics</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- Facility 5: Automated Pathology & 3T MRI --}}
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                <div class="p-4 rounded-4 border h-100 shadow-sm transition-all hover-lift bg-white" style="border-color: #E2E8F0 !important;">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="rounded-3 d-flex align-items-center justify-content-center text-white" style="width: 50px; height: 50px; background: linear-gradient(135deg, #0284C7, #0369a1);">
-                            <i class="fa-solid fa-microscope fs-5"></i>
-                        </div>
-                        <div>
-                            <h5 class="fw-bold text-dark mb-0">Automated Lab &amp; 3T MRI</h5>
-                            <span class="badge bg-info bg-opacity-10 text-info small">ISO 9001:2015</span>
-                        </div>
-                    </div>
-                    <p class="text-muted small mb-3">
-                        Robotic Roche &amp; Beckman biochemistry analyzers, 3 Tesla silent MRI, 128-Slice cardiac CT scanner, 4D Doppler ultrasound, and digital radiography.
-                    </p>
-                    <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-1.5">
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> Zero Manual Pipetting Error</li>
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> Same-Day Verified Digital PDF Reports</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- Facility 6: Central Pharmacy & Blood Bank --}}
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="350">
-                <div class="p-4 rounded-4 border h-100 shadow-sm transition-all hover-lift bg-white" style="border-color: #E2E8F0 !important;">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="rounded-3 d-flex align-items-center justify-content-center text-white" style="width: 50px; height: 50px; background: linear-gradient(135deg, #16A34A, #15803d);">
-                            <i class="fa-solid fa-pills fs-5"></i>
-                        </div>
-                        <div>
-                            <h5 class="fw-bold text-dark mb-0">24/7 Pharmacy &amp; Blood Bank</h5>
-                            <span class="badge bg-success bg-opacity-10 text-success small">Always In-Stock</span>
-                        </div>
-                    </div>
-                    <p class="text-muted small mb-3">
-                        Hospital central pharmacy stocked with 100% genuine medications, temperature-controlled biological storage, and screened blood component bank.
-                    </p>
-                    <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-1.5">
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> 24/7 Direct Inpatient Medication Supply</li>
-                        <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> Screened Whole Blood, Plasma &amp; Platelets</li>
-                    </ul>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -499,7 +334,7 @@
             <div class="col-xl-3 col-lg-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ ($i+1)*100 }}">
                 <div class="doctor-card-modern bg-white rounded-4 shadow-sm overflow-hidden border h-100 d-flex flex-column transition-all hover-lift" style="border-color: #E2E8F0 !important;">
                     <div class="position-relative bg-light text-center" style="height: 250px; overflow: hidden;">
-                        <img src="{{ $doc->photo ? asset('storage/'.$doc->photo) : 'https://images.unsplash.com/photo-1594824436998-058a23116fc7?auto=format&fit=crop&w=500&q=80' }}" alt="{{ $doc->name }}" class="w-100 h-100 object-fit-cover">
+                        <img src="{{ $doc->photo ? asset('storage/'.$doc->photo) : 'https://images.unsplash.com/photo-1594824436998-058a23116fc7?auto=format&fit=crop&w=500&q=80' }}" alt="{{ $doc->name }}" class="w-100 h-100 object-fit-cover" onerror="this.src='https://images.unsplash.com/photo-1594824436998-058a23116fc7?auto=format&fit=crop&w=500&q=80'">
                         <span class="badge position-absolute bottom-0 start-0 m-3 rounded-pill px-3 py-1.5 shadow-sm text-white" style="background: #142D4E; font-size: 0.75rem;">
                             {{ $doc->department ? $doc->department->name : 'Consultant' }}
                         </span>
@@ -508,9 +343,14 @@
                         <div>
                             <h5 class="fw-bold text-dark mb-1">{{ $doc->name }}</h5>
                             <div class="text-muted small mb-2">{{ $doc->qualification ?? 'MBBS, FCPS' }}</div>
-                            <div class="badge bg-light text-secondary border px-2.5 py-1 small mb-3">
+                            <div class="badge bg-light text-secondary border px-2.5 py-1 small mb-2">
                                 <i class="fa-solid fa-stethoscope me-1" style="color: #0D9488;"></i>{{ $doc->specialization ?? 'Specialist Consultant' }}
                             </div>
+                            @if($doc->schedules && $doc->schedules->isNotEmpty())
+                                <div class="text-teal small mb-2" style="font-size: 0.73rem; color: #0D9488;">
+                                    <i class="fa-regular fa-clock me-1"></i>{{ $doc->schedules->pluck('day')->unique()->take(3)->implode(', ') }}
+                                </div>
+                            @endif
                         </div>
                         <div class="pt-3 border-top" style="border-color: #F1F5F9 !important;">
                             <div class="d-flex justify-content-between align-items-center mb-3 text-muted small">
@@ -651,47 +491,34 @@
     <div class="container py-4">
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-lg-6" data-aos="fade-right">
-                <span class="badge px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2" style="background: rgba(13, 148, 136, 0.1); color: #0D9488;">Quality &amp; Standards</span>
-                <h2 class="display-6 fw-bold text-dark mb-3" style="color: #142D4E !important;">Why Patients Choose Dhaka Central Hospital</h2>
-                <p class="text-muted mb-4">We merge clinical expertise with world-class medical engineering to deliver safe, effective, and patient-centered hospital care.</p>
+                <span class="badge px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2" style="background: rgba(13, 148, 136, 0.1); color: #0D9488;">{{ $whyChoose['label'] ?? 'Quality & Standards' }}</span>
+                <h2 class="display-6 fw-bold text-dark mb-3" style="color: #142D4E !important;">{{ $whyChoose['title'] ?? ('Why Patients Choose ' . ($siteSettings['site_name'] ?? 'Our Hospital')) }}</h2>
+                <p class="text-muted mb-4">{{ $whyChoose['description'] ?? 'We merge clinical expertise with world-class medical engineering to deliver safe, effective, and patient-centered hospital care.' }}</p>
 
                 <div class="d-flex flex-column gap-3">
-                    <div class="d-flex gap-3 p-3 bg-white rounded-3 shadow-sm border" style="border-color: #E2E8F0 !important;">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px; background: rgba(20, 45, 78, 0.1); color: #142D4E;">
-                            <i class="fa-solid fa-user-doctor fs-5"></i>
+                    @if(!empty($whyChoose['features']))
+                        @foreach($whyChoose['features'] as $feat)
+                        <div class="d-flex gap-3 p-3 bg-white rounded-3 shadow-sm border" style="border-color: #E2E8F0 !important;">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px; background: rgba(20, 45, 78, 0.1); color: #142D4E;">
+                                <i class="fa-solid {{ $feat['icon'] ?? 'fa-circle-check' }} fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-dark mb-1">{!! $feat['title'] !!}</h6>
+                                <p class="text-muted small mb-0">{!! $feat['desc'] ?? ($feat['description'] ?? '') !!}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h6 class="fw-bold text-dark mb-1">Board-Certified Specialists</h6>
-                            <p class="text-muted small mb-0">Senior professors and multi-disciplinary doctors with international clinical fellowships.</p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex gap-3 p-3 bg-white rounded-3 shadow-sm border" style="border-color: #E2E8F0 !important;">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px; background: rgba(13, 148, 136, 0.1); color: #0D9488;">
-                            <i class="fa-solid fa-microscope fs-5"></i>
-                        </div>
-                        <div>
-                            <h6 class="fw-bold text-dark mb-1">Fully Automated Pathology &amp; 3T MRI</h6>
-                            <p class="text-muted small mb-0">Zero manual error rate with robotic analyzers, 128-Slice CT scan, and digital X-ray.</p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex gap-3 p-3 bg-white rounded-3 shadow-sm border" style="border-color: #E2E8F0 !important;">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px; background: rgba(22, 163, 74, 0.1); color: #16A34A;">
-                            <i class="fa-solid fa-receipt fs-5"></i>
-                        </div>
-                        <div>
-                            <h6 class="fw-bold text-dark mb-1">100% Transparent &amp; Ethical Billing</h6>
-                            <p class="text-muted small mb-0">Clear itemized pricing with zero hidden charges and direct corporate insurance coverage.</p>
-                        </div>
-                    </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
 
             <div class="col-lg-6" data-aos="fade-left">
                 <div class="position-relative">
-                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1000&q=80"
-                         alt="Hospital Clinical Protocols" class="img-fluid rounded-4 shadow-lg w-100 object-fit-cover" style="max-height: 480px; border: 1px solid #E2E8F0;">
+                    <img src="{{ !empty($whyChoose['image']) ? asset('storage/' . $whyChoose['image']) : 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1000&q=80' }}"
+                         alt="Clinical Quality &amp; Standards" 
+                         class="img-fluid rounded-4 shadow-lg w-100 object-fit-cover" 
+                         style="max-height: 480px; border: 1px solid #E2E8F0;"
+                         onerror="this.src='https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1000&q=80'">
                     <div class="position-absolute bottom-0 end-0 text-white p-4 rounded-4 shadow-lg m-3" style="background: rgba(20, 45, 78, 0.95) !important; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);">
                         <div class="d-flex align-items-center gap-3">
                             <i class="fa-solid fa-award text-warning display-6"></i>
@@ -712,50 +539,24 @@
      ============================================================ --}}
 <section class="section-padding py-5 bg-white">
     <div class="container py-4 text-center">
-        <span class="badge px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2" style="background: rgba(13, 148, 136, 0.1); color: #0D9488;">Seamless Experience</span>
-        <h2 class="fw-bold text-dark mb-2" style="color: #142D4E !important;">How It Works</h2>
-        <p class="text-muted mb-5">Hassle-free access to hospital consultations, diagnostics, and patient care.</p>
+        <span class="badge px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2" style="background: rgba(13, 148, 136, 0.1); color: #0D9488;">{{ $howItWorks['label'] ?? 'Seamless Experience' }}</span>
+        <h2 class="fw-bold text-dark mb-2" style="color: #142D4E !important;">{{ $howItWorks['title'] ?? 'How It Works' }}</h2>
+        <p class="text-muted mb-5">{{ $howItWorks['description'] ?? 'Hassle-free access to hospital consultations, diagnostics, and patient care.' }}</p>
 
         <div class="row g-4">
-            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="step-card p-4 rounded-4 bg-light-soft border h-100" style="border-color: #E2E8F0 !important;">
-                    <div class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-sm" style="width: 50px; height: 50px; background: #142D4E; font-size: 1.2rem;">
-                        1
+            @if(!empty($howItWorks['steps']))
+                @foreach($howItWorks['steps'] as $i => $step)
+                <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="{{ 100 + ($i * 100) }}">
+                    <div class="step-card p-4 rounded-4 bg-light-soft border h-100" style="border-color: #E2E8F0 !important;">
+                        <div class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-sm" style="width: 50px; height: 50px; background: {{ $step['color'] ?? ($i % 2 == 0 ? '#142D4E' : '#0D9488') }}; font-size: 1.2rem;">
+                            {{ $step['n'] ?? ($i + 1) }}
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">{{ $step['title'] }}</h5>
+                        <p class="text-muted small mb-0">{{ $step['desc'] ?? ($step['description'] ?? '') }}</p>
                     </div>
-                    <h5 class="fw-bold text-dark mb-2">Choose Service</h5>
-                    <p class="text-muted small mb-0">Select your preferred doctor, diagnostic test, or specialized health package.</p>
                 </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="step-card p-4 rounded-4 bg-light-soft border h-100" style="border-color: #E2E8F0 !important;">
-                    <div class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-sm" style="width: 50px; height: 50px; background: #0D9488; font-size: 1.2rem;">
-                        2
-                    </div>
-                    <h5 class="fw-bold text-dark mb-2">Schedule Slot</h5>
-                    <p class="text-muted small mb-0">Pick your convenient date and time online or request home sample pickup.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="300">
-                <div class="step-card p-4 rounded-4 bg-light-soft border h-100" style="border-color: #E2E8F0 !important;">
-                    <div class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-sm" style="width: 50px; height: 50px; background: #F59E0B; font-size: 1.2rem;">
-                        3
-                    </div>
-                    <h5 class="fw-bold text-dark mb-2">Consult &amp; Care</h5>
-                    <p class="text-muted small mb-0">Visit our doctor chambers or inpatient hospital wards for personalized treatment.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="step-card p-4 rounded-4 bg-light-soft border h-100" style="border-color: #E2E8F0 !important;">
-                    <div class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-sm" style="width: 50px; height: 50px; background: #16A34A; font-size: 1.2rem;">
-                        4
-                    </div>
-                    <h5 class="fw-bold text-dark mb-2">Get Digital Report</h5>
-                    <p class="text-muted small mb-0">Receive SMS notifications and download verified PDF diagnostic reports online.</p>
-                </div>
-            </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </section>
@@ -862,7 +663,7 @@
             <div class="row g-4 text-center align-items-center">
                 <div class="col-6 col-md-3 border-end border-white border-opacity-10">
                     <div class="d-flex align-items-center justify-content-center gap-1 mb-1">
-                        <span class="h3 fw-bold text-white mb-0">4.9</span>
+                        <span class="h3 fw-bold text-white mb-0">{{ number_format($testimonials->avg('rating') ?: 4.9, 1) }}</span>
                         <div class="text-warning small">
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
@@ -871,7 +672,7 @@
                             <i class="fa-solid fa-star"></i>
                         </div>
                     </div>
-                    <small class="text-white-50">15,000+ Verified Reviews</small>
+                    <small class="text-white-50">{{ $testimonials->count() > 0 ? number_format($testimonials->count() * 120) . '+' : '15,000+' }} Verified Reviews</small>
                 </div>
                 <div class="col-6 col-md-3 border-end border-white border-opacity-10">
                     <h3 class="fw-bold mb-1" style="color: #2dd4bf;">99.4%</h3>
@@ -882,7 +683,7 @@
                     <small class="text-white-50">Online Report Delivery</small>
                 </div>
                 <div class="col-6 col-md-3">
-                    <h3 class="fw-bold mb-1" style="color: #2dd4bf;">24/7</h3>
+                    <h3 class="fw-bold mb-1" style="color: #2dd4bf;">{{ $stats['support'] ?? '24/7' }}</h3>
                     <small class="text-white-50">Emergency &amp; Critical Care</small>
                 </div>
             </div>
@@ -966,7 +767,7 @@
                     </div>
                     <div>
                         <h6 class="fw-bold text-dark mb-1">Visiting &amp; Consultation Hours</h6>
-                        <small class="text-muted">OPD: 8:00 AM – 10:00 PM | Patient Visit: 4:00 PM – 7:00 PM</small>
+                        <small class="text-muted">{{ $siteSettings['site_visiting_hours'] ?? ($siteSettings['visiting_hours'] ?? 'OPD: 8:00 AM – 10:00 PM | Patient Visit: 4:00 PM – 7:00 PM') }}</small>
                     </div>
                 </div>
             </div>
@@ -977,7 +778,7 @@
                     </div>
                     <div>
                         <h6 class="fw-bold text-dark mb-1">Emergency Trauma Hotline</h6>
-                        <small class="text-muted">24/7 Hotline: <strong class="text-danger">{{ $siteSettings['site_phone'] ?? '+880 1711 000 000' }}</strong></small>
+                        <small class="text-muted">24/7 Hotline: <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings['site_phone'] ?? '01711000000') }}" class="text-danger fw-bold text-decoration-none">{{ $siteSettings['site_phone'] ?? '+880 1711 000 000' }}</a></small>
                     </div>
                 </div>
             </div>

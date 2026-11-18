@@ -70,16 +70,16 @@
 
             <!-- Mobile Header Quick Actions & Hamburger -->
             <div class="d-flex align-items-center gap-2 d-xl-none flex-shrink-0">
-                <button class="btn btn-link text-dark p-1.5 rounded-circle" data-bs-toggle="modal" data-bs-target="#searchModal" title="Search">
-                    <i class="fa-solid fa-magnifying-glass fs-5"></i>
+                <button class="btn mobile-header-btn mobile-header-search-btn" data-bs-toggle="modal" data-bs-target="#searchModal" title="Search medical directory" type="button" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
-                <a href="{{ url('/appointment') }}" class="btn btn-sm rounded-pill px-2.5 px-sm-3 py-1.5 fw-bold text-white d-inline-flex align-items-center shadow-sm" style="background: #0D9488; font-size: 0.8rem;">
-                    <i class="fa-regular fa-calendar-check me-1.5"></i>
-                    <span class="d-none d-sm-inline">Book</span>
+                <a href="{{ url('/appointment') }}" class="btn mobile-header-book-btn shadow-sm" title="Book Doctor Appointment">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    <span>Book</span>
                 </a>
-                <button class="navbar-toggler border-0 shadow-none p-1 ms-0.5" type="button"
+                <button class="navbar-toggler mobile-header-btn mobile-header-toggler-btn border-0 shadow-none" type="button"
                         data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Toggle navigation">
-                    <i class="fa-solid fa-bars fs-4" style="color: #142D4E;"></i>
+                    <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
 
