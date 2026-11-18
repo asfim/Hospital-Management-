@@ -4,8 +4,8 @@
 <header class="header-fixed-wrapper fixed-top shadow-sm" id="siteHeader" style="background: #ffffff; z-index: 1040;">
 
     <!-- TOPBAR (Deep Navy & Medical Teal) -->
-    <div class="site-topbar d-none d-lg-block" style="background: #142D4E; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
-        <div class="container">
+    <div class="site-topbar d-none d-xl-block" style="background: #142D4E; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+        <div class="container-fluid px-3 px-xl-4 px-xxl-5">
             <div class="d-flex align-items-center justify-content-between py-1.5" style="min-height: 36px;">
                 {{-- Left: Hotline & Email & Hours --}}
                 <div class="d-flex align-items-center gap-3">
@@ -50,32 +50,32 @@
     </div>
 
     <!-- MAIN NAVBAR -->
-    <nav class="navbar navbar-expand-lg main-header py-2 bg-white" id="mainNavbar">
-        <div class="container">
+    <nav class="navbar navbar-expand-xl main-header py-2 bg-white" id="mainNavbar">
+        <div class="container-fluid px-3 px-xl-4 px-xxl-5">
 
             <!-- Hospital Logo & Brand -->
-            <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none me-auto me-lg-3 py-0" href="{{ url('/') }}">
+            <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none me-auto me-xl-3 py-0 flex-shrink-0" href="{{ url('/') }}">
                 @if(!empty($siteSettings['site_logo']))
-                    <img src="{{ asset('storage/' . $siteSettings['site_logo']) }}" alt="{{ $siteSettings['site_name'] ?? 'Hospital' }}" class="site-logo-img" style="height: 38px; max-height: 42px; object-fit: contain;">
+                    <img src="{{ asset('storage/' . $siteSettings['site_logo']) }}" alt="{{ $siteSettings['site_name'] ?? 'Hospital' }}" class="site-logo-img" style="height: 54px; max-height: 58px; max-width: 240px; object-fit: contain;">
                 @else
-                    <div class="d-flex align-items-center justify-content-center rounded-3 text-white flex-shrink-0 shadow-sm" style="width: 38px; height: 38px; background: linear-gradient(135deg, #142D4E 0%, #0D9488 100%);">
-                        <i class="fa-solid fa-hospital-user fs-5"></i>
+                    <div class="d-flex align-items-center justify-content-center rounded-3 text-white flex-shrink-0 shadow-sm" style="width: 46px; height: 46px; background: linear-gradient(135deg, #142D4E 0%, #0D9488 100%);">
+                        <i class="fa-solid fa-hospital-user fs-4"></i>
                     </div>
                     <div class="lh-1">
-                        <span class="fw-bold d-block text-truncate" style="color: #142D4E; font-size: clamp(0.95rem, 3.8vw, 1.25rem); letter-spacing: -0.3px; max-width: 170px;">{{ $siteSettings['site_name'] ?? 'Dhaka Central' }}</span>
-                        <small class="text-uppercase fw-semibold d-block text-truncate" style="color: #0D9488; font-size: 0.62rem; letter-spacing: 0.05em; max-width: 170px;">Hospital &amp; Diagnostics</small>
+                        <span class="fw-bold d-block text-truncate" style="color: #142D4E; font-size: clamp(1.05rem, 4vw, 1.35rem); letter-spacing: -0.3px; max-width: 220px;">{{ $siteSettings['site_name'] ?? 'Dhaka Central' }}</span>
+                        <small class="text-uppercase fw-semibold d-block text-truncate" style="color: #0D9488; font-size: 0.68rem; letter-spacing: 0.06em; max-width: 220px;">Hospital &amp; Diagnostics</small>
                     </div>
                 @endif
             </a>
 
             <!-- Mobile Header Quick Actions & Hamburger -->
-            <div class="d-flex align-items-center gap-1.5 d-lg-none flex-shrink-0">
+            <div class="d-flex align-items-center gap-2 d-xl-none flex-shrink-0">
                 <button class="btn btn-link text-dark p-1.5 rounded-circle" data-bs-toggle="modal" data-bs-target="#searchModal" title="Search">
                     <i class="fa-solid fa-magnifying-glass fs-5"></i>
                 </button>
-                <a href="{{ url('/appointment') }}" class="btn btn-sm rounded-pill px-2.5 px-sm-3 py-1.5 fw-bold text-white d-inline-flex align-items-center shadow-sm" style="background: #0D9488; font-size: 0.78rem;">
-                    <i class="fa-regular fa-calendar-check"></i>
-                    <span class="d-none d-sm-inline ms-1">Book</span>
+                <a href="{{ url('/appointment') }}" class="btn btn-sm rounded-pill px-2.5 px-sm-3 py-1.5 fw-bold text-white d-inline-flex align-items-center shadow-sm" style="background: #0D9488; font-size: 0.8rem;">
+                    <i class="fa-regular fa-calendar-check me-1.5"></i>
+                    <span class="d-none d-sm-inline">Book</span>
                 </a>
                 <button class="navbar-toggler border-0 shadow-none p-1 ms-0.5" type="button"
                         data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Toggle navigation">
@@ -85,7 +85,7 @@
 
             <!-- Desktop Navigation Menu -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto align-items-center">
+                <ul class="navbar-nav ms-auto me-2 me-xxl-3 align-items-center">
 
                     {{-- Home --}}
                     <li class="nav-item">
@@ -225,16 +225,16 @@
                 </ul>
 
                 {{-- Right Actions: Search + Login + Book Appointment CTA --}}
-                <div class="d-flex align-items-center gap-2 flex-shrink-0">
-                    <button class="btn btn-light rounded-circle p-2 text-dark border-0" data-bs-toggle="modal" data-bs-target="#searchModal" title="Search medical directory" style="width: 38px; height: 38px;">
+                <div class="d-flex align-items-center gap-2 flex-shrink-0 ms-xl-2">
+                    <button class="btn btn-light rounded-circle p-2 text-dark border-0 flex-shrink-0" data-bs-toggle="modal" data-bs-target="#searchModal" title="Search medical directory" style="width: 38px; height: 38px;">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
-                    <a href="{{ url('/login') }}" class="btn btn-outline-dark btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1.5" style="border-color: #CBD5E1; color: #142D4E; font-size: 0.85rem; white-space: nowrap;">
-                        <i class="fa-regular fa-user"></i>
+                    <a href="{{ url('/login') }}" class="btn btn-outline-dark btn-sm rounded-pill px-2.5 px-xxl-3 py-1.5 fw-semibold d-inline-flex align-items-center header-action-btn flex-shrink-0" style="border-color: #CBD5E1; color: #142D4E; font-size: 0.85rem; white-space: nowrap; gap: 8px;">
+                        <i class="fa-regular fa-user me-1.5"></i>
                         <span>Login</span>
                     </a>
-                    <a href="{{ url('/appointment') }}" class="btn btn-sm rounded-pill px-3.5 py-1.5 fw-bold text-white d-inline-flex align-items-center gap-1.5 shadow-sm" style="background: linear-gradient(135deg, #0D9488 0%, #0f766e 100%); font-size: 0.88rem; border: none; white-space: nowrap;">
-                        <i class="fa-regular fa-calendar-check"></i>
+                    <a href="{{ url('/appointment') }}" class="btn btn-sm rounded-pill px-3 px-xxl-3.5 py-1.5 fw-bold text-white d-inline-flex align-items-center shadow-sm header-action-btn flex-shrink-0" style="background: linear-gradient(135deg, #0D9488 0%, #0f766e 100%); font-size: 0.86rem; border: none; white-space: nowrap; gap: 8px;">
+                        <i class="fa-regular fa-calendar-check me-1.5"></i>
                         <span>Appointment</span>
                     </a>
                 </div>

@@ -18,7 +18,7 @@
                         <i class="fa-regular fa-calendar-check me-2"></i>{{ $footerSettings['cta_button_text'] ?? 'Book Appointment Online' }}
                     </a>
                     <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings['site_phone'] ?? '+8801711000000') }}" class="btn btn-outline-light btn-lg px-4 py-2.5 rounded-pill fw-bold d-inline-flex align-items-center gap-2">
-                        <i class="fa-solid fa-phone-volume text-danger"></i>
+                        <i class="fa-solid fa-phone-volume text-danger me-2"></i>
                         <span>24/7 Emergency Hotline</span>
                     </a>
                 </div>
