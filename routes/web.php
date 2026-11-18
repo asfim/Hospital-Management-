@@ -90,9 +90,12 @@ Route::middleware('auth')->group(function () {
     // Nursing Station, MAR & Shift Roster
     Route::get('nursing', [\App\Http\Controllers\NursingController::class, 'index'])->name('nursing.index');
     Route::get('nursing/mar', [\App\Http\Controllers\NursingController::class, 'mar'])->name('nursing.mar');
-    Route::post('nursing/administer-dose', [\App\Http\Controllers\NursingController::class, 'administerDose'])->name('nursing.administer-dose');
+    Route::post('nursing/medication', [\App\Http\Controllers\NursingController::class, 'storeMedication'])->name('nursing.storeMedication');
+    Route::post('nursing/medication/{chart}/administer', [\App\Http\Controllers\NursingController::class, 'administerMedication'])->name('nursing.administer');
+    Route::post('nursing/notes', [\App\Http\Controllers\NursingController::class, 'storeNote'])->name('nursing.storeNote');
     Route::get('nursing/roster', [\App\Http\Controllers\NursingController::class, 'roster'])->name('nursing.roster');
-    Route::post('nursing/roster', [\App\Http\Controllers\NursingController::class, 'storeRoster'])->name('nursing.store-roster');
+    Route::post('nursing/roster', [\App\Http\Controllers\NursingController::class, 'storeRoster'])->name('nursing.storeRoster');
+    Route::post('nursing/store-roster', [\App\Http\Controllers\NursingController::class, 'storeRoster'])->name('nursing.store-roster');
 
     // Operation Theatre (OT) & Surgeries
     Route::resource('ot', \App\Http\Controllers\OtController::class);
