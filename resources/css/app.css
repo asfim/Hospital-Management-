@@ -256,12 +256,13 @@ body {
     }
 }
 
-/* Header Action Buttons (Login & Appointment spacing) */
+/* Header Action Buttons (Login & Appointment spacing & hover states) */
 .header-action-btn {
     display: inline-flex !important;
     align-items: center !important;
     text-decoration: none !important;
     gap: 8px !important;
+    font-weight: 600;
 }
 .header-action-btn i {
     margin-right: 4px !important;
@@ -272,6 +273,66 @@ body {
 .header-action-btn span {
     display: inline-block !important;
     line-height: 1 !important;
+}
+
+/* Header Login Button - Normal & Hover States */
+.btn-header-login {
+    background-color: transparent !important;
+    border: 1.5px solid #CBD5E1 !important;
+    color: #142D4E !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.btn-header-login i {
+    color: #142D4E !important;
+    transition: color 0.25s ease !important;
+}
+.btn-header-login span {
+    color: #142D4E !important;
+    transition: color 0.25s ease !important;
+}
+.btn-header-login:hover,
+.btn-header-login:focus,
+.btn-header-login:active {
+    background-color: #142D4E !important;
+    border-color: #142D4E !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(20, 45, 78, 0.2) !important;
+}
+.btn-header-login:hover i,
+.btn-header-login:focus i,
+.btn-header-login:active i {
+    color: #2dd4bf !important;
+}
+.btn-header-login:hover span,
+.btn-header-login:focus span,
+.btn-header-login:active span {
+    color: #FFFFFF !important;
+}
+
+/* Header Appointment Button - Normal & Hover States */
+.btn-header-appoint {
+    background: linear-gradient(135deg, #0D9488 0%, #0f766e 100%) !important;
+    border: 1.5px solid transparent !important;
+    color: #FFFFFF !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.btn-header-appoint i,
+.btn-header-appoint span {
+    color: #FFFFFF !important;
+}
+.btn-header-appoint:hover,
+.btn-header-appoint:focus,
+.btn-header-appoint:active {
+    background: linear-gradient(135deg, #0f766e 0%, #115e59 100%) !important;
+    border-color: transparent !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35) !important;
+}
+.btn-header-appoint:hover i,
+.btn-header-appoint:hover span {
+    color: #FFFFFF !important;
 }
 
 @media (max-width: 575.98px) {

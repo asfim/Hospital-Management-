@@ -229,11 +229,11 @@
                     <button class="btn btn-light rounded-circle p-2 text-dark border-0 flex-shrink-0" data-bs-toggle="modal" data-bs-target="#searchModal" title="Search medical directory" style="width: 38px; height: 38px;">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
-                    <a href="{{ url('/login') }}" class="btn btn-outline-dark btn-sm rounded-pill px-2.5 px-xxl-3 py-1.5 fw-semibold d-inline-flex align-items-center header-action-btn flex-shrink-0" style="border-color: #CBD5E1; color: #142D4E; font-size: 0.85rem; white-space: nowrap; gap: 8px;">
+                    <a href="{{ url('/login') }}" class="btn btn-sm rounded-pill px-2.5 px-xxl-3 py-1.5 header-action-btn btn-header-login flex-shrink-0" style="font-size: 0.85rem; white-space: nowrap;">
                         <i class="fa-regular fa-user me-1.5"></i>
                         <span>Login</span>
                     </a>
-                    <a href="{{ url('/appointment') }}" class="btn btn-sm rounded-pill px-3 px-xxl-3.5 py-1.5 fw-bold text-white d-inline-flex align-items-center shadow-sm header-action-btn flex-shrink-0" style="background: linear-gradient(135deg, #0D9488 0%, #0f766e 100%); font-size: 0.86rem; border: none; white-space: nowrap; gap: 8px;">
+                    <a href="{{ url('/appointment') }}" class="btn btn-sm rounded-pill px-3 px-xxl-3.5 py-1.5 shadow-sm header-action-btn btn-header-appoint flex-shrink-0" style="font-size: 0.86rem; white-space: nowrap;">
                         <i class="fa-regular fa-calendar-check me-1.5"></i>
                         <span>Appointment</span>
                     </a>
