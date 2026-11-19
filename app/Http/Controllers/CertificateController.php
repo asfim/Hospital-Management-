@@ -21,8 +21,8 @@ class CertificateController extends Controller
         $deathRecords = DeathRecord::with(['patient', 'doctor', 'admission'])->latest()->paginate(15, ['*'], 'death_page');
         $medicalCertificates = MedicalCertificate::with(['patient', 'doctor'])->latest()->paginate(15, ['*'], 'med_page');
 
-        $patients = Patient::select('id', 'name', 'phone', 'blood_group', 'age', 'gender')->orderBy('name')->get();
-        $doctors = Doctor::select('id', 'name', 'speciality')->orderBy('name')->get();
+        $patients = Patient::select('id', 'name', 'mobile', 'blood_group', 'age', 'gender')->orderBy('name')->get();
+        $doctors = Doctor::select('id', 'name', 'specialization')->orderBy('name')->get();
         $admissions = Admission::with('patient')->where('status', 'admitted')->get();
 
         return view('certificates.index', compact(

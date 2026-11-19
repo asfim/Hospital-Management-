@@ -20,6 +20,11 @@ class BirthRecord extends Model
         'weight_kg' => 'decimal:2',
     ];
 
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id');
+    }
+
     public function mother()
     {
         return $this->belongsTo(Patient::class, 'patient_id');

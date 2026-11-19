@@ -17,6 +17,11 @@ class Patient extends Model
         'notes', 'allergies', 'medical_history'
     ];
 
+    public function getPhoneAttribute()
+    {
+        return $this->mobile;
+    }
+
     public function admissions()
     {
         return $this->hasMany(Admission::class)->latest();

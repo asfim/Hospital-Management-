@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
     // Emergency Department (ER & Triage)
     Route::resource('emergency', \App\Http\Controllers\EmergencyController::class);
     Route::post('emergency/{emergency}/transfer-ipd', [\App\Http\Controllers\EmergencyController::class, 'transferToIpd'])->name('emergency.transfer-ipd');
+    Route::post('emergency/{emergency}/transfer-to-ipd', [\App\Http\Controllers\EmergencyController::class, 'transferToIpd'])->name('emergency.transferToIpd');
 
     // Clinical Vitals Recording
     Route::post('vitals', [\App\Http\Controllers\VitalController::class, 'store'])->name('vitals.store');
@@ -84,7 +85,9 @@ Route::middleware('auth')->group(function () {
     // IPD Admissions, Transfers & Discharges
     Route::resource('admissions', \App\Http\Controllers\AdmissionController::class);
     Route::post('admissions/{admission}/transfer-bed', [\App\Http\Controllers\AdmissionController::class, 'transferBed'])->name('admissions.transfer-bed');
+    Route::post('admissions/{admission}/transfer-bed-alt', [\App\Http\Controllers\AdmissionController::class, 'transferBed'])->name('admissions.transferBed');
     Route::post('admissions/{admission}/daily-charge', [\App\Http\Controllers\AdmissionController::class, 'addDailyCharge'])->name('admissions.daily-charge');
+    Route::post('admissions/{admission}/daily-charge-alt', [\App\Http\Controllers\AdmissionController::class, 'addDailyCharge'])->name('admissions.addDailyCharge');
     Route::post('admissions/{admission}/discharge', [\App\Http\Controllers\AdmissionController::class, 'discharge'])->name('admissions.discharge');
 
     // Nursing Station, MAR & Shift Roster
@@ -100,14 +103,18 @@ Route::middleware('auth')->group(function () {
     // Operation Theatre (OT) & Surgeries
     Route::resource('ot', \App\Http\Controllers\OtController::class);
     Route::put('ot/{ot}/notes', [\App\Http\Controllers\OtController::class, 'updateNotes'])->name('ot.update-notes');
+    Route::put('ot/{ot}/update-notes', [\App\Http\Controllers\OtController::class, 'updateNotes'])->name('ot.updateNotes');
     Route::post('ot/{ot}/staff', [\App\Http\Controllers\OtController::class, 'addStaff'])->name('ot.add-staff');
+    Route::post('ot/{ot}/add-staff', [\App\Http\Controllers\OtController::class, 'addStaff'])->name('ot.addStaff');
 
     // Hospital Pharmacy POS & Inventory
     Route::get('pharmacy', [\App\Http\Controllers\PharmacyController::class, 'index'])->name('pharmacy.index');
     Route::get('pharmacy/medicines', [\App\Http\Controllers\PharmacyController::class, 'medicines'])->name('pharmacy.medicines');
-    Route::post('pharmacy/medicines', [\App\Http\Controllers\PharmacyController::class, 'storeMedicine'])->name('pharmacy.medicines.store');
+    Route::post('pharmacy/medicines', [\App\Http\Controllers\PharmacyController::class, 'storeMedicine'])->name('pharmacy.storeMedicine');
+    Route::post('pharmacy/store-medicine', [\App\Http\Controllers\PharmacyController::class, 'storeMedicine'])->name('pharmacy.medicines.store');
     Route::get('pharmacy/batches', [\App\Http\Controllers\PharmacyController::class, 'batches'])->name('pharmacy.batches');
-    Route::post('pharmacy/batches', [\App\Http\Controllers\PharmacyController::class, 'storeBatch'])->name('pharmacy.batches.store');
+    Route::post('pharmacy/batches', [\App\Http\Controllers\PharmacyController::class, 'storeBatch'])->name('pharmacy.storeBatch');
+    Route::post('pharmacy/store-batch', [\App\Http\Controllers\PharmacyController::class, 'storeBatch'])->name('pharmacy.batches.store');
     Route::get('pharmacy/pos', [\App\Http\Controllers\PharmacyController::class, 'pos'])->name('pharmacy.pos');
     Route::post('pharmacy/pos/checkout', [\App\Http\Controllers\PharmacyController::class, 'checkout'])->name('pharmacy.pos.checkout');
     Route::post('pharmacy/store-sale', [\App\Http\Controllers\PharmacyController::class, 'storeSale'])->name('pharmacy.storeSale');
@@ -121,9 +128,18 @@ Route::middleware('auth')->group(function () {
 
     // Digital Radiology & Imaging
     Route::resource('radiology', \App\Http\Controllers\RadiologyController::class);
-    Route::get('radiology/{radiology}/report', [\App\Http\Controllers\RadiologyController::class, 'reportForm'])->name('radiology.report-form');
-    Route::post('radiology/{radiology}/report', [\App\Http\Controllers\RadiologyController::class, 'saveReport'])->name('radiology.save-report');
-    Route::get('radiology/{radiology}/print', [\App\Http\Controllers\RadiologyController::class, 'printReport'])->name('radiology.print-report');
+    Route::get('radiology/{order}/report', [\App\Http\Controllers\RadiologyController::class, 'report'])->name('radiology.report');
+    Route::get('radiology/{order}/report-form', [\App\Http\Controllers\RadiologyController::class, 'report'])->name('radiology.report-form');
+    Route::post('radiology/{order}/report', [\App\Http\Controllers\RadiologyController::class, 'storeReport'])->name('radiology.storeReport');
+    Route::post('radiology/{order}/save-report', [\App\Http\Controllers\RadiologyController::class, 'storeReport'])->name('radiology.save-report');
+    Route::get('radiology/{order}/print', [\App\Http\Controllers\RadiologyController::class, 'print'])->name('radiology.print');
+    Route::get('radiology/{order}/print-report', [\App\Http\Controllers\RadiologyController::class, 'print'])->name('radiology.print-report');
+
+    // Doctor Portal routes
+    Route::get('doctor/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('doctor.dashboard');
+    Route::get('doctor/appointments', [\App\Http\Controllers\AppointmentController::class, 'index'])->name('doctor.appointments');
+    Route::get('doctor/consultations', [\App\Http\Controllers\ConsultationController::class, 'index'])->name('doctor.consultations');
+    Route::get('doctor/patients', [\App\Http\Controllers\PatientController::class, 'index'])->name('doctor.patients');
 
     // Hospital Expenses
     Route::resource('expenses', \App\Http\Controllers\ExpenseController::class);

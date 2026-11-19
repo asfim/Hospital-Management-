@@ -26,6 +26,11 @@ class BloodInventory extends Model
         return $this->belongsTo(BloodDonor::class, 'donor_id');
     }
 
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'issued_to_patient_id');
+    }
+
     public function issuedToPatient()
     {
         return $this->belongsTo(Patient::class, 'issued_to_patient_id');

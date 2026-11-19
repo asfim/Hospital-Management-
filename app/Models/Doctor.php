@@ -16,6 +16,11 @@ class Doctor extends Model
         'consultation_fee', 'ipd_round_charge', 'emergency_charge', 'status'
     ];
 
+    public function getSpecialityAttribute()
+    {
+        return $this->specialization;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

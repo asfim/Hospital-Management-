@@ -24,7 +24,7 @@ class AmbulanceController extends Controller
         }
         $requests = $query->paginate(15);
 
-        $patients = Patient::select('id', 'name', 'phone')->orderBy('name')->get();
+        $patients = Patient::select('id', 'name', 'mobile')->orderBy('name')->get();
 
         return view('ambulance.index', compact('vehicles', 'totalVehicles', 'availableVehicles', 'onDutyVehicles', 'requests', 'patients', 'statusFilter'));
     }

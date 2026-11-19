@@ -34,7 +34,7 @@ class BloodBankController extends Controller
         $bags = $query->paginate(20);
 
         $donors = BloodDonor::latest()->paginate(15, ['*'], 'donors_page');
-        $patients = Patient::select('id', 'name', 'phone', 'blood_group')->orderBy('name')->get();
+        $patients = Patient::select('id', 'name', 'mobile', 'blood_group')->orderBy('name')->get();
 
         return view('blood_bank.index', compact('groupCounts', 'bags', 'donors', 'patients', 'bloodGroupFilter', 'statusFilter'));
     }

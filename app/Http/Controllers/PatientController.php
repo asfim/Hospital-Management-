@@ -17,7 +17,7 @@ class PatientController extends Controller
                 $q->where('name', 'like', "%{$search}%")
                   ->orWhere('patient_id', 'like', "%{$search}%")
                   ->orWhere('mobile', 'like', "%{$search}%")
-                  ->orWhere('phone', 'like', "%{$search}%");
+                  ->orWhere('email', 'like', "%{$search}%");
             });
         }
         $patients = $query->latest()->paginate(10)->withQueryString();
