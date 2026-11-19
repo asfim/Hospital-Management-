@@ -57,13 +57,13 @@
 
         <!-- Sidebar Menu Live Search Filter -->
         <div class="sidebar-search-container">
-            <div class="position-relative">
-                <i class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-2.5 text-white-50" style="font-size: 0.76rem; pointer-events: none;"></i>
+            <div class="sidebar-search-box">
+                <i class="fa-solid fa-magnifying-glass sidebar-search-icon"></i>
                 <input type="text" id="sidebarMenuSearch" class="form-control form-control-sm erp-sidebar-search-input" 
-                       placeholder="Live search all menus... (Alt+M)" 
+                       placeholder="Search menus... (Alt+M)" 
                        autocomplete="off" spellcheck="false" aria-label="Search all menus">
-                <button type="button" id="sidebarMenuSearchClear" class="btn btn-sm position-absolute top-50 end-0 translate-middle-y me-1 text-white-50 p-0 border-0 d-none" style="width: 22px; height: 22px; line-height: 1;" title="Clear search">
-                    <i class="fa-solid fa-xmark" style="font-size: 0.75rem;"></i>
+                <button type="button" id="sidebarMenuSearchClear" class="sidebar-search-clear d-none" title="Clear search">
+                    <i class="fa-solid fa-xmark" style="font-size: 0.72rem;"></i>
                 </button>
             </div>
             <div id="sidebarMenuEmptyState" class="d-none text-center py-2 text-white-50 small mt-1" style="font-size: 0.76rem;">
@@ -837,17 +837,17 @@
                     // If no search input exists for this table, auto-inject a live filter bar
                     if (!searchInput) {
                         const searchBar = document.createElement('div');
-                        searchBar.className = 'live-table-search-wrap d-flex justify-content-between align-items-center mb-2 px-1 flex-wrap gap-2';
+                        searchBar.className = 'live-table-search-wrap';
                         searchBar.innerHTML = `
-                            <div class="position-relative" style="min-width: 220px; max-width: 300px;">
-                                <i class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-2.5 text-muted" style="font-size: 0.75rem; pointer-events: none;"></i>
-                                <input type="text" class="form-control form-control-sm live-table-filter-input" placeholder="Live filter ${rows.length} rows..." autocomplete="off">
-                                <button type="button" class="btn btn-sm position-absolute top-50 end-0 translate-middle-y me-1 text-muted p-0 border-0 d-none live-filter-clear-btn" style="width: 20px; height: 20px; line-height: 1;">
-                                    <i class="fa-solid fa-xmark" style="font-size: 0.75rem;"></i>
+                            <div class="live-table-search-box">
+                                <i class="fa-solid fa-magnifying-glass live-table-search-icon"></i>
+                                <input type="text" class="form-control form-control-sm live-table-filter-input" placeholder="Filter ${rows.length} records..." autocomplete="off">
+                                <button type="button" class="live-filter-clear-btn d-none" title="Clear filter">
+                                    <i class="fa-solid fa-xmark"></i>
                                 </button>
                             </div>
                             <span class="live-table-count-badge">
-                                <i class="fa-solid fa-list-check me-1 text-primary"></i> <span class="count-num">${rows.length}</span> rows
+                                <i class="fa-solid fa-filter me-1 text-teal" style="color: var(--erp-secondary, #0D9488);"></i> <span class="count-num">${rows.length}</span> records
                             </span>
                         `;
 

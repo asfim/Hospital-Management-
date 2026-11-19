@@ -133,8 +133,8 @@
 
     <div class="px-3 mb-2">
         <div class="position-relative">
-            <i class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-2.5 text-white-50" style="font-size: 0.75rem; pointer-events: none;"></i>
-            <input type="text" id="doctorMenuSearch" class="form-control form-control-sm text-white" placeholder="Live search menus... (Alt+M)" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding-left: 2rem; font-size: 0.78rem;" autocomplete="off">
+            <i class="fa-solid fa-magnifying-glass position-absolute top-50 translate-middle-y text-white-50" style="left: 12px; font-size: 0.75rem; pointer-events: none;"></i>
+            <input type="text" id="doctorMenuSearch" class="form-control form-control-sm text-white" placeholder="Search menus... (Alt+M)" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding-left: 32px; padding-right: 20px; font-size: 0.78rem;" autocomplete="off">
         </div>
     </div>
 
@@ -288,10 +288,10 @@
                     wrap.className = 'd-flex justify-content-between align-items-center mb-2 px-1';
                     wrap.innerHTML = `
                         <div class="position-relative" style="max-width: 260px;">
-                            <i class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-2.5 text-muted" style="font-size: 0.75rem;"></i>
-                            <input type="text" class="form-control form-control-sm rounded-pill ps-4 doc-table-filter" placeholder="Live filter rows..." style="font-size: 0.78rem;">
+                            <i class="fa-solid fa-magnifying-glass position-absolute top-50 translate-middle-y text-muted" style="left: 12px; font-size: 0.75rem; pointer-events: none;"></i>
+                            <input type="text" class="form-control form-control-sm rounded-pill doc-table-filter" placeholder="Filter ${rows.length} records..." style="font-size: 0.78rem; padding-left: 32px;">
                         </div>
-                        <span class="badge bg-light text-secondary border rounded-pill">${rows.length} rows</span>
+                        <span class="badge bg-light text-secondary border rounded-pill">${rows.length} records</span>
                     `;
                     table.parentNode.insertBefore(wrap, table);
                     searchInput = wrap.querySelector('.doc-table-filter');
