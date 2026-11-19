@@ -55,6 +55,22 @@
             </button>
         </div>
 
+        <!-- Sidebar Menu Live Search Filter -->
+        <div class="sidebar-search-container">
+            <div class="position-relative">
+                <i class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-2.5 text-white-50" style="font-size: 0.76rem; pointer-events: none;"></i>
+                <input type="text" id="sidebarMenuSearch" class="form-control form-control-sm erp-sidebar-search-input" 
+                       placeholder="Live search all menus... (Alt+M)" 
+                       autocomplete="off" spellcheck="false" aria-label="Search all menus">
+                <button type="button" id="sidebarMenuSearchClear" class="btn btn-sm position-absolute top-50 end-0 translate-middle-y me-1 text-white-50 p-0 border-0 d-none" style="width: 22px; height: 22px; line-height: 1;" title="Clear search">
+                    <i class="fa-solid fa-xmark" style="font-size: 0.75rem;"></i>
+                </button>
+            </div>
+            <div id="sidebarMenuEmptyState" class="d-none text-center py-2 text-white-50 small mt-1" style="font-size: 0.76rem;">
+                <i class="fa-solid fa-circle-exclamation me-1 text-warning"></i> No menu found
+            </div>
+        </div>
+
         <!-- Scrollable Navigation Menu -->
         <nav class="sidebar-nav">
             <!-- GROUP 1: DASHBOARD -->
@@ -633,6 +649,288 @@
             // Execute immediately and after a short render delay (for collapse/fonts)
             scrollToActiveSidebarMenu();
             setTimeout(scrollToActiveSidebarMenu, 180);
+
+            // ================================================================
+            // 1. SIDEBAR ALL-MENU REAL-TIME LIVE SEARCH
+            // ================================================================
+            const menuSearchInput = document.getElementById('sidebarMenuSearch');
+            const menuSearchClear = document.getElementById('sidebarMenuSearchClear');
+            const menuEmptyState = document.getElementById('sidebarMenuEmptyState');
+
+            if (menuSearchInput && sidebar) {
+                const sidebarNav = sidebar.querySelector('.sidebar-nav');
+                const allSidebarItems = sidebarNav ? sidebarNav.querySelectorAll('.sidebar-item') : [];
+                const allGroupTitles = sidebarNav ? sidebarNav.querySelectorAll('.nav-group-title') : [];
+
+                // Cache original label texts
+                allSidebarItems.forEach(item => {
+                    const link = item.querySelector('.sidebar-link');
+                    if (link) {
+                        const span = link.querySelector('span:not(.nav-icon)');
+                        if (span && !link.dataset.origText) link.dataset.origText = span.textContent.trim();
+                    }
+                    item.querySelectorAll('.sidebar-dropdown-menu a').forEach(sub => {
+                        if (!sub.dataset.origText) sub.dataset.origText = sub.textContent.trim();
+                    });
+                });
+
+                function filterSidebarMenus() {
+                    const query = menuSearchInput.value.trim().toLowerCase();
+
+                    if (menuSearchClear) {
+                        menuSearchClear.classList.toggle('d-none', query.length === 0);
+                    }
+
+                    if (query === '') {
+                        allSidebarItems.forEach(item => {
+                            item.style.display = '';
+                            const link = item.querySelector('.sidebar-link');
+                            if (link && link.dataset.origText) {
+                                const span = link.querySelector('span:not(.nav-icon)');
+                                if (span) span.textContent = link.dataset.origText;
+                            }
+                            item.querySelectorAll('.sidebar-dropdown-menu a').forEach(sub => {
+                                sub.style.display = '';
+                                if (sub.dataset.origText) sub.textContent = sub.dataset.origText;
+                            });
+                        });
+                        allGroupTitles.forEach(t => t.style.display = '');
+                        if (menuEmptyState) menuEmptyState.classList.add('d-none');
+                        return;
+                    }
+
+                    let visibleCount = 0;
+                    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    const regex = new RegExp(`(${escaped})`, 'gi');
+
+                    allSidebarItems.forEach(item => {
+                        const link = item.querySelector('.sidebar-link');
+                        const dropdownLinks = item.querySelectorAll('.sidebar-dropdown-menu a');
+                        let matched = false;
+
+                        // Check main link
+                        if (link && link.dataset.origText) {
+                            const span = link.querySelector('span:not(.nav-icon)');
+                            if (link.dataset.origText.toLowerCase().includes(query)) {
+                                matched = true;
+                                if (span) {
+                                    span.innerHTML = link.dataset.origText.replace(regex, '<mark class="erp-menu-mark">$1</mark>');
+                                }
+                            } else {
+                                if (span) span.textContent = link.dataset.origText;
+                            }
+                        }
+
+                        // Check dropdown sublinks
+                        let subMatched = false;
+                        dropdownLinks.forEach(sub => {
+                            if (sub.dataset.origText) {
+                                if (sub.dataset.origText.toLowerCase().includes(query)) {
+                                    matched = true;
+                                    subMatched = true;
+                                    sub.style.display = '';
+                                    sub.innerHTML = sub.dataset.origText.replace(regex, '<mark class="erp-menu-mark">$1</mark>');
+                                } else {
+                                    sub.textContent = sub.dataset.origText;
+                                    sub.style.display = query.length > 0 ? 'none' : '';
+                                }
+                            }
+                        });
+
+                        if (subMatched) {
+                            const collapseEl = item.querySelector('.collapse');
+                            if (collapseEl && !collapseEl.classList.contains('show')) {
+                                collapseEl.classList.add('show');
+                            }
+                        }
+
+                        if (matched) {
+                            item.style.display = '';
+                            visibleCount++;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    // Hide headers whose items are all hidden
+                    allGroupTitles.forEach(title => {
+                        let next = title.nextElementSibling;
+                        let hasVisibleChild = false;
+                        while (next && !next.classList.contains('nav-group-title')) {
+                            if (next.classList.contains('sidebar-item') && next.style.display !== 'none') {
+                                hasVisibleChild = true;
+                                break;
+                            }
+                            next = next.nextElementSibling;
+                        }
+                        title.style.display = hasVisibleChild ? '' : 'none';
+                    });
+
+                    if (menuEmptyState) {
+                        menuEmptyState.classList.toggle('d-none', visibleCount > 0);
+                    }
+                }
+
+                menuSearchInput.addEventListener('input', filterSidebarMenus);
+
+                if (menuSearchClear) {
+                    menuSearchClear.addEventListener('click', function() {
+                        menuSearchInput.value = '';
+                        filterSidebarMenus();
+                        menuSearchInput.focus();
+                    });
+                }
+
+                // Keyboard handling: Enter to open first matching link, Escape to clear
+                menuSearchInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const firstLink = sidebarNav.querySelector('.sidebar-item:not([style*="display: none"]) .sidebar-link:not(.dropdown-toggle), .sidebar-dropdown-menu a:not([style*="display: none"])');
+                        if (firstLink && firstLink.href) {
+                            window.location.href = firstLink.href;
+                        }
+                    } else if (e.key === 'Escape') {
+                        menuSearchInput.value = '';
+                        filterSidebarMenus();
+                        menuSearchInput.blur();
+                    }
+                });
+
+                // Alt + M shortcut to jump to menu live search
+                document.addEventListener('keydown', function(e) {
+                    if ((e.altKey && (e.key === 'm' || e.key === 'M')) || (e.ctrlKey && e.altKey && (e.key === 'm' || e.key === 'M'))) {
+                        e.preventDefault();
+                        menuSearchInput.focus();
+                        menuSearchInput.select();
+                    }
+                });
+            }
+
+            // ================================================================
+            // 2. UNIVERSAL IN-PAGE LIVE TABLE SEARCH FOR EVERY MENU PAGE
+            // ================================================================
+            function setupUniversalTableLiveSearch() {
+                const tables = document.querySelectorAll('table');
+                if (!tables.length) return;
+
+                tables.forEach(table => {
+                    const tbody = table.querySelector('tbody');
+                    if (!tbody) return;
+
+                    const rows = Array.from(tbody.querySelectorAll('tr')).filter(tr => !tr.classList.contains('live-search-no-match'));
+                    if (rows.length === 0) return;
+
+                    // Locate card container
+                    const parentCard = table.closest('.card, .erp-card, .card-premium, .tab-pane, .ambulance-card') || table.parentElement;
+                    let searchInput = parentCard.querySelector('input[name="search"], input[type="search"], input[placeholder*="Search" i], input[placeholder*="search" i]');
+
+                    // Also check for page-level search input above this table (e.g. In filter card)
+                    if (!searchInput) {
+                        const pageSearch = document.querySelector('main input[name="search"]:not(#globalPatientSearch), .erp-main-wrapper input[name="search"]:not(#globalPatientSearch)');
+                        if (pageSearch) {
+                            searchInput = pageSearch;
+                        }
+                    }
+
+                    let counterBadge = null;
+
+                    // If no search input exists for this table, auto-inject a live filter bar
+                    if (!searchInput) {
+                        const searchBar = document.createElement('div');
+                        searchBar.className = 'live-table-search-wrap d-flex justify-content-between align-items-center mb-2 px-1 flex-wrap gap-2';
+                        searchBar.innerHTML = `
+                            <div class="position-relative" style="min-width: 220px; max-width: 300px;">
+                                <i class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-2.5 text-muted" style="font-size: 0.75rem; pointer-events: none;"></i>
+                                <input type="text" class="form-control form-control-sm live-table-filter-input" placeholder="Live filter ${rows.length} rows..." autocomplete="off">
+                                <button type="button" class="btn btn-sm position-absolute top-50 end-0 translate-middle-y me-1 text-muted p-0 border-0 d-none live-filter-clear-btn" style="width: 20px; height: 20px; line-height: 1;">
+                                    <i class="fa-solid fa-xmark" style="font-size: 0.75rem;"></i>
+                                </button>
+                            </div>
+                            <span class="live-table-count-badge">
+                                <i class="fa-solid fa-list-check me-1 text-primary"></i> <span class="count-num">${rows.length}</span> rows
+                            </span>
+                        `;
+
+                        const tableWrapper = table.closest('.table-responsive') || table;
+                        tableWrapper.parentNode.insertBefore(searchBar, tableWrapper);
+
+                        searchInput = searchBar.querySelector('.live-table-filter-input');
+                        counterBadge = searchBar.querySelector('.count-num');
+                        const clearBtn = searchBar.querySelector('.live-filter-clear-btn');
+
+                        if (clearBtn) {
+                            clearBtn.addEventListener('click', function() {
+                                searchInput.value = '';
+                                searchInput.dispatchEvent(new Event('input'));
+                                searchInput.focus();
+                            });
+                        }
+                    } else {
+                        counterBadge = parentCard.querySelector('.live-table-count-badge .count-num');
+                    }
+
+                    if (!searchInput) return;
+
+                    function filterTableRows() {
+                        const query = searchInput.value.trim().toLowerCase();
+                        const clearBtn = parentCard.querySelector('.live-filter-clear-btn');
+                        if (clearBtn) clearBtn.classList.toggle('d-none', query.length === 0);
+
+                        let visibleCount = 0;
+                        const existingNoMatch = tbody.querySelector('.live-search-no-match');
+                        if (existingNoMatch) existingNoMatch.remove();
+
+                        const queryTerms = query.split(/\s+/).filter(Boolean);
+
+                        rows.forEach(tr => {
+                            if (tr.classList.contains('table-info') || (tr.classList.contains('table-light') && tr.querySelector('th'))) {
+                                return;
+                            }
+
+                            if (queryTerms.length === 0) {
+                                tr.style.display = '';
+                                visibleCount++;
+                                return;
+                            }
+
+                            const text = tr.textContent.toLowerCase();
+                            const allMatch = queryTerms.every(term => text.includes(term));
+
+                            if (allMatch) {
+                                tr.style.display = '';
+                                visibleCount++;
+                            } else {
+                                tr.style.display = 'none';
+                            }
+                        });
+
+                        if (counterBadge) {
+                            counterBadge.textContent = query.length > 0 ? `${visibleCount} of ${rows.length}` : rows.length;
+                        }
+
+                        if (visibleCount === 0 && query.length > 0) {
+                            const colCount = table.querySelectorAll('thead th').length || 8;
+                            const emptyTr = document.createElement('tr');
+                            emptyTr.className = 'live-search-no-match';
+                            emptyTr.innerHTML = `
+                                <td colspan="${colCount}" class="text-center py-4 text-muted">
+                                    <i class="fa-solid fa-magnifying-glass me-2 text-secondary"></i>
+                                    No records matching "<strong>${query.replace(/</g, '&lt;')}</strong>" found on this page.
+                                </td>
+                            `;
+                            tbody.appendChild(emptyTr);
+                        }
+                    }
+
+                    let debounceTimer;
+                    searchInput.addEventListener('input', function() {
+                        clearTimeout(debounceTimer);
+                        debounceTimer = setTimeout(filterTableRows, 35);
+                    });
+                });
+            }
+
+            setupUniversalTableLiveSearch();
         });
     </script>
 

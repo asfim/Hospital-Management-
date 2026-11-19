@@ -131,6 +131,13 @@
     </div>
     @endif
 
+    <div class="px-3 mb-2">
+        <div class="position-relative">
+            <i class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-2.5 text-white-50" style="font-size: 0.75rem; pointer-events: none;"></i>
+            <input type="text" id="doctorMenuSearch" class="form-control form-control-sm text-white" placeholder="Live search menus... (Alt+M)" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding-left: 2rem; font-size: 0.78rem;" autocomplete="off">
+        </div>
+    </div>
+
     <div class="px-4 my-2 text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 1px; color: #5eead4; opacity: 0.7;">Navigation</div>
 
     <a href="{{ route('doctor.dashboard') }}" class="{{ request()->routeIs('doctor.dashboard') ? 'active' : '' }}">
@@ -236,6 +243,70 @@
             }
             scrollToActiveDoctorMenu();
             setTimeout(scrollToActiveDoctorMenu, 180);
+
+            // Doctor Portal Sidebar Live Search
+            const docMenuSearch = document.getElementById('doctorMenuSearch');
+            if (docMenuSearch) {
+                const links = sidebar.querySelectorAll('a[href]');
+                docMenuSearch.addEventListener('input', function() {
+                    const q = this.value.trim().toLowerCase();
+                    links.forEach(link => {
+                        const text = link.textContent.trim().toLowerCase();
+                        if (q === '' || text.includes(q)) {
+                            link.style.display = '';
+                        } else {
+                            link.style.display = 'none';
+                        }
+                    });
+                });
+
+                docMenuSearch.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const first = sidebar.querySelector('a[href]:not([style*="display: none"])');
+                        if (first) window.location.href = first.href;
+                    } else if (e.key === 'Escape') {
+                        docMenuSearch.value = '';
+                        docMenuSearch.dispatchEvent(new Event('input'));
+                        docMenuSearch.blur();
+                    }
+                });
+            }
+
+            // Universal In-page Table Live Search for Doctor Portal
+            const docTables = document.querySelectorAll('table');
+            docTables.forEach(table => {
+                const tbody = table.querySelector('tbody');
+                if (!tbody) return;
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                if (rows.length < 2) return;
+
+                const parentCard = table.closest('.card') || table.parentElement;
+                let searchInput = parentCard.querySelector('input[type="search"], input[name="search"], input[placeholder*="Search" i]');
+                if (!searchInput) {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'd-flex justify-content-between align-items-center mb-2 px-1';
+                    wrap.innerHTML = `
+                        <div class="position-relative" style="max-width: 260px;">
+                            <i class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-2.5 text-muted" style="font-size: 0.75rem;"></i>
+                            <input type="text" class="form-control form-control-sm rounded-pill ps-4 doc-table-filter" placeholder="Live filter rows..." style="font-size: 0.78rem;">
+                        </div>
+                        <span class="badge bg-light text-secondary border rounded-pill">${rows.length} rows</span>
+                    `;
+                    table.parentNode.insertBefore(wrap, table);
+                    searchInput = wrap.querySelector('.doc-table-filter');
+                }
+
+                if (searchInput) {
+                    searchInput.addEventListener('input', function() {
+                        const q = this.value.trim().toLowerCase();
+                        rows.forEach(tr => {
+                            const text = tr.textContent.toLowerCase();
+                            tr.style.display = (q === '' || text.includes(q)) ? '' : 'none';
+                        });
+                    });
+                }
+            });
         }
     });
 </script>

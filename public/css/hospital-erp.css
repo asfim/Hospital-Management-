@@ -136,6 +136,88 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
+/* ====================================================================
+   SIDEBAR MENU LIVE SEARCH FILTER
+   ==================================================================== */
+.erp-sidebar .sidebar-search-container {
+    padding: 0.65rem 0.85rem;
+    background: #091526;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
+}
+
+.erp-sidebar .erp-sidebar-search-input {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    color: #ffffff !important;
+    border-radius: 20px !important;
+    padding-left: 2rem !important;
+    padding-right: 1.8rem !important;
+    font-size: 0.78rem !important;
+    height: 32px;
+    transition: all 0.2s ease;
+}
+
+.erp-sidebar .erp-sidebar-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.45) !important;
+    font-size: 0.75rem;
+}
+
+.erp-sidebar .erp-sidebar-search-input:focus {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border-color: var(--erp-secondary-bright, #2dd4bf) !important;
+    box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.25) !important;
+    color: #ffffff !important;
+}
+
+.erp-menu-mark {
+    background: rgba(45, 212, 191, 0.35) !important;
+    color: #5eead4 !important;
+    border-radius: 3px;
+    padding: 0 3px;
+    font-weight: 700;
+}
+
+/* In-Page Universal Live Table Search Bar */
+.live-table-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.live-table-filter-input {
+    font-size: 0.8rem !important;
+    border-radius: 20px !important;
+    border: 1px solid #cbd5e1 !important;
+    padding-left: 2rem !important;
+    padding-right: 1.6rem !important;
+    height: 32px;
+    background-color: #ffffff !important;
+    transition: all 0.2s ease;
+}
+
+.live-table-filter-input:focus {
+    border-color: #0D9488 !important;
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15) !important;
+}
+
+.live-table-count-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 3px 8px;
+    border-radius: 12px;
+    white-space: nowrap;
+    border: 1px solid #e2e8f0;
+}
+
+.live-search-highlight {
+    background: #fef08a;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
 /* Scrollable Menu Area */
 .erp-sidebar .sidebar-nav {
     flex: 1;
@@ -335,6 +417,7 @@ body.erp-sidebar-collapsed .erp-main-wrapper {
 }
 
 body.erp-sidebar-collapsed .erp-sidebar .sidebar-brand-text,
+body.erp-sidebar-collapsed .erp-sidebar .sidebar-search-container,
 body.erp-sidebar-collapsed .erp-sidebar .nav-group-title,
 body.erp-sidebar-collapsed .erp-sidebar .sidebar-link span:not(.nav-icon),
 body.erp-sidebar-collapsed .erp-sidebar .sidebar-footer-info,
