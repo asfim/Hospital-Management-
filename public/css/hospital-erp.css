@@ -48,6 +48,19 @@
     --erp-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Card Headers with bg-primary or dark themes */
+.card-header.bg-primary,
+.card-header.bg-primary h1,
+.card-header.bg-primary h2,
+.card-header.bg-primary h3,
+.card-header.bg-primary h4,
+.card-header.bg-primary h5,
+.card-header.bg-primary h6,
+.card-header.bg-primary i,
+.card-header.bg-primary span {
+    color: #ffffff !important;
+}
+
 /* ====================================================================
    GLOBAL TYPOGRAPHY & BASE RESET
    ==================================================================== */

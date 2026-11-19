@@ -45,10 +45,46 @@
 
             <div class="row">
             @foreach($groupedPermissions as $module => $modulePermissions)
+                @php
+                    $moduleIcons = [
+                        'dashboard' => 'fa-gauge-high',
+                        'patients' => 'fa-users',
+                        'doctors' => 'fa-user-doctor',
+                        'appointments' => 'fa-calendar-check',
+                        'consultations' => 'fa-stethoscope',
+                        'tests' => 'fa-microscope',
+                        'lab orders' => 'fa-vial',
+                        'lab results' => 'fa-file-medical',
+                        'billing' => 'fa-file-invoice-dollar',
+                        'accounts' => 'fa-scale-balanced',
+                        'reports' => 'fa-chart-line',
+                        'staff' => 'fa-user-tie',
+                        'payroll' => 'fa-money-check-dollar',
+                        'settings' => 'fa-gear',
+                        'roles' => 'fa-shield-halved',
+                        'prescriptions' => 'fa-prescription',
+                        'radiology' => 'fa-x-ray',
+                        'ipd' => 'fa-hospital-user',
+                        'wards' => 'fa-door-open',
+                        'beds' => 'fa-bed',
+                        'emergency' => 'fa-truck-medical',
+                        'nursing' => 'fa-user-nurse',
+                        'ot' => 'fa-syringe',
+                        'pharmacy' => 'fa-prescription-bottle-medical',
+                        'inventory' => 'fa-boxes-stacked',
+                        'blood bank' => 'fa-droplet',
+                        'ambulance' => 'fa-truck-medical',
+                        'certificates' => 'fa-certificate',
+                    ];
+                    $modIcon = $moduleIcons[strtolower($module)] ?? 'fa-layer-group';
+                @endphp
                 <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 shadow-sm border-0" style="border-radius: 10px; overflow: hidden;">
-                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" style="border-bottom: 0;">
-                            <h6 class="mb-0 text-uppercase fw-bold"><i class="fa-solid fa-layer-group me-2"></i>{{ $module }}</h6>
+                    <div class="card h-100 shadow-sm border-0" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #142D4E 0%, #0d1e34 100%) !important; color: #ffffff !important; border-bottom: 0; padding: 0.85rem 1.15rem;">
+                            <h6 class="mb-0 text-uppercase fw-bold text-white d-flex align-items-center" style="color: #ffffff !important; font-size: 0.88rem; letter-spacing: 0.5px;">
+                                <i class="fa-solid {{ $modIcon }} me-2" style="color: #ffffff !important; font-size: 0.95rem;"></i>
+                                <span style="color: #ffffff !important; font-weight: 700;">{{ $module }}</span>
+                            </h6>
                             <div class="form-check form-switch m-0">
                                 <input class="form-check-input module-select-all" type="checkbox" onclick="toggleModule(this, '{{ str_replace(' ', '_', $module) }}')">
                             </div>
