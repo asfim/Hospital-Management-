@@ -220,6 +220,22 @@
             sidebar.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
                 if (window.innerWidth < 992) close();
             }));
+
+            // Auto-scroll sidebar to active menu item
+            function scrollToActiveDoctorMenu() {
+                const activeDoctorLink = sidebar.querySelector('a.active');
+                if (activeDoctorLink) {
+                    const navRect = sidebar.getBoundingClientRect();
+                    const linkRect = activeDoctorLink.getBoundingClientRect();
+                    const targetScroll = sidebar.scrollTop + (linkRect.top - navRect.top) - (sidebar.clientHeight / 2) + (activeDoctorLink.clientHeight / 2);
+                    sidebar.scrollTo({
+                        top: Math.max(0, targetScroll),
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            scrollToActiveDoctorMenu();
+            setTimeout(scrollToActiveDoctorMenu, 180);
         }
     });
 </script>

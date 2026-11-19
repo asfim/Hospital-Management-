@@ -599,6 +599,40 @@
                     });
                 });
             }
+
+            // Auto-scroll sidebar to active menu item on page load / reload
+            function scrollToActiveSidebarMenu() {
+                const sidebarNav = document.querySelector('.erp-sidebar .sidebar-nav');
+                if (!sidebarNav) return;
+
+                const activeItem = sidebarNav.querySelector('.sidebar-link.active, .sidebar-dropdown-menu a.active, a.active');
+                if (!activeItem) return;
+
+                // Expand parent collapse if inside a collapsed dropdown menu
+                const parentCollapse = activeItem.closest('.collapse');
+                if (parentCollapse && !parentCollapse.classList.contains('show')) {
+                    parentCollapse.classList.add('show');
+                    const toggleBtn = parentCollapse.closest('.sidebar-item')?.querySelector('.dropdown-toggle');
+                    if (toggleBtn) {
+                        toggleBtn.setAttribute('aria-expanded', 'true');
+                    }
+                }
+
+                // Compute relative vertical position within sidebarNav
+                const navRect = sidebarNav.getBoundingClientRect();
+                const itemRect = activeItem.getBoundingClientRect();
+                const relativeOffset = itemRect.top - navRect.top;
+                const targetScroll = sidebarNav.scrollTop + relativeOffset - (sidebarNav.clientHeight / 2) + (activeItem.clientHeight / 2);
+
+                sidebarNav.scrollTo({
+                    top: Math.max(0, targetScroll),
+                    behavior: 'smooth'
+                });
+            }
+
+            // Execute immediately and after a short render delay (for collapse/fonts)
+            scrollToActiveSidebarMenu();
+            setTimeout(scrollToActiveSidebarMenu, 180);
         });
     </script>
 
