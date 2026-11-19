@@ -939,6 +939,89 @@ body.erp-sidebar-collapsed .erp-sidebar .sidebar-link .nav-icon {
     color: var(--erp-primary);
 }
 
+/* Modern Branch Action Buttons */
+.branch-actions-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.branch-btn-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #0369a1 !important;
+    background: #f0f9ff !important;
+    border: 1px solid #bae6fd !important;
+    border-radius: 8px !important;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 32px;
+    line-height: 1;
+}
+
+.branch-btn-edit:hover {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    border-color: #0284c7 !important;
+    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25);
+    transform: translateY(-1px);
+}
+
+.branch-btn-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    font-size: 0.82rem;
+    color: #be123c !important;
+    background: #fff1f2 !important;
+    border: 1px solid #fecdd3 !important;
+    border-radius: 8px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.branch-btn-delete:hover {
+    background: #e11d48 !important;
+    color: #ffffff !important;
+    border-color: #e11d48 !important;
+    box-shadow: 0 4px 10px rgba(225, 29, 72, 0.25);
+    transform: translateY(-1px);
+}
+
+.branch-btn-map {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    font-size: 0.82rem;
+    color: #0f766e !important;
+    background: #f0fdfa !important;
+    border: 1px solid #ccfbf1 !important;
+    border-radius: 8px !important;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1;
+}
+
+.branch-btn-map:hover {
+    background: #0d9488 !important;
+    color: #ffffff !important;
+    border-color: #0d9488 !important;
+    box-shadow: 0 4px 10px rgba(13, 148, 136, 0.25);
+    transform: translateY(-1px);
+}
+
 /* Action Icons inside Tables */
 .erp-action-btn {
     width: 32px;

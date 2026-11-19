@@ -92,15 +92,21 @@
                                 <span class="fw-bold text-muted">{{ $branch->sort_order }}</span>
                             </td>
                             <td class="text-end pe-4">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill me-1" data-bs-toggle="modal" data-bs-target="#editBranchModal{{ $branch->id }}">
-                                        <i class="fa-solid fa-pen"></i> Edit
+                                <div class="branch-actions-wrap">
+                                    @if($branch->map_link)
+                                        <a href="{{ $branch->map_link }}" target="_blank" class="branch-btn-map" title="View on Google Maps">
+                                            <i class="fa-solid fa-map-location-dot"></i>
+                                        </a>
+                                    @endif
+                                    <button type="button" class="branch-btn-edit" data-bs-toggle="modal" data-bs-target="#editBranchModal{{ $branch->id }}" title="Edit Branch Information">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        <span>Edit</span>
                                     </button>
-                                    <form action="{{ route('branches.destroy', $branch) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this branch?');">
+                                    <form action="{{ route('branches.destroy', $branch) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Are you sure you want to delete branch \'{{ $branch->name }}\'?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
-                                            <i class="fa-solid fa-trash"></i>
+                                        <button type="submit" class="branch-btn-delete" title="Delete Branch">
+                                            <i class="fa-solid fa-trash-can"></i>
                                         </button>
                                     </form>
                                 </div>
