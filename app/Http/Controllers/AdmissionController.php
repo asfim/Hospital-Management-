@@ -144,9 +144,7 @@ class AdmissionController extends Controller
                 InvoiceItem::create([
                     'invoice_id' => $invoice->id,
                     'item_name' => "Admission Intake Deposit ({$admission->admission_no})",
-                    'quantity' => 1,
-                    'unit_price' => $deposit,
-                    'total' => $deposit,
+                    'amount' => $deposit,
                 ]);
 
                 Payment::create([
