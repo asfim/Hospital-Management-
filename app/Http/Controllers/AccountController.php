@@ -47,10 +47,10 @@ class AccountController extends Controller
         }], 'amount')->get();
 
         // Recent Invoices
-        $recentInvoices = Invoice::with('patient')->latest()->take(5)->get();
+        $recentInvoices = Invoice::with('patient')->latest()->take(15)->get();
 
         // Recent Expenses
-        $recentExpenses = Expense::with('category')->latest()->take(5)->get();
+        $recentExpenses = Expense::with('category')->latest()->take(15)->get();
 
         return view('accounts.index', compact(
             'startDate',
