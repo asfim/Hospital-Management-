@@ -99,8 +99,8 @@
                     <span class="badge bg-danger rounded-pill px-3 py-1.5 fw-bold text-uppercase mb-2">
                         <i class="fa-solid fa-bolt me-1"></i> 24/7 Immediate Response
                     </span>
-                    <h3 class="fw-bold mb-2">Need Urgent Medical Attention or Emergency Transfer?</h3>
-                    <p class="text-white-50 mb-0" style="max-width: 600px;">
+                    <h3 class="fw-bold mb-2 text-white" style="color: #ffffff !important;">Need Urgent Medical Attention or Emergency Transfer?</h3>
+                    <p class="mb-0" style="color: #e2e8f0 !important; max-width: 600px;">
                         Our emergency resuscitation center, cardiac ambulance dispatch, and inpatient admission desk are active 24 hours a day, 7 days a week.
                     </p>
                 </div>

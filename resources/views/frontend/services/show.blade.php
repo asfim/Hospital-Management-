@@ -128,7 +128,7 @@
                         <span class="badge bg-danger rounded-pill px-3 py-1 fw-bold text-uppercase mb-2 align-self-start">
                             <i class="fa-solid fa-headset me-1"></i> Direct Assistance
                         </span>
-                        <h4 class="fw-bold mb-2 text-white">Emergency &amp; Service Desk</h4>
+                        <h4 class="fw-bold mb-2 text-white" style="color: #ffffff !important;">Emergency &amp; Service Desk</h4>
                         <p class="text-white-50 small mb-3">
                             For immediate trauma transfer, admission intake, or ambulance dispatch, call our 24/7 central control line:
                         </p>
