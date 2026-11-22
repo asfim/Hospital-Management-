@@ -286,13 +286,21 @@
         <div class="row g-4" id="hospital-services">
             @foreach($facilities as $i => $fac)
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ 100 + ($i * 50) }}">
-                <div class="p-4 rounded-4 border h-100 shadow-sm transition-all hover-lift bg-white" style="border-color: #E2E8F0 !important;">
+                <div class="p-4 rounded-4 border h-100 shadow-sm transition-all hover-lift bg-white d-flex flex-column" style="border-color: #E2E8F0 !important;">
                     <div class="d-flex align-items-center gap-3 mb-3">
                         <div class="rounded-3 d-flex align-items-center justify-content-center text-white" style="width: 50px; height: 50px; background: {{ $fac['gradient'] ?? 'linear-gradient(135deg, #0D9488, #0f766e)' }};">
                             <i class="fa-solid {{ $fac['icon'] ?? 'fa-hospital' }} fs-5"></i>
                         </div>
                         <div>
-                            <h5 class="fw-bold text-dark mb-0">{{ $fac['title'] }}</h5>
+                            <h5 class="fw-bold text-dark mb-0">
+                                @if(!empty($fac['slug']))
+                                    <a href="{{ url('/services/' . $fac['slug']) }}" class="text-dark text-decoration-none hover-teal">
+                                        {{ $fac['title'] }}
+                                    </a>
+                                @else
+                                    {{ $fac['title'] }}
+                                @endif
+                            </h5>
                             <span class="badge small bg-{{ $fac['badge_color'] ?? 'teal' }} bg-opacity-10 text-{{ $fac['badge_color'] ?? 'teal' }}">{{ $fac['badge'] }}</span>
                         </div>
                     </div>
@@ -300,12 +308,18 @@
                         {{ $fac['description'] }}
                     </p>
                     @if(!empty($fac['points']))
-                    <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-1.5">
+                    <ul class="list-unstyled small text-muted mb-3 d-flex flex-column gap-1.5">
                         @foreach($fac['points'] as $pt)
                         <li><i class="fa-solid fa-circle-check text-teal me-2" style="color: #0D9488;"></i> {{ $pt }}</li>
                         @endforeach
                     </ul>
                     @endif
+                    <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                        <span class="text-muted small"><i class="fa-regular fa-clock me-1 text-teal"></i> 24/7 Available</span>
+                        <a href="{{ !empty($fac['slug']) ? url('/services/' . $fac['slug']) : url('/services') }}" class="small fw-bold text-teal text-decoration-none" style="color: #0D9488;">
+                            Explore Service &rarr;
+                        </a>
+                    </div>
                 </div>
             </div>
             @endforeach

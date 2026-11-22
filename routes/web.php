@@ -15,6 +15,9 @@ Route::get('/contact', [\App\Http\Controllers\Frontend\ContactController::class,
 Route::post('/contact', [\App\Http\Controllers\Frontend\ContactController::class, 'store'])->name('frontend.contact.store');
 
 // Frontend Services
+Route::get('/services', [\App\Http\Controllers\Frontend\ServiceController::class, 'index'])->name('frontend.services.index');
+Route::get('/services/{slug}', [\App\Http\Controllers\Frontend\ServiceController::class, 'show'])->name('frontend.services.show');
+
 Route::get('/departments', [\App\Http\Controllers\Frontend\DepartmentController::class, 'index']);
 Route::get('/departments/{slug}', [\App\Http\Controllers\Frontend\DepartmentController::class, 'show']);
 

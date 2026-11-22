@@ -1,0 +1,172 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Service;
+use Illuminate\Database\Seeder;
+
+class ServiceSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $services = [
+            [
+                'title' => '24/7 Emergency & ICU',
+                'slug' => 'emergency-icu',
+                'tagline' => 'Critical trauma care',
+                'badge' => '24/7 Resuscitation & Trauma',
+                'badge_color' => 'danger',
+                'icon' => 'fa-solid fa-truck-medical',
+                'icon_color' => 'text-danger',
+                'gradient' => 'linear-gradient(135deg, #e11d48, #be123c)',
+                'short_description' => 'Dedicated resuscitation bays, acute cardiac & stroke protocol, continuous hemodynamics, and on-call specialist surgeons.',
+                'description' => 'Our 24/7 Emergency and Intensive Care Department is staffed around the clock by board-certified intensivists, emergency physicians, and ACLS-certified critical care nurses. Equipped with advanced Dräger multi-parameter ventilators, central cardiac telemetry, invasive arterial monitoring, and bedside sonography, our unit provides immediate triage, resuscitation, and life support for severe trauma, cardiac arrest, stroke, and multi-organ failure.',
+                'points' => [
+                    'Multi-parameter Dräger and Hamilton mechanical ventilators',
+                    '1:1 critical care nursing ratio for high-dependency patients',
+                    'Immediate bedside 4D cardiac ultrasound & point-of-care ABG testing',
+                    'Dedicated resuscitation bays with rapid central oxygen & suction delivery',
+                    'Direct seamless transfer pathway to catheterization lab & modular OT',
+                ],
+                'contact_number' => '+880 1711 000000',
+                'emergency_button_text' => 'Call Emergency Hotline',
+                'emergency_button_link' => 'tel:+8801711000000',
+                'image' => 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80',
+                'status' => true,
+                'sort_order' => 1,
+            ],
+            [
+                'title' => 'Inpatient Cabins & Wards',
+                'slug' => 'inpatient-cabins',
+                'tagline' => 'AC VIP cabins & nursing',
+                'badge' => 'Modern Inpatient Suites',
+                'badge_color' => 'primary',
+                'icon' => 'fa-solid fa-bed-pulse',
+                'icon_color' => 'text-primary',
+                'gradient' => 'linear-gradient(135deg, #142D4E, #1e3a63)',
+                'short_description' => 'Comfortable VIP & Deluxe cabins, separate male/female wards, motorized Hill-Rom beds, and 24/7 attentive nursing care.',
+                'description' => 'Our inpatient accommodation is designed to foster a serene, infection-free healing environment. We offer luxury air-conditioned VIP cabins, Deluxe private suites, and semi-private general wards. Each room features motorized multi-position beds, central medical gas outlets, nurse call stations, smart TV entertainment, dedicated attendant seating, and ensuite sanitized washrooms.',
+                'points' => [
+                    'Motorized ergonomic hospital beds with electronic position controllers',
+                    'Central pipeline medical oxygen, vacuum suction, and air outlets',
+                    'Round-the-clock bedside duty doctor and senior nursing supervision',
+                    'Dedicated clinical nutritionist meal planning tailored to recovery diets',
+                    'Daily sanitized, pressurized air-conditioned rooms with visitor lounge',
+                ],
+                'contact_number' => '+880 1711 000001',
+                'emergency_button_text' => 'Admission Desk Inquiry',
+                'emergency_button_link' => 'tel:+8801711000001',
+                'image' => 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80',
+                'status' => true,
+                'sort_order' => 2,
+            ],
+            [
+                'title' => 'Operation Theatre (OT)',
+                'slug' => 'operation-theatre',
+                'tagline' => 'Modular surgical theaters',
+                'badge' => 'HEPA Class 100 Airflow',
+                'badge_color' => 'success',
+                'icon' => 'fa-solid fa-shield-virus',
+                'icon_color' => 'text-success',
+                'gradient' => 'linear-gradient(135deg, #0D9488, #0f766e)',
+                'short_description' => 'State-of-the-art modular surgical theaters with positive-pressure laminar airflow, HD laparoscopic towers, and C-arm imaging.',
+                'description' => 'The surgical suites feature Class 100 HEPA-filtered laminar airflow that guarantees sterile, positive-pressure environments adhering to international infection control guidelines. Fully outfitted with Karl Storz 4K ultra-HD laparoscopic imaging, Zeiss surgical microscopes, GE anesthesia workstations, and Siemens high-frequency mobile C-arms, our theaters support general, orthopedic, neurosurgical, and cardiac surgeries.',
+                'points' => [
+                    'Class 100 ultra-clean laminar airflow with 99.97% HEPA particle filtration',
+                    'Karl Storz 4K ultra-high-definition laparoscopic video towers',
+                    'Advanced GE multi-gas anesthesia delivery & patient hemodynamic monitors',
+                    'Siemens digital mobile C-arm fluoroscopy for precision trauma & orthopedic cases',
+                    'Post-anesthesia recovery unit (PACU) with 1:1 dedicated monitoring',
+                ],
+                'contact_number' => '+880 1711 000002',
+                'emergency_button_text' => 'Surgery Inquiry Hotline',
+                'emergency_button_link' => 'tel:+8801711000002',
+                'image' => 'https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1200&q=80',
+                'status' => true,
+                'sort_order' => 3,
+            ],
+            [
+                'title' => '24/7 Central Pharmacy',
+                'slug' => 'central-pharmacy',
+                'tagline' => 'Genuine medication dispensing',
+                'badge' => '100% Genuine Medicines',
+                'badge_color' => 'warning',
+                'icon' => 'fa-solid fa-pills',
+                'icon_color' => 'text-warning',
+                'gradient' => 'linear-gradient(135deg, #f59e0b, #d97706)',
+                'short_description' => 'Fully stocked pharmacy with temperature-controlled cold-chain biologics, authentic pharmaceuticals, and bedside delivery.',
+                'description' => 'The hospital central pharmacy operates 24 hours a day, 365 days a year to supply genuine, batch-verified pharmaceuticals and surgical consumables. Equipped with computerized inventory management, digital barcode verification, and continuous cold-chain refrigerators for vaccines and insulin, we ensure every medication dispensed meets rigorous pharmacopeial safety standards.',
+                'points' => [
+                    'Direct manufacturer sourcing with zero tolerance for counterfeit medicines',
+                    'Continuous calibrated cold-chain storage for vaccines, insulin & serums',
+                    'Registered A-grade hospital pharmacists overseeing every prescription dispense',
+                    'Immediate bedside medication delivery for all admitted inpatient wards',
+                    'Computerized digital billing with transparent prices and itemized receipts',
+                ],
+                'contact_number' => '+880 1711 000003',
+                'emergency_button_text' => 'Pharmacy Direct Line',
+                'emergency_button_link' => 'tel:+8801711000003',
+                'image' => 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=1200&q=80',
+                'status' => true,
+                'sort_order' => 4,
+            ],
+            [
+                'title' => 'Ambulance Dispatch',
+                'slug' => 'ambulance-dispatch',
+                'tagline' => 'Prompt cardiac ambulance',
+                'badge' => 'Rapid Response Ambulance',
+                'badge_color' => 'danger',
+                'icon' => 'fa-solid fa-ambulance',
+                'icon_color' => 'text-danger',
+                'gradient' => 'linear-gradient(135deg, #ef4444, #b91c1c)',
+                'short_description' => 'Modern fleet of Basic & Advanced Cardiac Life Support (ACLS) ambulances fitted with GPS tracking and trained paramedics.',
+                'description' => 'Our emergency ambulance fleet provides swift, lifesaving transportation across the metropolitan area and inter-district transfers. Each ACLS vehicle is effectively a mobile intensive care unit, equipped with portable multiparameter defibrillator-monitors, medical transport ventilators, suction units, oxygen cylinders, and emergency trauma medications, driven by trained paramedics.',
+                'points' => [
+                    'Advanced Cardiac Life Support (ACLS) & Basic Life Support (BLS) fleet',
+                    'On-board defibrillators, portable transport ventilators & spinal immobilization',
+                    'Real-time GPS vehicle tracking and priority central hospital dispatch center',
+                    'Trained emergency paramedics administering acute care en route to hospital',
+                    'Direct communication with ER triage team before patient arrival at hospital',
+                ],
+                'contact_number' => '+880 1711 000004',
+                'emergency_button_text' => 'Request Emergency Ambulance',
+                'emergency_button_link' => 'tel:+8801711000004',
+                'image' => 'https://images.unsplash.com/photo-1587745416684-47953f16f02f?auto=format&fit=crop&w=1200&q=80',
+                'status' => true,
+                'sort_order' => 5,
+            ],
+            [
+                'title' => 'Blood Bank & Transfusion',
+                'slug' => 'blood-bank',
+                'tagline' => 'Screened blood components',
+                'badge' => 'Safe Blood 24/7',
+                'badge_color' => 'danger',
+                'icon' => 'fa-solid fa-droplet',
+                'icon_color' => 'text-danger',
+                'gradient' => 'linear-gradient(135deg, #e11d48, #9f1239)',
+                'short_description' => 'NABH/WHO-compliant voluntary blood donor screening, component separation, apheresis, and cross-matching.',
+                'description' => 'Our Blood Bank and Transfusion Service ensures prompt availability of safe, thoroughly screened blood and blood components. We utilize automated ELISA and nucleic acid testing (NAT) to screen for transfusion-transmitted infections, providing PRBC, Fresh Frozen Plasma, Single-Donor Platelets, and Cryoprecipitate around the clock.',
+                'points' => [
+                    'Comprehensive 5-panel mandatory infectious disease screening (HIV, HBV, HCV, VDRL, Malaria)',
+                    'Automated blood component separation: PRBC, FFP, Platelet Concentrate, Cryo',
+                    'Gel-card technology for precise pre-transfusion antibody screening & cross-matching',
+                    'Emergency uncrossed O-Negative blood units reserved for critical mass trauma',
+                    'Comfortable voluntary donor bleeding lounge with post-donation clinical care',
+                ],
+                'contact_number' => '+880 1711 000005',
+                'emergency_button_text' => 'Blood Bank Desk',
+                'emergency_button_link' => 'tel:+8801711000005',
+                'image' => 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=1200&q=80',
+                'status' => true,
+                'sort_order' => 6,
+            ],
+        ];
+
+        foreach ($services as $srv) {
+            Service::updateOrCreate(
+                ['slug' => $srv['slug']],
+                $srv
+            );
+        }
+    }
+}

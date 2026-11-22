@@ -18,9 +18,24 @@ class DepartmentController extends Controller
 
     public function show($slug)
     {
-        $department = Department::where('slug', $slug)->firstOrFail();
-        $doctors    = Doctor::where('department_id', $department->id)->where('status', 1)->get();
-        $tests      = Test::where('department_id', $department->id)->where('status', 1)->get();
+        $normalized = strtolower(trim($slug));
+
+        $department = Department::where('slug', $normalized)
+            ->orWhere('slug', $slug)
+            ->orWhereRaw('LOWER(name) = ?', [$normalized])
+            ->orWhere('id', is_numeric($slug) ? (int)$slug : 0)
+            ->firstOrFail();
+
+        $doctors = Doctor::where('department_id', $department->id)->where('status', 1)->get();
+        if ($doctors->isEmpty()) {
+            $doctors = Doctor::where('status', 1)
+                ->where(function ($q) use ($department) {
+                    $q->where('specialization', 'like', "%{$department->name}%")
+                      ->orWhere('specialization', 'like', "%{$department->slug}%");
+                })->get();
+        }
+
+        $tests = Test::where('department_id', $department->id)->where('status', 1)->get();
 
         return view('frontend.departments.show', compact('department', 'doctors', 'tests'));
     }

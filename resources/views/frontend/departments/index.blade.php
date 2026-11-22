@@ -15,8 +15,10 @@
         @php
         $icons = [
             'Pathology' => 'bi-lungs', 'Radiology' => 'bi-broadcast', 'Cardiology' => 'bi-heart-pulse',
-            'Neurology' => 'bi-moisture', 'Gynecology' => 'bi-gender-female', 'Orthopedics' => 'bi-person-standing',
-            'Medicine' => 'bi-capsule', 'Dental' => 'bi-emoji-smile', 'Physiotherapy' => 'bi-activity',
+            'Neurology' => 'bi-moisture', 'Gynecology' => 'bi-gender-female', 'Gynecology & Obstetrics' => 'bi-gender-female',
+            'Orthopedics' => 'bi-person-standing', 'Pediatrics' => 'bi-balloon', 'General Surgery' => 'bi-heart',
+            'Nephrology' => 'bi-droplet-half', 'Internal Medicine' => 'bi-capsule', 'Medicine' => 'bi-capsule',
+            'Dental' => 'bi-emoji-smile', 'Physiotherapy' => 'bi-activity',
             'default' => 'bi-hospital',
         ];
         @endphp
@@ -31,7 +33,7 @@
             @foreach($departments as $i => $dept)
             @php $icon = $icons[$dept->name] ?? $icons['default']; @endphp
             <div class="col-lg-3 col-md-4 col-6" data-aos="zoom-in" data-aos-delay="{{ ($i % 4) * 80 }}">
-                <a href="{{ url('/departments/'.$dept->id) }}" class="dept-card">
+                <a href="{{ url('/departments/'.($dept->slug ?: $dept->id)) }}" class="dept-card">
                     <i class="bi {{ $icon }} dept-icon"></i>
                     <h5>{{ $dept->name }}</h5>
                     <div class="d-flex justify-content-center gap-3 mt-2">

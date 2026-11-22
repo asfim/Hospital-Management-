@@ -144,46 +144,29 @@
                         <a class="nav-link fw-semibold px-2.5 py-2 {{ request()->is('doctors*') ? 'active text-teal' : '' }}" href="{{ url('/doctors') }}" style="color: #1E293B; font-size: 0.9rem; white-space: nowrap;">Our Doctors</a>
                     </li>
 
-                    {{-- Hospital Services Hover Dropdown --}}
+                    {{-- Hospital Services Hover Dropdown (Dynamic) --}}
+                    @php
+                        $headerServices = \App\Models\Service::active()->ordered()->get();
+                    @endphp
                     <li class="nav-item nav-hover-dropdown">
-                        <a class="nav-link fw-semibold px-2.5 py-2 d-flex align-items-center gap-1 {{ request()->is('services*') ? 'active text-teal' : '' }}" href="#hospital-services" style="color: #1E293B; font-size: 0.9rem; white-space: nowrap;">
+                        <a class="nav-link fw-semibold px-2.5 py-2 d-flex align-items-center gap-1 {{ request()->is('services*') ? 'active text-teal' : '' }}" href="{{ url('/services') }}" style="color: #1E293B; font-size: 0.9rem; white-space: nowrap;">
                             Services <i class="fa-solid fa-chevron-down ms-1" style="font-size: 0.65rem;"></i>
                         </a>
-                        <div class="hover-dropdown-menu" style="min-width: 260px; padding: 0.9rem;">
-                            <a class="dropdown-item py-2 px-2.5 rounded-2 d-flex align-items-center" href="#hospital-services">
-                                <i class="fa-solid fa-truck-medical text-danger me-2 fs-6"></i>
-                                <div>
-                                    <strong class="d-block text-dark small">24/7 Emergency &amp; ICU</strong>
-                                    <small class="text-muted" style="font-size: 0.72rem;">Critical trauma care</small>
+                        <div class="hover-dropdown-menu" style="min-width: 290px; padding: 0.9rem;">
+                            @foreach($headerServices as $hs)
+                            <a class="dropdown-item py-2 px-2.5 rounded-2 d-flex align-items-center mb-1 {{ request()->is('services/'.$hs->slug) ? 'bg-light text-teal' : '' }}" href="{{ url('/services/' . $hs->slug) }}">
+                                <div class="rounded-2 d-flex align-items-center justify-content-center me-2.5 flex-shrink-0" style="width: 32px; height: 32px; background: rgba(13, 148, 136, 0.08);">
+                                    <i class="{{ $hs->icon ?: 'fa-solid fa-hospital' }} {{ $hs->icon_color ?: 'text-teal' }}" style="font-size: 0.95rem;"></i>
+                                </div>
+                                <div class="overflow-hidden">
+                                    <strong class="d-block text-dark small text-truncate" style="font-size: 0.85rem;">{{ $hs->title }}</strong>
+                                    <small class="text-muted d-block text-truncate" style="font-size: 0.72rem;">{{ $hs->tagline ?: 'Specialized care' }}</small>
                                 </div>
                             </a>
-                            <a class="dropdown-item py-2 px-2.5 rounded-2 d-flex align-items-center" href="#hospital-facilities">
-                                <i class="fa-solid fa-bed-pulse text-primary me-2 fs-6"></i>
-                                <div>
-                                    <strong class="d-block text-dark small">Inpatient Cabins &amp; Wards</strong>
-                                    <small class="text-muted" style="font-size: 0.72rem;">AC VIP cabins &amp; nursing</small>
-                                </div>
-                            </a>
-                            <a class="dropdown-item py-2 px-2.5 rounded-2 d-flex align-items-center" href="#hospital-facilities">
-                                <i class="fa-solid fa-shield-virus text-success me-2 fs-6"></i>
-                                <div>
-                                    <strong class="d-block text-dark small">Operation Theatre (OT)</strong>
-                                    <small class="text-muted" style="font-size: 0.72rem;">Modular surgical theaters</small>
-                                </div>
-                            </a>
-                            <a class="dropdown-item py-2 px-2.5 rounded-2 d-flex align-items-center" href="{{ url('/pharmacy') }}">
-                                <i class="fa-solid fa-pills text-warning me-2 fs-6"></i>
-                                <div>
-                                    <strong class="d-block text-dark small">24/7 Central Pharmacy</strong>
-                                    <small class="text-muted" style="font-size: 0.72rem;">Genuine medication dispensing</small>
-                                </div>
-                            </a>
-                            <a class="dropdown-item py-2 px-2.5 rounded-2 d-flex align-items-center" href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings['site_phone'] ?? '01711000000') }}">
-                                <i class="fa-solid fa-ambulance text-danger me-2 fs-6"></i>
-                                <div>
-                                    <strong class="d-block text-dark small">Ambulance Dispatch</strong>
-                                    <small class="text-muted" style="font-size: 0.72rem;">Prompt cardiac ambulance</small>
-                                </div>
+                            @endforeach
+                            <div class="dropdown-divider my-2"></div>
+                            <a class="dropdown-item py-1.5 px-2 rounded-2 fw-bold text-teal text-center" href="{{ url('/services') }}" style="color: #0D9488 !important; font-size: 0.82rem;">
+                                <i class="fa-solid fa-grid-2 me-1"></i> View All Services &rarr;
                             </a>
                         </div>
                     </li>
@@ -300,7 +283,7 @@
                 </a>
             </div>
 
-            <!-- Services & Facilities Accordion -->
+            <!-- Services & Facilities Accordion (Dynamic) -->
             <div class="accordion-item rounded-0 border-0 border-bottom">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed px-4 py-3 fw-semibold bg-white text-dark shadow-none" type="button"
@@ -310,11 +293,13 @@
                 </h2>
                 <div id="mobServices" class="accordion-collapse collapse" data-bs-parent="#mobileAccordion">
                     <div class="accordion-body pt-0 ps-4 pb-3">
-                        <a class="d-block text-muted py-1.5" href="#hospital-services">24/7 ICU &amp; Emergency</a>
-                        <a class="d-block text-muted py-1.5" href="#hospital-facilities">Inpatient Wards &amp; Cabins</a>
-                        <a class="d-block text-muted py-1.5" href="#hospital-facilities">Modular Operation Theatre (OT)</a>
-                        <a class="d-block text-muted py-1.5" href="{{ url('/pharmacy') }}">24/7 Central Pharmacy</a>
-                        <a class="d-block text-muted py-1.5" href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings['site_phone'] ?? '01711000000') }}">Ambulance Dispatch</a>
+                        <a class="d-block fw-bold text-teal py-1.5" href="{{ url('/services') }}" style="color: #0D9488 !important;">All Hospital Services &rarr;</a>
+                        @foreach($headerServices as $hs)
+                            <a class="d-block text-muted py-1.5 d-flex align-items-center gap-2" href="{{ url('/services/' . $hs->slug) }}">
+                                <i class="{{ $hs->icon ?: 'fa-solid fa-hospital' }} {{ $hs->icon_color ?: 'text-muted' }}" style="font-size: 0.82rem; width: 16px;"></i>
+                                <span>{{ $hs->title }}</span>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -19,6 +19,7 @@ use App\Models\Bed;
 use App\Models\Ward;
 use App\Models\AmbulanceVehicle;
 use App\Models\Branch;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -169,62 +170,75 @@ class HomeController extends Controller
             'button_link' => url('/about')
         ]);
 
-        $facilities = HomeSetting::getSection('facilities_section', [
-            [
-                'title' => '24/7 ICU & CCU Units',
-                'badge' => 'Critical Care',
-                'badge_color' => 'danger',
-                'icon' => 'fa-heart-pulse',
-                'gradient' => 'linear-gradient(135deg, #e11d48, #be123c)',
-                'description' => 'Advanced multi-parameter ventilators, invasive arterial monitoring, central telemetry, and round-the-clock intensivist & critical care nurse presence.',
-                'points' => ['High-end Dräger Ventilators', '1:1 Critical Care Nursing Ratio'],
-            ],
-            [
-                'title' => 'Modular Operation Theatres',
-                'badge' => 'Surgical Suites',
-                'badge_color' => 'teal',
-                'icon' => 'fa-shield-virus',
-                'gradient' => 'linear-gradient(135deg, #0D9488, #0f766e)',
-                'description' => 'HEPA-filtered ultra-clean laminar airflow systems, advanced C-Arm fluoroscopy, Zeiss surgical microscopes, and high-definition laparoscopy suites.',
-                'points' => ['Class 100 Laminar Airflow (HEPA)', 'Minimally Invasive Laparoscopic Setup'],
-            ],
-            [
-                'title' => 'Inpatient Cabins & Wards',
-                'badge' => ($bedCount > 0 ? $bedCount . '+ Bed Capacity' : '40+ Bed Capacity'),
-                'badge_color' => 'primary',
-                'icon' => 'fa-bed-pulse',
-                'gradient' => 'linear-gradient(135deg, #142D4E, #1e3a63)',
-                'description' => 'Air-conditioned VIP & Deluxe cabins, specialized male/female general wards, central medical oxygen outlets, and dedicated bedside attendant support.',
-                'points' => ['Motorized Hill-Rom ICU Beds', 'Central Medical Gas & Suction'],
-            ],
-            [
-                'title' => '24/7 Trauma & Emergency',
-                'badge' => 'Immediate Triage',
-                'badge_color' => 'danger',
-                'icon' => 'fa-truck-medical',
-                'gradient' => 'linear-gradient(135deg, #e11d48, #9f1239)',
-                'description' => 'Dedicated resuscitation bays, acute trauma management, immediate stroke protocols, on-call surgical consultants, and ambulance dispatch.',
-                'points' => ['Immediate Resuscitation & Defibrillation', 'Cardiac Ambulances with Paramedics'],
-            ],
-            [
-                'title' => 'Automated Lab & 3T MRI',
-                'badge' => 'ISO 9001:2015',
-                'badge_color' => 'info',
-                'icon' => 'fa-microscope',
-                'gradient' => 'linear-gradient(135deg, #0284C7, #0369a1)',
-                'description' => 'Robotic Roche & Beckman biochemistry analyzers, 3 Tesla silent MRI, 128-Slice cardiac CT scanner, 4D Doppler ultrasound, and digital radiography.',
-                'points' => ['Zero Manual Pipetting Error', 'Same-Day Verified Digital PDF Reports'],
-            ],
-            [
-                'title' => '24/7 Pharmacy & Blood Bank',
-                'badge' => 'Always In-Stock',
-                'badge_color' => 'success',
-                'icon' => 'fa-pills',
-                'gradient' => 'linear-gradient(135deg, #16A34A, #15803d)',
-                'description' => 'Hospital central pharmacy stocked with 100% genuine medications, temperature-controlled biological storage, and screened blood component bank.',
-                'points' => ['24/7 Direct Inpatient Medication Supply', 'Screened Whole Blood, Plasma & Platelets'],
-            ],
-        ]);
+        $dbServices = Service::active()->ordered()->get();
+        if ($dbServices->isNotEmpty()) {
+            $facilities = $dbServices->map(function ($s) {
+                return [
+                    'slug' => $s->slug,
+                    'title' => $s->title,
+                    'badge' => $s->badge ?: 'Clinical Facility',
+                    'badge_color' => $s->badge_color ?: 'teal',
+                    'icon' => str_replace(['fa-solid ', 'fa-regular '], '', $s->icon ?: 'fa-hospital'),
+                    'gradient' => $s->gradient ?: 'linear-gradient(135deg, #0D9488, #0f766e)',
+                    'description' => $s->short_description ?: \Illuminate\Support\Str::limit($s->description, 130),
+                    'points' => !empty($s->points) ? array_slice($s->points, 0, 2) : [],
+                    'link' => url('/services/' . $s->slug),
+                ];
+            })->toArray();
+        } else {
+            $facilities = HomeSetting::getSection('facilities_section', [
+                [
+                    'slug' => 'emergency-icu',
+                    'title' => '24/7 ICU & CCU Units',
+                    'badge' => 'Critical Care',
+                    'badge_color' => 'danger',
+                    'icon' => 'fa-heart-pulse',
+                    'gradient' => 'linear-gradient(135deg, #e11d48, #be123c)',
+                    'description' => 'Advanced multi-parameter ventilators, invasive arterial monitoring, central telemetry, and round-the-clock intensivist & critical care nurse presence.',
+                    'points' => ['High-end Dräger Ventilators', '1:1 Critical Care Nursing Ratio'],
+                ],
+                [
+                    'slug' => 'operation-theatre',
+                    'title' => 'Modular Operation Theatres',
+                    'badge' => 'Surgical Suites',
+                    'badge_color' => 'teal',
+                    'icon' => 'fa-shield-virus',
+                    'gradient' => 'linear-gradient(135deg, #0D9488, #0f766e)',
+                    'description' => 'HEPA-filtered ultra-clean laminar airflow systems, advanced C-Arm fluoroscopy, Zeiss surgical microscopes, and high-definition laparoscopy suites.',
+                    'points' => ['Class 100 Laminar Airflow (HEPA)', 'Minimally Invasive Laparoscopic Setup'],
+                ],
+                [
+                    'slug' => 'inpatient-cabins',
+                    'title' => 'Inpatient Cabins & Wards',
+                    'badge' => ($bedCount > 0 ? $bedCount . '+ Bed Capacity' : '40+ Bed Capacity'),
+                    'badge_color' => 'primary',
+                    'icon' => 'fa-bed-pulse',
+                    'gradient' => 'linear-gradient(135deg, #142D4E, #1e3a63)',
+                    'description' => 'Air-conditioned VIP & Deluxe cabins, specialized male/female general wards, central medical oxygen outlets, and dedicated bedside attendant support.',
+                    'points' => ['Motorized Hill-Rom ICU Beds', 'Central Medical Gas & Suction'],
+                ],
+                [
+                    'slug' => 'emergency-icu',
+                    'title' => '24/7 Trauma & Emergency',
+                    'badge' => 'Immediate Triage',
+                    'badge_color' => 'danger',
+                    'icon' => 'fa-truck-medical',
+                    'gradient' => 'linear-gradient(135deg, #e11d48, #9f1239)',
+                    'description' => 'Dedicated resuscitation bays, acute trauma management, immediate stroke protocols, on-call surgical consultants, and ambulance dispatch.',
+                    'points' => ['Immediate Resuscitation & Defibrillation', 'Cardiac Ambulances with Paramedics'],
+                ],
+                [
+                    'slug' => 'central-pharmacy',
+                    'title' => '24/7 Pharmacy & Blood Bank',
+                    'badge' => 'Always In-Stock',
+                    'badge_color' => 'success',
+                    'icon' => 'fa-pills',
+                    'gradient' => 'linear-gradient(135deg, #16A34A, #15803d)',
+                    'description' => 'Hospital central pharmacy stocked with 100% genuine medications, temperature-controlled biological storage, and screened blood component bank.',
+                    'points' => ['24/7 Direct Inpatient Medication Supply', 'Screened Whole Blood, Plasma & Platelets'],
+                ],
+            ]);
+        }
 
         $whyChoose = HomeSetting::getSection('why_choose_section', [
             'image' => null,

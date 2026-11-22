@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
     {
         // 1. Seed Roles & Permissions first
         $this->call(RolesAndPermissionsSeeder::class);
+        $this->call(ServiceSeeder::class);
 
         // 2. Admin User (Idempotent: create if missing, or retrieve existing)
         $admin = User::firstOrCreate(
@@ -91,13 +92,32 @@ class DatabaseSeeder extends Seeder
         );
 
         // 5. Departments & Categories
-        $dept = Department::firstOrCreate(
-            ['name' => 'Pathology'],
-            [
-                'description' => 'Pathology Department',
-                'status' => true,
-            ]
-        );
+        $defaultDepts = [
+            ['name' => 'Neurology', 'slug' => 'neurology', 'description' => 'Comprehensive diagnosis and treatment of complex neurological disorders, brain injuries, stroke management, spinal conditions, and neuro-rehabilitation with 24/7 neuro-critical care.', 'icon' => 'fa-solid fa-brain'],
+            ['name' => 'Cardiology', 'slug' => 'cardiology', 'description' => 'Advanced cardiovascular diagnosis, coronary care, interventional cardiology, echo-cardiography, and emergency stroke and cardiac resuscitation with specialized CCU facilities.', 'icon' => 'fa-solid fa-heart-pulse'],
+            ['name' => 'Orthopedics', 'slug' => 'orthopedics', 'description' => 'Specialized musculoskeletal care including bone trauma surgery, joint replacements, sports injuries, arthroscopic interventions, and specialized post-operative physiotherapy.', 'icon' => 'fa-solid fa-bone'],
+            ['name' => 'Pediatrics', 'slug' => 'pediatrics', 'description' => 'Compassionate neonatal and pediatric care, newborn intensive care (NICU), child immunizations, developmental pediatrics, and pediatric emergency services.', 'icon' => 'fa-solid fa-baby'],
+            ['name' => 'General Surgery', 'slug' => 'surgery', 'description' => 'State-of-the-art modular surgical theaters for minimally invasive laparoscopic, abdominal, trauma, and elective surgical procedures with dedicated post-op ICU support.', 'icon' => 'fa-solid fa-stethoscope'],
+            ['name' => 'Gynecology & Obstetrics', 'slug' => 'gynecology', 'description' => 'Dedicated maternal and women health center offering antenatal care, high-risk pregnancy monitoring, normal & cesarean delivery, reproductive endocrinology, and fertility support.', 'icon' => 'fa-solid fa-venus'],
+            ['name' => 'Nephrology', 'slug' => 'nephrology', 'description' => 'Kidney disease management, high-flux hemodialysis, peritoneal dialysis, hypertension clinic, and collaborative renal failure prevention programs.', 'icon' => 'fa-solid fa-hand-holding-droplet'],
+            ['name' => 'Pathology', 'slug' => 'pathology', 'description' => 'Fully automated diagnostic laboratory providing accurate hematology, biochemistry, immunology, molecular diagnostics, and histopathology testing services.', 'icon' => 'fa-solid fa-flask-vial'],
+            ['name' => 'Radiology', 'slug' => 'radiology', 'description' => 'Precision digital medical imaging including high-resolution digital X-rays, 4D ultrasonography, CT scan, and interventional radiology reports with rapid turnaround.', 'icon' => 'fa-solid fa-x-ray'],
+            ['name' => 'Internal Medicine', 'slug' => 'medicine', 'description' => 'Adult preventive medicine, chronic disease management (diabetes, hypertension, asthma), geriatric care, infectious disease screening, and outpatient consultations.', 'icon' => 'fa-solid fa-capsules'],
+        ];
+
+        foreach ($defaultDepts as $d) {
+            Department::firstOrCreate(
+                ['slug' => $d['slug']],
+                [
+                    'name' => $d['name'],
+                    'description' => $d['description'],
+                    'icon' => $d['icon'],
+                    'status' => true,
+                ]
+            );
+        }
+
+        $dept = Department::where('slug', 'pathology')->first();
 
         $cat = TestCategory::firstOrCreate(
             ['name' => 'Hematology'],
