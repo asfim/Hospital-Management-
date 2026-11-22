@@ -154,11 +154,11 @@
                         </a>
                         <div class="hover-dropdown-menu" style="min-width: 290px; padding: 0.9rem;">
                             @foreach($headerServices as $hs)
-                            <a class="dropdown-item py-2 px-2.5 rounded-2 d-flex align-items-center mb-1 {{ request()->is('services/'.$hs->slug) ? 'bg-light text-teal' : '' }}" href="{{ url('/services/' . $hs->slug) }}">
-                                <div class="rounded-2 d-flex align-items-center justify-content-center me-2.5 flex-shrink-0" style="width: 32px; height: 32px; background: rgba(13, 148, 136, 0.08);">
+                            <a class="dropdown-item py-2 px-3 rounded-2 d-flex align-items-center mb-1 {{ request()->is('services/'.$hs->slug) ? 'bg-light text-teal' : '' }}" href="{{ url('/services/' . $hs->slug) }}">
+                                <div class="rounded-2 d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 34px; height: 34px; min-width: 34px; background: rgba(13, 148, 136, 0.08);">
                                     <i class="{{ $hs->icon ?: 'fa-solid fa-hospital' }} {{ $hs->icon_color ?: 'text-teal' }}" style="font-size: 0.95rem;"></i>
                                 </div>
-                                <div class="overflow-hidden">
+                                <div class="overflow-hidden flex-grow-1" style="min-width: 0;">
                                     <strong class="d-block text-dark small text-truncate" style="font-size: 0.85rem;">{{ $hs->title }}</strong>
                                     <small class="text-muted d-block text-truncate" style="font-size: 0.72rem;">{{ $hs->tagline ?: 'Specialized care' }}</small>
                                 </div>

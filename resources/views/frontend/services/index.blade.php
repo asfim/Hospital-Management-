@@ -56,7 +56,7 @@
 
                         {{-- Bullet Highlights --}}
                         @if(!empty($service->points))
-                            <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-1.5 pt-2 border-top" style="border-color: #F1F5F9 !important;">
+                            <ul class="list-unstyled small text-muted mb-0 d-flex flex-column pt-2 border-top" style="border-color: #F1F5F9 !important; gap: 8px;">
                                 @foreach(array_slice($service->points, 0, 3) as $point)
                                     <li class="d-flex align-items-center">
                                         <i class="fa-solid fa-circle-check text-teal me-2 flex-shrink-0" style="color: #0D9488; font-size: 0.8rem;"></i>

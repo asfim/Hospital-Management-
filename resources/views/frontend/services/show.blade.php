@@ -71,7 +71,7 @@
                                 <div class="row g-3">
                                     @foreach($service->points as $point)
                                         <div class="col-md-6">
-                                            <div class="p-3 rounded-3 bg-light d-flex align-items-start gap-2.5 h-100" style="border: 1px solid #EDF2F7;">
+                                            <div class="p-3 rounded-3 bg-light d-flex align-items-start h-100" style="border: 1px solid #EDF2F7; gap: 12px;">
                                                 <i class="fa-solid fa-circle-check text-teal mt-1 flex-shrink-0" style="color: #0D9488; font-size: 1.05rem;"></i>
                                                 <span class="text-dark small fw-medium" style="line-height: 1.5;">{{ $point }}</span>
                                             </div>
@@ -153,21 +153,21 @@
                         <div class="d-flex flex-column gap-2">
                             @foreach($allServices as $other)
                                 <a href="{{ url('/services/' . $other->slug) }}" 
-                                   class="d-flex align-items-center justify-content-between p-2.5 rounded-3 text-decoration-none transition-all hover-lift"
-                                   style="background: #F8FAFC; border: 1px solid #E2E8F0; color: #1E293B;">
-                                    <div class="d-flex align-items-center gap-2.5">
-                                        <div class="rounded-2 d-flex align-items-center justify-content-center text-white" 
-                                             style="width: 32px; height: 32px; font-size: 0.8rem; background: {{ $other->gradient ?: '#0D9488' }};">
+                                   class="d-flex align-items-center justify-content-between rounded-3 text-decoration-none transition-all hover-lift"
+                                   style="padding: 10px 14px; background: #F8FAFC; border: 1px solid #E2E8F0; color: #1E293B;">
+                                    <div class="d-flex align-items-center flex-grow-1" style="min-width: 0;">
+                                        <div class="rounded-3 d-flex align-items-center justify-content-center text-white flex-shrink-0 me-3" 
+                                             style="width: 38px; height: 38px; min-width: 38px; font-size: 0.9rem; background: {{ $other->gradient ?: 'linear-gradient(135deg, #0D9488, #0f766e)' }}; box-shadow: 0 2px 4px rgba(0,0,0,0.06);">
                                             <i class="{{ $other->icon ?: 'fa-solid fa-hospital' }}"></i>
                                         </div>
-                                        <div>
-                                            <strong class="d-block small text-dark" style="font-size: 0.85rem;">{{ $other->title }}</strong>
+                                        <div class="flex-grow-1" style="min-width: 0;">
+                                            <strong class="d-block text-dark text-truncate" style="font-size: 0.88rem; font-weight: 700; line-height: 1.25;">{{ $other->title }}</strong>
                                             @if($other->tagline)
-                                                <small class="text-muted d-block" style="font-size: 0.72rem;">{{ $other->tagline }}</small>
+                                                <small class="text-muted d-block text-truncate" style="font-size: 0.74rem; line-height: 1.3; margin-top: 2px;">{{ $other->tagline }}</small>
                                             @endif
                                         </div>
                                     </div>
-                                    <i class="fa-solid fa-chevron-right text-muted" style="font-size: 0.75rem;"></i>
+                                    <i class="fa-solid fa-chevron-right text-muted flex-shrink-0 ms-2" style="font-size: 0.72rem; opacity: 0.6;"></i>
                                 </a>
                             @endforeach
                         </div>
